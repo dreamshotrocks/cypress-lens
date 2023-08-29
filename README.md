@@ -61,7 +61,7 @@ Add the following config to your _cypress.config.js_ file:
 
 ```javascript
 const { defineConfig } = require("cypress");
-const getCompareSnapshotsPlugin = require("cypress-visual-regression/dist/plugin");
+const getCompareSnapshotsPlugin = require("cypress-lens/dist/plugin");
 
 module.exports = defineConfig({
   screenshotsFolder: "./cypress/snapshots/actual",
@@ -78,7 +78,7 @@ module.exports = defineConfig({
 Add the command to _cypress/support/commands.js_:
 
 ```javascript
-const compareSnapshotCommand = require("cypress-visual-regression/dist/command");
+const compareSnapshotCommand = require("cypress-lens/dist/command");
 
 compareSnapshotCommand();
 ```
@@ -97,7 +97,7 @@ _cypress/cypress.config.ts_
 
 ```ts
 import { defineConfig } from "cypress";
-import getCompareSnapshotsPlugin from "cypress-visual-regression/dist/plugin";
+import getCompareSnapshotsPlugin from "cypress-lens/dist/plugin";
 
 export default defineConfig({
   env: {
@@ -116,7 +116,7 @@ export default defineConfig({
 _cypress/support/commands.ts_
 
 ```ts
-import compareSnapshotCommand from "cypress-visual-regression/dist/command";
+import compareSnapshotCommand from "cypress-lens/dist/command";
 
 compareSnapshotCommand();
 ```
@@ -128,7 +128,7 @@ _cypress/tsconfig.json_
   "compilerOptions": {
     "types": [
       "cypress",
-      "cypress-visual-regression"
+      "cypress-lens"
     ]
   }
 }
