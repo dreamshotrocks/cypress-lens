@@ -1,13 +1,12 @@
-# Cypress Visual Regression
+# Cypress Lens
 
 [![npm](https://img.shields.io/npm/v/cypress-visual-regression)](https://www.npmjs.com/package/cypress-visual-regression)
 
 [![github actions](https://github.com/mjhea0/cypress-visual-regression/workflows/Continuous%20Integration/badge.svg)](https://github.com/mjhea0/cypress-visual-regression/actions)
 
+Based on [Cypress Visual Regression](https://www.npmjs.com/package/cypress-visual-regression)
 
-Based on Cypress Visual Regression [![npm](https://img.shields.io/npm/v/cypress-visual-regression)](https://www.npmjs.com/package/cypress-visual-regression)
-
-Module for adding visual regression testing to [Cypress](https://www.cypress.io/).
+Module for visual regression testing and reporting for [Cypress](https://www.cypress.io/).
 
 ## Getting Started
 
