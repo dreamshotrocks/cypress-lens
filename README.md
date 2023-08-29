@@ -1,8 +1,44 @@
+<p align="center">
+  <a href="https://www.cypress-lens.io">
+    <picture>
+      <source media="(prefers-color-scheme: dark)"  srcset="./assets/logo-dark.png">
+      <source media="(prefers-color-scheme: light)" srcset="./assets/logo-light.png">
+      <img alt="Logo" src="./assets/logo-light.png">
+    </picture>    
+  </a>
+</p>
+<p align="center">
+  <a href="https://on.cypress-lens.io">Documentation</a> |
+  <a href="https://on.cypress-lens.io/changelog">Changelog</a> |
+  <a href="https://on.cypress-lens.io/roadmap">Roadmap</a>
+</p>
+
+<h3 align="center">
+  The best module for visual testing for Cypress.
+</h3>
+
+<p align="center">
+  Developed in
+</p>
+<p align="center">
+  <a href="https://bit.ly/3P7ufFf">
+    <img alt="Cypress Conf Link" src="./assets/dreamshot-logo.png" width="40%" height="40%" />
+  </a>
+</p>
+<p align="center">
+  Join us, we're <a href="https://careers.dreamshot.bg/careers">hiring</a>.
+</p>
+
+<p align="center">
+  <a href="https://www.npmjs.com/package/cypress-lens">
+    <img src="https://img.shields.io/npm/dm/cypress.svg" alt="npm"/>
+  </a>
+    <a href="https://www.npmjs.com/package/cypress-lens">
+    <img src="https://img.shields.io/npm/v/cypress-lens" alt="StackShare"/>
+  </a><br />
+</p>
+
 # Cypress Lens
-
-[![npm](https://img.shields.io/npm/v/cypress-visual-regression)](https://www.npmjs.com/package/cypress-visual-regression)
-
-[![github actions](https://github.com/mjhea0/cypress-visual-regression/workflows/Continuous%20Integration/badge.svg)](https://github.com/mjhea0/cypress-visual-regression/actions)
 
 Based on [Cypress Visual Regression](https://www.npmjs.com/package/cypress-visual-regression)
 
@@ -16,14 +52,14 @@ Install:
 $ npm install cypress-lens
 ```
 
-Add the following config to your *cypress.config.js* file:
+Add the following config to your _cypress.config.js_ file:
 
 ```javascript
 const { defineConfig } = require("cypress");
-const getCompareSnapshotsPlugin = require('cypress-visual-regression/dist/plugin');
+const getCompareSnapshotsPlugin = require("cypress-visual-regression/dist/plugin");
 
 module.exports = defineConfig({
-  screenshotsFolder: './cypress/snapshots/actual',
+  screenshotsFolder: "./cypress/snapshots/actual",
   trashAssetsBeforeRuns: true,
   video: false,
   e2e: {
@@ -34,35 +70,35 @@ module.exports = defineConfig({
 });
 ```
 
-Add the command to *cypress/support/commands.js*:
+Add the command to _cypress/support/commands.js_:
 
 ```javascript
-const compareSnapshotCommand = require('cypress-visual-regression/dist/command');
+const compareSnapshotCommand = require("cypress-visual-regression/dist/command");
 
 compareSnapshotCommand();
 ```
 
-> Make sure you import *commands.js* in *cypress/support/e2e.js*:
+> Make sure you import _commands.js_ in _cypress/support/e2e.js_:
 >
 > ```javascript
-> import './commands'
+> import "./commands";
 > ```
 
 ### TypeScript
 
 If you're using TypeScript, use files with a `.ts` extension, as follows:
 
-*cypress/cypress.config.ts*
+_cypress/cypress.config.ts_
 
 ```ts
-import { defineConfig } from 'cypress';
-import getCompareSnapshotsPlugin from 'cypress-visual-regression/dist/plugin';
+import { defineConfig } from "cypress";
+import getCompareSnapshotsPlugin from "cypress-visual-regression/dist/plugin";
 
 export default defineConfig({
   env: {
-    screenshotsFolder: './cypress/snapshots/actual',
+    screenshotsFolder: "./cypress/snapshots/actual",
     trashAssetsBeforeRuns: true,
-    video: false
+    video: false,
   },
   e2e: {
     setupNodeEvents(on, config) {
@@ -72,15 +108,15 @@ export default defineConfig({
 });
 ```
 
-*cypress/support/commands.ts*
+_cypress/support/commands.ts_
 
 ```ts
-import compareSnapshotCommand from 'cypress-visual-regression/dist/command';
+import compareSnapshotCommand from "cypress-visual-regression/dist/command";
 
 compareSnapshotCommand();
 ```
 
-*cypress/tsconfig.json*
+_cypress/tsconfig.json_
 
 ```json:
 {
