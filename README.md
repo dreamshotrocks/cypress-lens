@@ -9,7 +9,7 @@
 </p>
 <p align="center">
   <a href="https://careers.dreamshot.bg/open-source">Documentation</a> |
-  <a href="https://careers.dreamshot.bg/open-source">Changelog</a>
+  <a href="https://github.com/dreamshotrocks/cypress-lens/blob/main/CHANGELOG.md">Changelog</a>
 </p>
 
 <h3 align="center">
@@ -30,7 +30,13 @@
 
 <p align="center">
   <a href="https://www.npmjs.com/package/cypress-lens">
-    <img src="https://img.shields.io/npm/v/cypress-lens" alt="StackShare"/>
+    <img src="https://img.shields.io/npm/v/cypress-lens" alt="version"/>
+  </a>
+  <a href="https://github.com/dreamshotrocks/cypress-lens/blob/main/LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="license"/>
+  </a>
+  <a href="https://github.com/semantic-release/semantic-release">
+    <img src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg" alt="semantic-version"/>
   </a>
   <a href="https://conventionalcommits.org">
     <img src="https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white" alt="conventional"/>
