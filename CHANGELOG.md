@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/dreamshotrocks/cypress-lens/compare/v1.1.0...v1.2.0) (2023-08-29)
+
+
+### Features
+
+* update readme ([af07c89](https://github.com/dreamshotrocks/cypress-lens/commit/af07c89e27503ea0e8a53b272522c5bf0dc1928d))
+
 ## 1.1.0 (2023-08-29)
 
 
