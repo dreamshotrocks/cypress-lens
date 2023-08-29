@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://www.cypress-lens.io">
+  <a href="https://careers.dreamshot.bg/open-source">
     <picture>
       <source media="(prefers-color-scheme: dark)"  srcset="./assets/logo-dark.png">
       <source media="(prefers-color-scheme: light)" srcset="./assets/logo-light.png">
@@ -8,9 +8,8 @@
   </a>
 </p>
 <p align="center">
-  <a href="https://on.cypress-lens.io">Documentation</a> |
-  <a href="https://on.cypress-lens.io/changelog">Changelog</a> |
-  <a href="https://on.cypress-lens.io/roadmap">Roadmap</a>
+  <a href="https://careers.dreamshot.bg/open-source">Documentation</a> |
+  <a href="https://careers.dreamshot.bg/open-source">Changelog</a>
 </p>
 
 <h3 align="center">
@@ -21,7 +20,7 @@
   Developed in
 </p>
 <p align="center">
-  <a href="https://bit.ly/3P7ufFf">
+  <a href="https://dreamshot.bg/">
     <img alt="Cypress Conf Link" src="./assets/dreamshot-logo.png" width="40%" height="40%" />
   </a>
 </p>
@@ -31,10 +30,10 @@
 
 <p align="center">
   <a href="https://www.npmjs.com/package/cypress-lens">
-    <img src="https://img.shields.io/npm/dm/cypress.svg" alt="npm"/>
-  </a>
-    <a href="https://www.npmjs.com/package/cypress-lens">
     <img src="https://img.shields.io/npm/v/cypress-lens" alt="StackShare"/>
+  </a>
+  <a href="https://conventionalcommits.org">
+    <img src="https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white" alt="conventional"/>
   </a><br />
 </p>
 
