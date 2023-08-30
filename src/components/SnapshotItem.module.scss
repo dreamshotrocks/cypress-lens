@@ -1,0 +1,75 @@
+.container,
+.active-container {
+  gap: 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #212121;
+  cursor: pointer;
+  margin-left: 20px;
+  margin-right: 20px;
+
+  &:hover {
+    background-color: #333333;
+  }
+}
+
+.active-container {
+  background-color: rgb(61, 121, 250);
+
+  &:hover {
+    background-color: rgb(61, 121, 250);
+  }
+}
+
+.image-container,
+.active-image-container {
+  width: 90px;
+  height: 69px;
+  position: relative;
+  border-radius: 7px;
+  background-color: #292929;
+  margin: 6px;
+}
+
+.active-image-container {
+  background-color: rgb(92, 143, 255);
+}
+
+.image {
+  width: 100%;
+  max-width: 64px;
+  height: 100%;
+  max-height: 60px;
+  position: absolute;
+  top: 7%;
+  left: 15%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.information-container {
+  gap: 5px;
+  width: 100%;
+  flex: 1 0 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.image-name-text {
+  opacity: 0.9;
+  white-space: pre;
+  color: #ffffff;
+  line-height: 1.2;
+  position: relative;
+}
+
+.image-percent-text {
+  opacity: 0.6;
+  white-space: pre;
+  line-height: 1.2;
+  position: relative;
+}

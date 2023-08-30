@@ -1,0 +1,23 @@
+.vertical-collapse {
+  user-select: none;
+}
+
+.header-container {
+  cursor: pointer;
+  border: 0px solid #222;
+  border-bottom-width: 1px;
+
+  &:hover {
+    background-color: #212121;
+  }
+}
+
+.header {
+  display: flex;
+  line-height: 1.2;
+  color: #ffffff;
+  padding: 15px 20px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}

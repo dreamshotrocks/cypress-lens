@@ -1,0 +1,25 @@
+.transparency-slider-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 400px;
+}
+
+.transparency-slider-input {
+  width: 100%;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  background: #000;
+  height: 7px;
+  border-radius: 10px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  margin-top: -5px; /* Centers thumb on the track */
+  height: 20px;
+  width: 20px;
+}
