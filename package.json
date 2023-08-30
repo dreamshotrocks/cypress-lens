@@ -1,6 +1,6 @@
 {
   "name": "cypress-lens",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "Module for visual regression testing and reporting in Cypress",
   "repository": "https://github.com/dreamshotrocks/cypress-lens",
   "author": "Borislava Kirova <b.kirova999@gmail.com>",
