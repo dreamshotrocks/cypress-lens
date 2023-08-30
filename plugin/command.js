@@ -25,7 +25,7 @@ function getSpecRelativePath() {
 
   return (
     Cypress.spec.relative.replace(integrationFolder, "") +
-    "\\" +
+    "/" +
     sanitize(Cypress.currentTest.title).split(" ").join("-")
   );
 }

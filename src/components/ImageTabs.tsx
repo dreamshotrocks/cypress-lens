@@ -51,7 +51,7 @@ export default function ImageTabs({ test, snapshot }: ImageTabsProps) {
 
   return (
     <>
-      {test.failure || snapshot.images.diff ? (
+      {test.failure || snapshot?.images.diff ? (
         <div className={styles["tabs-container"]}>
           <div className={styles["menu-container"]}>
             {tabs.map((tab) => (
@@ -83,10 +83,10 @@ export default function ImageTabs({ test, snapshot }: ImageTabsProps) {
           </div>
         </div>
       ) : (
-        <Baseline src={snapshot.images.base} />
+        <Baseline src={snapshot?.images.base} />
       )}
       <div className={styles["badge-container"]}>
-        <div className={styles.text}>{snapshot.props.name}</div>
+        <div className={styles.text}>{snapshot?.props.name}</div>
       </div>
     </>
   );
