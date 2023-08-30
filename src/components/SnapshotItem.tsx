@@ -1,13 +1,14 @@
 import styles from "./SnapshotItem.module.scss";
+import classNames from "classnames";
+import { Warning, Check } from "@phosphor-icons/react";
 
 interface SnapshotItemProps {
   image: string;
   isActive: boolean;
   snapshotName: string;
   snapshotPercent: string;
-  isSnapshotLast: boolean;
-  isSnapshotFirst: boolean;
   onClick: () => void;
+  variant?: string;
 }
 
 export default function SnapshotItem({
@@ -16,31 +17,31 @@ export default function SnapshotItem({
   isActive,
   snapshotName,
   snapshotPercent,
-  isSnapshotLast,
-  isSnapshotFirst,
+  variant,
 }: SnapshotItemProps) {
   return (
     <div
-      className={styles[isActive ? "active-container" : "container"]}
+      className={classNames({
+        [styles["container"]]: true,
+        [styles["active"]]: isActive && variant != "fail",
+        [styles["active-fail"]]: isActive && variant === "fail",
+        [styles["fail"]]: variant === "fail",
+      })}
       onClick={onClick}
-      style={{
-        borderTopLeftRadius: isSnapshotFirst ? "10px" : 0,
-        borderTopRightRadius: isSnapshotFirst ? "10px" : 0,
-        borderBottomLeftRadius: isSnapshotLast ? "10px" : 0,
-        borderBottomRightRadius: isSnapshotLast ? "10px" : 0,
-      }}
     >
       <div
-        className={
-          styles[isActive ? "active-image-container" : "image-container"]
-        }
+        className={classNames({
+          [styles["image-container"]]: true,
+          [styles["active"]]: isActive,
+        })}
       >
         <img className={styles["image"]} src={image} alt="base" />
       </div>
       <div className={styles["information-container"]}>
         <div className={styles["image-name-text"]}>{snapshotName}</div>
         <div className={styles["image-percent-text"]}>
-          {snapshotPercent && `${snapshotPercent}%`}
+          {variant === "fail" ? <Warning size={16} /> : <Check size={16} />}
+          {snapshotPercent}
         </div>
       </div>
     </div>

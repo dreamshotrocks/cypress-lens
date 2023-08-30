@@ -1,6 +1,7 @@
 export interface Snapshot {
   props: {
     name: string;
+    extraData: any;
   };
   images: {
     base: string;
@@ -33,6 +34,7 @@ export interface SelectedImage {
   snapshot: {
     props: {
       name: string;
+      extraData: any;
     };
     images: {
       base: string;

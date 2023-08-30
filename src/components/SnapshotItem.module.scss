@@ -1,5 +1,4 @@
-.container,
-.active-container {
+.container {
   gap: 15px;
   display: flex;
   flex-direction: row;
@@ -10,66 +9,93 @@
   margin-left: 20px;
   margin-right: 20px;
 
-  &:hover {
-    background-color: #333333;
+  &:first-child {
+    border-radius: 10px;
   }
-}
-
-.active-container {
-  background-color: rgb(61, 121, 250);
 
   &:hover {
+    background-color: #212121;
+  }
+
+  &.active {
     background-color: rgb(61, 121, 250);
+
+    .image-container {
+      background-color: #ffffff33;
+    }
   }
-}
 
-.image-container,
-.active-image-container {
-  width: 90px;
-  height: 69px;
-  position: relative;
-  border-radius: 7px;
-  background-color: #292929;
-  margin: 6px;
-}
+  &.active-fail {
+    background-color: rgb(203, 16, 60);
 
-.active-image-container {
-  background-color: rgb(92, 143, 255);
-}
+    .image-container {
+      background-color: #ffffff33 !important;
+    }
 
-.image {
-  width: 100%;
-  max-width: 64px;
-  height: 100%;
-  max-height: 60px;
-  position: absolute;
-  top: 7%;
-  left: 15%;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
+    &:hover {
+      background-color: rgb(203, 16, 60);
+    }
+  }
 
-.information-container {
-  gap: 5px;
-  width: 100%;
-  flex: 1 0 0px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
+  &.fail {
+    .image-container {
+      border: solid 3px rgb(203, 16, 60);
+      background-color: rgba(203, 16, 60, 0.06);
+    }
+    .information-container {
+      .image-percent-text {
+        color: rgb(203, 16, 60);
+      }
+    }
+  }
 
-.image-name-text {
-  opacity: 0.9;
-  white-space: pre;
-  color: #ffffff;
-  line-height: 1.2;
-  position: relative;
-}
+  .image-container {
+    width: 90px;
+    height: 69px;
+    position: relative;
+    border-radius: 7px;
+    background-color: #292929;
+    margin: 6px;
 
-.image-percent-text {
-  opacity: 0.6;
-  white-space: pre;
-  line-height: 1.2;
-  position: relative;
+    .image {
+      width: 100%;
+      max-width: 64px;
+      height: 100%;
+      max-height: 60px;
+      position: absolute;
+      top: 7%;
+      left: 15%;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  }
+
+  .information-container {
+    gap: 5px;
+    width: 100%;
+    flex: 1 0 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    .image-name-text {
+      white-space: pre;
+      color: #ffffff;
+      line-height: 1.2;
+      font-size: 12px;
+      position: relative;
+    }
+
+    .image-percent-text {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 3px;
+      color: rgb(16, 203, 91);
+      font-size: 12px;
+      font-weight: 600;
+    }
+  }
 }

@@ -57,27 +57,28 @@ export default function Navigation({
                   </div>
 
                   {test.snapshots.map((snapshot: Snapshot) => {
-                    const isSnapshotLast =
-                      test.snapshots[test.snapshots.length - 1].props.name ===
-                      snapshot.props.name;
-                    const isSnapshotFirst =
-                      test.snapshots[0].props.name === snapshot.props.name;
-
                     return (
                       <SnapshotItem
-                        isSnapshotFirst={isSnapshotFirst}
-                        isSnapshotLast={isSnapshotLast}
                         key={snapshot.props.name}
                         image={snapshot.images.base}
                         snapshotName={snapshot.props.name}
-                        snapshotPercent={Number(
-                          test.failure?.percentage
-                        ).toFixed(2)}
+                        snapshotPercent={
+                          test.failure && snapshot.props.extraData.percentage
+                            ? `${Number(
+                                snapshot.props.extraData.percentage
+                              ).toFixed(2)}%`
+                            : "PASS"
+                        }
                         isActive={
                           selectedImage?.snapshot.props?.name ===
                           snapshot.props?.name
                         }
                         onClick={() => imageClickHandler(snapshot, item, test)}
+                        variant={
+                          test.failure && snapshot.props.extraData.percentage
+                            ? "fail"
+                            : "pass"
+                        }
                       />
                     );
                   })}

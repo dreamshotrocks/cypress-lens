@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const stripAnsi = require("strip-ansi");
+const sanitize = require("sanitize-filename");
 
 var INVALID_CHARACTERS_REGEX =
   /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007f-\u0084\u0086-\u009f\uD800-\uDFFF\uFDD0-\uFDFF\uFFFF\uC008]/g; //eslint-disable-line no-control-regex
@@ -96,6 +97,8 @@ Reporter.prototype.getSnapshotsData = function (test) {
         }
       );
 
+      let extraData = {};
+
       //base
       fs.copyFileSync(
         path.resolve(`./cypress/snapshots/base/${testPath}/${file}`),
@@ -115,6 +118,17 @@ Reporter.prototype.getSnapshotsData = function (test) {
           )
         );
 
+        try {
+          const rawdata = fs.readFileSync(
+            `./cypress/snapshots/diff/${testPath}/${file.replace(
+              ".png",
+              ".json"
+            )}`
+          );
+
+          extraData = JSON.parse(rawdata);
+        } catch {}
+
         //new
         if (
           fs.existsSync(
@@ -133,6 +147,7 @@ Reporter.prototype.getSnapshotsData = function (test) {
       snapshots.push({
         props: {
           name: file,
+          extraData,
         },
         images: {
           base: `snapshots/${testPath}/${file}/base.png`,
