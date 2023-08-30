@@ -51,7 +51,7 @@ export default function ImageTabs({ test, snapshot }: ImageTabsProps) {
 
   return (
     <>
-      {test.failure || snapshot?.images.diff ? (
+      {test.failure ? (
         <div className={styles["tabs-container"]}>
           <div className={styles["menu-container"]}>
             {tabs.map((tab) => (
