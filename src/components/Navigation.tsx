@@ -16,7 +16,6 @@ export default function Navigation({
   selectedImage,
   onImageClick,
 }: NavigationProps) {
-  console.error("items", items);
   const [openCollapse, setOpenCollapse] = useState<string | null>(
     items[0].props.name
   );

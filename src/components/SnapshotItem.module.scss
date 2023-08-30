@@ -32,6 +32,12 @@
       background-color: #ffffff33 !important;
     }
 
+    .information-container {
+      .image-percent-text {
+        color: #fff !important;
+      }
+    }
+
     &:hover {
       background-color: rgb(203, 16, 60);
     }
@@ -95,7 +101,7 @@
       gap: 3px;
       color: rgb(16, 203, 91);
       font-size: 12px;
-      font-weight: 600;
+      font-weight: 500;
     }
   }
 }
