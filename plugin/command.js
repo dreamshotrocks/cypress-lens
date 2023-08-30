@@ -1,15 +1,16 @@
-const path = require('path');
-const { deserializeError, getValueOrDefault } = require('./utils-browser');
+const path = require("path");
+const { deserializeError, getValueOrDefault } = require("./utils-browser");
+const sanitize = require("sanitize-filename");
 
 /* eslint-disable no-undef */
 
 /** Return the errorThreshold from the options settings */
 function getErrorThreshold(defaultScreenshotOptions, params) {
-  if (typeof params === 'number') {
+  if (typeof params === "number") {
     return params;
   }
 
-  if (typeof params === 'object' && params.errorThreshold) {
+  if (typeof params === "object" && params.errorThreshold) {
     return params.errorThreshold;
   }
 
@@ -18,11 +19,15 @@ function getErrorThreshold(defaultScreenshotOptions, params) {
 
 function getSpecRelativePath() {
   const integrationFolder = getValueOrDefault(
-    Cypress.env('INTEGRATION_FOLDER'),
-    path.join('cypress', 'e2e')
+    Cypress.env("INTEGRATION_FOLDER"),
+    path.join("cypress", "e2e")
   );
 
-  return Cypress.spec.relative.replace(integrationFolder, '');
+  return (
+    Cypress.spec.relative.replace(integrationFolder, "") +
+    "\\" +
+    sanitize(Cypress.currentTest.title).split(" ").join("-")
+  );
 }
 
 /** Take a screenshot and move screenshot to base or actual folder */
@@ -41,7 +46,7 @@ function takeScreenshot(subject, name, screenshotOptions) {
       onAfterScreenshot,
     })
     .then(() => {
-      cy.task('moveSnapshot', {
+      cy.task("moveSnapshot", {
         fileName: `${name}.png`,
         fromPath: screenshotPath,
         specDirectory: getSpecRelativePath(),
@@ -50,11 +55,11 @@ function takeScreenshot(subject, name, screenshotOptions) {
 }
 
 function updateScreenshot(name) {
-  cy.task('updateSnapshot', {
+  cy.task("updateSnapshot", {
     name,
     specDirectory: getSpecRelativePath(),
     screenshotsFolder: Cypress.config().screenshotsFolder,
-    snapshotBaseDirectory: Cypress.env('SNAPSHOT_BASE_DIRECTORY'),
+    snapshotBaseDirectory: Cypress.env("SNAPSHOT_BASE_DIRECTORY"),
   });
 }
 
@@ -63,14 +68,14 @@ function compareScreenshots(name, errorThreshold) {
   const options = {
     fileName: name,
     specDirectory: getSpecRelativePath(),
-    baseDir: Cypress.env('SNAPSHOT_BASE_DIRECTORY'),
-    diffDir: Cypress.env('SNAPSHOT_DIFF_DIRECTORY'),
-    keepDiff: Cypress.env('ALWAYS_GENERATE_DIFF'),
-    allowVisualRegressionToFail: Cypress.env('ALLOW_VISUAL_REGRESSION_TO_FAIL'),
+    baseDir: Cypress.env("SNAPSHOT_BASE_DIRECTORY"),
+    diffDir: Cypress.env("SNAPSHOT_DIFF_DIRECTORY"),
+    keepDiff: Cypress.env("ALWAYS_GENERATE_DIFF"),
+    allowVisualRegressionToFail: Cypress.env("ALLOW_VISUAL_REGRESSION_TO_FAIL"),
     errorThreshold,
   };
 
-  cy.task('compareSnapshotsPlugin', options).then((results) => {
+  cy.task("compareSnapshotsPlugin", options).then((results) => {
     if (results.error) {
       throw deserializeError(results.error);
     }
@@ -80,19 +85,19 @@ function compareScreenshots(name, errorThreshold) {
 /** Add custom cypress command to compare image snapshots of an element or the window. */
 function compareSnapshotCommand(defaultScreenshotOptions) {
   Cypress.Commands.add(
-    'compareSnapshot',
-    { prevSubject: 'optional' },
+    "compareSnapshot",
+    { prevSubject: "optional" },
     (subject, name, params = {}) => {
-      const type = Cypress.env('type');
+      const type = Cypress.env("type");
       const screenshotOptions =
-        typeof params === 'object'
+        typeof params === "object"
           ? { ...defaultScreenshotOptions, ...params }
           : { ...defaultScreenshotOptions };
 
       takeScreenshot(subject, name, screenshotOptions);
 
       switch (type) {
-        case 'actual':
+        case "actual":
           compareScreenshots(
             name,
             getErrorThreshold(defaultScreenshotOptions, params)
@@ -100,7 +105,7 @@ function compareSnapshotCommand(defaultScreenshotOptions) {
 
           break;
 
-        case 'base':
+        case "base":
           updateScreenshot(name);
 
           break;

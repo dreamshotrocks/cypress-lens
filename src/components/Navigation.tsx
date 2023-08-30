@@ -69,7 +69,7 @@ export default function Navigation({
                         isSnapshotLast={isSnapshotLast}
                         key={snapshot.props.name}
                         image={snapshot.images.base}
-                        snapshotName={item.props.name}
+                        snapshotName={snapshot.props.name}
                         snapshotPercent={Number(
                           test.failure?.percentage
                         ).toFixed(2)}
