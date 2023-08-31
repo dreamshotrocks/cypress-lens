@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.8.0](https://github.com/dreamshotrocks/cypress-lens/compare/v1.7.2...v1.8.0) (2023-08-31)
+
+
+### Features
+
+* update demo assets ([80d0334](https://github.com/dreamshotrocks/cypress-lens/commit/80d0334a3e64ad49318fe7b6b57cbf62a7898464))
+* update readme ([41cfee7](https://github.com/dreamshotrocks/cypress-lens/commit/41cfee7acf70a54656debacda1afe7250ff9cc2e))
+* update readme ([b33b2cc](https://github.com/dreamshotrocks/cypress-lens/commit/b33b2ccab2e203ad34321f2ae30d7c86cbd28d8a))
+
+
+### Bug Fixes
+
+* do not show diffing features when passed ([876dc03](https://github.com/dreamshotrocks/cypress-lens/commit/876dc0364a345f8a636c450b161278f6183978ac))
+
 ### [1.7.2](https://github.com/dreamshotrocks/cypress-lens/compare/v1.7.1...v1.7.2) (2023-08-30)
 
 
