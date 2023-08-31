@@ -49,6 +49,14 @@ Based on [Cypress Visual Regression](https://www.npmjs.com/package/cypress-visua
 
 Module for visual regression testing and reporting for [Cypress](https://www.cypress.io/).
 
+###### Visual Regression Demo
+
+![example](./assets/visual-regression.gif)
+
+###### Reporter Demo
+
+![example](./assets/reporter-demo.gif)
+
 ## Getting Started
 
 Install:
@@ -144,20 +152,14 @@ module.exports = defineConfig({
 
 # 3. How to use
 
-Add `cy.compareSnapshot('home');` in your tests specs whenever you want to test for visual regressions, making sure to replace home with a relevant name. You can also add an optional error threshold: Value can range from 0.00 (no difference) to 1.00 (every pixel is different). So, if you enter an error threshold of 0.51, the test would fail only if > 51% of pixels are different.
-
-Sample:
-
 ```js
-it("should display the login page correctly", () => {
-  cy.visit("/03.html");
-  cy.get("H1").contains("Login");
-  cy.compareSnapshot("login", 0.0);
-  cy.compareSnapshot("login", 0.1);
+it("Should display the home page according to baseline snapshot", () => {
+  cy.visit("www.dreamshot.bg");
+  cy.compareSnapshot("home-page");
 });
 ```
 
-## Options
+### Options
 
 `failSilently` is enabled by default. Add the following config to your cypress.config.js file to see the errors:
 
@@ -180,3 +182,15 @@ compareSnapshotCommand({
 ```
 
 These will be used by default when no parameters are passed to the compareSnapshot command.
+
+### Take the base images:
+
+```sh
+$ ./node_modules/.bin/cypress run --env type=base"
+```
+
+### Find regressions:
+
+```sh
+$ ./node_modules/.bin/cypress run --env type=actual
+```
