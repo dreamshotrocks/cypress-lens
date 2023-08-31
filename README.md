@@ -57,9 +57,11 @@ Install:
 $ npm install cypress-lens
 ```
 
+# 1. Setup visual regression
+
 Add the following config to your _cypress.config.js_ file:
 
-```javascript
+```js
 const { defineConfig } = require("cypress");
 const getCompareSnapshotsPlugin = require("cypress-lens/dist/plugin");
 
@@ -77,7 +79,7 @@ module.exports = defineConfig({
 
 Add the command to _cypress/support/commands.js_:
 
-```javascript
+```js
 const compareSnapshotCommand = require("cypress-lens/dist/command");
 
 compareSnapshotCommand();
@@ -85,27 +87,54 @@ compareSnapshotCommand();
 
 > Make sure you import _commands.js_ in _cypress/support/e2e.js_:
 >
-> ```javascript
+> ```js
 > import "./commands";
 > ```
 
 ### TypeScript
 
-If you're using TypeScript, use files with a `.ts` extension, as follows:
+_cypress/tsconfig.json_
 
-_cypress/cypress.config.ts_
+```json
+{
+  "compilerOptions": {
+    "types": ["cypress", "cypress-lens"]
+  }
+}
+```
 
-```ts
-import { defineConfig } from "cypress";
-import getCompareSnapshotsPlugin from "cypress-lens/dist/plugin";
+# 1. Setup reporter
 
-export default defineConfig({
-  env: {
-    screenshotsFolder: "./cypress/snapshots/actual",
-    trashAssetsBeforeRuns: true,
-    video: false,
-  },
+Install cypress-multi-reporters:
+This plugin allows us to use more than one reporters since we want to keep the cypress default spec reports.
+
+```sh
+$ npm install cypress-multi-reporters
+```
+
+Create reporter-config.json and place the following code
+
+```json
+{
+  "reporterEnabled": "spec, cypress-lens"
+}
+```
+
+Add the following config to your _cypress.config.js_ file:
+
+```js
+const { defineConfig } = require("cypress");
+const getCompareSnapshotsPlugin = require("cypress-lens/dist/plugin");
+
+module.exports = defineConfig({
+  screenshotsFolder: "./cypress/snapshots/actual",
+  trashAssetsBeforeRuns: true,
+  video: false,
   e2e: {
+    reporter: "cypress-multi-reporters",
+    reporterOptions: {
+      configFile: "reporter-config.json",
+    },
     setupNodeEvents(on, config) {
       getCompareSnapshotsPlugin(on, config);
     },
@@ -113,23 +142,41 @@ export default defineConfig({
 });
 ```
 
-_cypress/support/commands.ts_
+# 3. How to use
 
-```ts
-import compareSnapshotCommand from "cypress-lens/dist/command";
+Add `cy.compareSnapshot('home');` in your tests specs whenever you want to test for visual regressions, making sure to replace home with a relevant name. You can also add an optional error threshold: Value can range from 0.00 (no difference) to 1.00 (every pixel is different). So, if you enter an error threshold of 0.51, the test would fail only if > 51% of pixels are different.
 
-compareSnapshotCommand();
+Sample:
+
+```js
+it("should display the login page correctly", () => {
+  cy.visit("/03.html");
+  cy.get("H1").contains("Login");
+  cy.compareSnapshot("login", 0.0);
+  cy.compareSnapshot("login", 0.1);
+});
 ```
 
-_cypress/tsconfig.json_
+## Options
 
-```json:
+`failSilently` is enabled by default. Add the following config to your cypress.config.js file to see the errors:
+
+```js
 {
-  "compilerOptions": {
-    "types": [
-      "cypress",
-      "cypress-lens"
-    ]
+  env: {
+    failSilently: false;
   }
 }
 ```
+
+You can also pass default arguments to `compareSnapshotCommand()`:
+
+```js
+const compareSnapshotCommand = require("cypress-visual-regression/dist/command");
+
+compareSnapshotCommand({
+  capture: "fullPage",
+});
+```
+
+These will be used by default when no parameters are passed to the compareSnapshot command.
