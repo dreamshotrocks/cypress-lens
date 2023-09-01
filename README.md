@@ -17,7 +17,7 @@
 </h3>
 
 <p align="center">
-  Developed in
+  
 </p>
 <p align="center">
   <a href="https://dreamshot.bg/">
