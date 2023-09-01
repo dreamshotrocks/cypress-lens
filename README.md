@@ -17,9 +17,6 @@
 </h3>
 
 <p align="center">
-  
-</p>
-<p align="center">
   <a href="https://dreamshot.bg/">
     <img alt="Cypress Conf Link" src="./assets/dreamshot-logo.png" width="40%" height="40%" />
   </a>
