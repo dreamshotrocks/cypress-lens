@@ -122,7 +122,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (items) {
+    if (items && items[0].tests.length > 0) {
       const snapshot = items[0].tests[0].snapshots[0];
       const item = items[0];
       const test = items[0].tests[0];
