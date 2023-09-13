@@ -14,8 +14,18 @@ export default function Slider({ snapshot }: SliderProps) {
     <div className={styles["container"]}>
       <ReactCompareSlider
         className={styles["image-slider"]}
-        itemOne={<ReactCompareSliderImage src={snapshot.images.base} />}
-        itemTwo={<ReactCompareSliderImage src={snapshot.images.new} />}
+        itemOne={
+          <ReactCompareSliderImage
+            src={snapshot.images.base}
+            className={styles["image"]}
+          />
+        }
+        itemTwo={
+          <ReactCompareSliderImage
+            src={snapshot.images.new}
+            className={styles["image"]}
+          />
+        }
       />
     </div>
   );
