@@ -19,17 +19,20 @@ function readWriteSync(text) {
 <html>
 <head>
     <link href="./static/css/main.css" rel="stylesheet" />
+    <script src="./data.js"></script>
   </head>   
   <body>
     <div id="root"></div>
-    <script>
-    window.testData = \`${text}\`;
-    </script>
     <script src="./static/js/main.js"></script>
   </body>
 </html>
   `;
   fs.writeFileSync(path.resolve("./cypress/report/index.html"), data, "utf-8");
+  fs.writeFileSync(
+    path.resolve("./cypress/report/data.js"),
+    `var testData = ${text}`,
+    "utf-8"
+  );
 }
 
 var testsuites = [];
