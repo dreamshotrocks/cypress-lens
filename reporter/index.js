@@ -82,13 +82,16 @@ Reporter.prototype.getTestsuiteData = function (suite) {
 };
 
 Reporter.prototype.getSnapshotsData = function (test) {
-  const title = sanitize(test.title).split(" ").join("-");
+  const testTitle = sanitize(test.title);
+  const regexp = new RegExp(this._options.reporterOptions.titlePattern, "g");
+  const pathTitle =
+    testTitle.match(regexp)[0] || sanitize(test.title).split(" ").join("-");
 
   let snapshots = [];
   const testPath =
     test.invocationDetails.fileUrl.split("p=")[1].replace(/\\/g, "/") +
     "/" +
-    title;
+    pathTitle;
   let basePath = path.resolve(`./cypress/snapshots/base/${testPath}`);
 
   fs.existsSync(basePath) &&
