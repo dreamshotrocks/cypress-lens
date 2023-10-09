@@ -83,9 +83,13 @@ Reporter.prototype.getTestsuiteData = function (suite) {
 
 Reporter.prototype.getSnapshotsData = function (test) {
   const testTitle = sanitize(test.title);
-  const regexp = new RegExp(this._options.reporterOptions.titlePattern, "g");
-  const pathTitle =
-    testTitle.match(regexp)[0] || sanitize(test.title).split(" ").join("-");
+  let pathTitle;
+  if (this._options.reporterOptions.titlePattern) {
+    const regexp = new RegExp(this._options.reporterOptions.titlePattern, "g");
+    pathTitle = testTitle.match(regexp)[0];
+  } else {
+    pathTitle = sanitize(test.title).split(" ").join("-");
+  }
 
   let snapshots = [];
   const testPath =

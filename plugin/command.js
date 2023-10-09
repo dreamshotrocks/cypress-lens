@@ -23,14 +23,20 @@ function getSpecRelativePath() {
     path.join("cypress", "e2e")
   );
   const testTitle = sanitize(Cypress.currentTest.title);
-  const regexp = new RegExp(Cypress.config().reporterOptions.cypressLensReporterOptions.titlePattern, "g");
-  const title = testTitle.match(regexp)[0] || testTitle.split(" ").join("-");
+  let title;
+  if (
+    Cypress.config().reporterOptions.cypressLensReporterOptions.titlePattern
+  ) {
+    const regexp = new RegExp(
+      Cypress.config().reporterOptions.cypressLensReporterOptions.titlePattern,
+      "g"
+    );
+    title = testTitle.match(regexp)[0];
+  } else {
+    title = testTitle.split(" ").join("-");
+  }
 
-  return (
-    Cypress.spec.relative.replace(integrationFolder, "") +
-    "/" +
-    title
-  );
+  return Cypress.spec.relative.replace(integrationFolder, "") + "/" + title;
 }
 
 /** Take a screenshot and move screenshot to base or actual folder */
