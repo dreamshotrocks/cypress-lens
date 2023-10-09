@@ -23,14 +23,11 @@ function getSpecRelativePath() {
     path.join("cypress", "e2e")
   );
   const testTitle = sanitize(Cypress.currentTest.title);
+  const titlePattern =
+    Cypress.config().reporterOptions.cypressLensReporterOptions.titlePattern;
   let title;
-  if (
-    Cypress.config().reporterOptions.cypressLensReporterOptions.titlePattern
-  ) {
-    const regexp = new RegExp(
-      Cypress.config().reporterOptions.cypressLensReporterOptions.titlePattern,
-      "g"
-    );
+  if (titlePattern) {
+    const regexp = new RegExp(titlePattern, "g");
     title = testTitle.match(regexp)[0];
   } else {
     title = testTitle.split(" ").join("-");
