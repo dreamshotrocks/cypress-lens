@@ -22,12 +22,18 @@ function getSpecRelativePath() {
     Cypress.env("INTEGRATION_FOLDER"),
     path.join("cypress", "e2e")
   );
+  const testTitle = sanitize(Cypress.currentTest.title);
+  const titlePattern =
+    Cypress.config().reporterOptions.cypressLensReporterOptions.titlePattern;
+  let title;
+  if (titlePattern) {
+    const regexp = new RegExp(titlePattern, "g");
+    title = testTitle.match(regexp)[0];
+  } else {
+    title = testTitle.split(" ").join("-");
+  }
 
-  return (
-    Cypress.spec.relative.replace(integrationFolder, "") +
-    "/" +
-    sanitize(Cypress.currentTest.title).split(" ").join("-")
-  );
+  return Cypress.spec.relative.replace(integrationFolder, "") + "/" + title;
 }
 
 /** Take a screenshot and move screenshot to base or actual folder */
