@@ -6,8 +6,54 @@
   background-color: rgb(18, 18, 18);
 }
 
+.tabs-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: 10px 0;
+}
+
+.menu-container {
+  display: flex;
+  padding: 5px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 60px;
+  background-color: #121212;
+  height: 40px;
+
+  .tab {
+    gap: 5px;
+    display: flex;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 400;
+    color: #c9c9c9;
+    user-select: none;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    min-width: 106px;
+    border-radius: 60px;
+
+    &:hover {
+      color: #ffffff;
+    }
+
+    &.active {
+      color: #ffffff;
+      background-color: #3d79fa;
+    }
+  }
+}
+
 .collapse-container {
   width: 100%;
+  padding-bottom: 20px;
+
   .collapse-name {
     padding-top: 28px;
     padding-left: 20px;

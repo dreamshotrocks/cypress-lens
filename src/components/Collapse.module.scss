@@ -6,7 +6,7 @@
   cursor: pointer;
   border: 0px solid #222;
   border-bottom-width: 1px;
-
+  padding: 15px 20px;
   &:hover {
     background-color: #212121;
   }
@@ -16,8 +16,17 @@
   display: flex;
   line-height: 1.2;
   color: #ffffff;
-  padding: 15px 20px;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+}
+
+.counts {
+  display: flex;
+  flex-direction: column;
+  font-weight: 700;
+
+  .failed {
+    color: rgb(203, 16, 60);
+  }
 }
