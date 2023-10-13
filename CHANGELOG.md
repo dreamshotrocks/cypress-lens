@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.9.0](https://github.com/dreamshotrocks/cypress-lens/compare/v1.8.4...v1.9.0) (2023-10-13)
+
+
+### Features
+
+* add data example ([9e91ee1](https://github.com/dreamshotrocks/cypress-lens/commit/9e91ee1e3e28ed392ec0bda99c7fe0c553e16453))
+* add failed filter and failed counts ([040c344](https://github.com/dreamshotrocks/cypress-lens/commit/040c34405a32dd8bd7afcf06ae4ecb99f741d39e))
+
 ### [1.8.4](https://github.com/dreamshotrocks/cypress-lens/compare/v1.8.3...v1.8.4) (2023-10-10)
 
 ### [1.8.3](https://github.com/dreamshotrocks/cypress-lens/compare/v1.8.2...v1.8.3) (2023-09-19)
