@@ -23,11 +23,12 @@ function getSpecRelativePath() {
     path.join("cypress", "e2e")
   );
   const testTitle = sanitize(Cypress.currentTest.title);
+  const reporterOptions = Cypress.config().reporterOptions;
+
   const titlePattern =
     reporterOptions &&
     reporterOptions.cypressLensReporterOptions &&
     reporterOptions.cypressLensReporterOptions.titlePattern;
-
   let title;
   if (titlePattern) {
     const regexp = new RegExp(titlePattern, "g");
