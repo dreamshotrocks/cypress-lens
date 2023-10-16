@@ -84,7 +84,8 @@ Reporter.prototype.getTestsuiteData = function (suite) {
 Reporter.prototype.getSnapshotsData = function (test) {
   const testTitle = sanitize(test.title);
   let pathTitle;
-  const titlePattern = this._options.reporterOptions.titlePattern;
+  const titlePattern =
+    this._options.reporterOptions && this._options.reporterOptions.titlePattern;
   if (titlePattern) {
     const regexp = new RegExp(titlePattern, "g");
     pathTitle = testTitle.match(regexp)[0];

@@ -24,7 +24,10 @@ function getSpecRelativePath() {
   );
   const testTitle = sanitize(Cypress.currentTest.title);
   const titlePattern =
-    Cypress.config().reporterOptions.cypressLensReporterOptions.titlePattern;
+    reporterOptions &&
+    reporterOptions.cypressLensReporterOptions &&
+    reporterOptions.cypressLensReporterOptions.titlePattern;
+
   let title;
   if (titlePattern) {
     const regexp = new RegExp(titlePattern, "g");
