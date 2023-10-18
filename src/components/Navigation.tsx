@@ -61,7 +61,18 @@ export default function Navigation({
     if (activeFilter === "all") {
       setFilteredItems(items);
     } else if (activeFilter === "failed") {
-      const filtered = items.filter((item: Item) => {
+      const nextItems = JSON.parse(JSON.stringify(items));
+      const filterTests = (tests: Test[] = []) => {
+        return tests.filter((test: Test) => {
+          return test.failure;
+        });
+      };
+
+      nextItems.forEach((item: any = {}) => {
+        item.tests = filterTests(item.tests);
+      });
+
+      const filtered = nextItems.filter((item: Item) => {
         return item.tests.some((test: Test) => {
           return test.failure;
         });
