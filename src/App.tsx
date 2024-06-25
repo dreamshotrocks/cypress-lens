@@ -4,7 +4,6 @@ import styles from "./App.module.scss";
 import ImageTabs from "./components/ImageTabs";
 import { Item, SelectedImage } from "./types/ReporterTypes";
 
-
 function App() {
   const [items, setItems] = useState<Item[] | null>(null);
   const [selectedImage, setSelectedImage] = useState<SelectedImage | null>(
