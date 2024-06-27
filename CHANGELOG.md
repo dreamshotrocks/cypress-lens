@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.13.1](https://github.com/dreamshotrocks/cypress-lens/compare/v1.13.0...v1.13.1) (2024-06-27)
+
+
+### Bug Fixes
+
+* change vite output config ([4bf7258](https://github.com/dreamshotrocks/cypress-lens/commit/4bf7258ce37aca54bde6cfd025c37a17554ed4f9))
+
 ## [1.13.0](https://github.com/dreamshotrocks/cypress-lens/compare/v1.12.0...v1.13.0) (2024-06-27)
 
 
