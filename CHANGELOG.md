@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.13.0](https://github.com/dreamshotrocks/cypress-lens/compare/v1.12.0...v1.13.0) (2024-06-27)
+
+
+### Features
+
+* migrate from CRA to Vite ([432b33e](https://github.com/dreamshotrocks/cypress-lens/commit/432b33e6b6958f6c2237c86f1c5d357745f2936d))
+
 ## [1.12.0](https://github.com/dreamshotrocks/cypress-lens/compare/v1.11.0...v1.12.0) (2023-10-18)
 
 
