@@ -2,7 +2,10 @@
   "name": "cypress-lens",
   "version": "1.13.2",
   "description": "Module for visual regression testing and reporting in Cypress",
-  "repository": "https://github.com/dreamshotrocks/cypress-lens",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dreamshotrocks/cypress-lens.git"
+  },
   "author": "Borislava Kirova <b.kirova999@gmail.com>",
   "license": "MIT",
   "keywords": [
@@ -12,8 +15,8 @@
   ],
   "main": "./reporter/index.js",
   "scripts": {
-    "test": "./node_modules/.bin/cypress run --env type=actual",
-    "base": "./node_modules/.bin/cypress run --env type=base",
+    "test": "cypress run --env type=actual",
+    "base": "cypress run --env type=base",
     "prepublish": "npm run build",
     "lint": "eslint plugin",
     "prebuild": "rimraf dist",
