@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.13.3](https://github.com/dreamshotrocks/cypress-lens/compare/v1.13.2...v1.13.3) (2024-06-28)
+
+
+### Bug Fixes
+
+* pkg ([e08db79](https://github.com/dreamshotrocks/cypress-lens/commit/e08db79f67ed1e94fc15555f86ee60346a44e87a))
+
 ### [1.13.2](https://github.com/dreamshotrocks/cypress-lens/compare/v1.13.1...v1.13.2) (2024-06-28)
 
 
