@@ -87,7 +87,25 @@ function compareScreenshots(name, errorThreshold) {
 
   cy.task("compareSnapshotsPlugin", options).then((results) => {
     if (results.error) {
-      throw deserializeError(results.error);
+      const collectVisualErros = Cypress.env().collectVisualErros;
+
+      if (collectVisualErros) {
+        const visualErrors = Cypress.env().visualErrors || [];
+        if (visualErrors) {
+          let errorMessage = {
+            message: "Failed to parse json in cypress-lens",
+          };
+
+          try {
+            const parsed = JSON.parse(results.error);
+            errorMessage = parsed;
+          } catch (error) {}
+
+          visualErrors.push(errorMessage);
+        }
+      } else {
+        throw deserializeError(results.error);
+      }
     }
   });
 }
