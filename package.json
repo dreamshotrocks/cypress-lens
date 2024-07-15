@@ -1,6 +1,6 @@
 {
   "name": "cypress-lens",
-  "version": "1.13.3",
+  "version": "1.14.0",
   "description": "Module for visual regression testing and reporting in Cypress",
   "repository": {
     "type": "git",

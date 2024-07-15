@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.14.0](https://github.com/dreamshotrocks/cypress-lens/compare/v1.13.3...v1.14.0) (2024-07-15)
+
+
+### Features
+
+* add errors container to store failed snapshots ([d855355](https://github.com/dreamshotrocks/cypress-lens/commit/d855355c29512b3bbd035f8b039c6966d231961b))
+
 ### [1.13.3](https://github.com/dreamshotrocks/cypress-lens/compare/v1.13.2...v1.13.3) (2024-06-28)
 
 
