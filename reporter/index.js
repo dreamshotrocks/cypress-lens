@@ -144,11 +144,11 @@ Reporter.prototype.getSnapshotsData = function (test) {
         //new
         if (
           fs.existsSync(
-            path.resolve(`./cypress/screenshots/${testPath}/${file}`)
+            path.resolve(`./cypress/snapshots/actual/${testPath}/${file}`)
           )
         ) {
           fs.copyFileSync(
-            path.resolve(`./cypress/screenshots/${testPath}/${file}`),
+            path.resolve(`./cypress/snapshots/actual/${testPath}/${file}`),
             path.resolve(
               `./cypress/report/snapshots/${testPath}/${file}/new.png`
             )
