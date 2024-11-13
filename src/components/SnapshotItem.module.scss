@@ -51,6 +51,11 @@
     .information-container {
       .image-percent-text {
         color: rgb(203, 16, 60);
+
+        .failed-label {
+          font-size: 12px;
+          font-weight: 500;
+        }
       }
     }
   }
