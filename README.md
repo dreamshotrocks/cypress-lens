@@ -147,6 +147,31 @@ module.exports = defineConfig({
 });
 ```
 
+Also, you can avoid of creating _reporter-config.json_ just use the _cypress.config.ts_
+If you are using cypress-multi-reporters more info [there](https://www.npmjs.com/package/cypress-multi-reporters)
+```js
+const { defineConfig } = require("cypress");
+const getCompareSnapshotsPlugin = require("cypress-lens/dist/plugin");
+
+module.exports = defineConfig({
+  screenshotsFolder: "./cypress/snapshots/actual",
+  trashAssetsBeforeRuns: true,
+  video: false,
+  e2e: {
+    reporter: "cypress-multi-reporters",
+    reporterOptions: {
+      reporterEnabled: "spec, cypress-lens",
+      cypressLensReporterOptions: {
+        titlePattern: "(?<=\\[).*(?=\\])",
+      },
+    },
+    setupNodeEvents(on, config) {
+      getCompareSnapshotsPlugin(on, config);
+    },
+  },
+});
+```
+
 # 3. How to use
 
 ```js
@@ -165,6 +190,20 @@ it("Should display the home page according to baseline snapshot", () => {
   env: {
     failSilently: false;
   }
+}
+```
+`titlePattern` is disabled by default. If you aren't using this setting your folder's name has a title from the test title. It supports only `RegExp`.
+Add the following settings in your _cypress.config.js_ into the e2e object to manage the path for snapshots:
+
+```js
+  e2e: {
+    reporter: "cypress-multi-reporters",
+    reporterOptions: {
+      reporterEnabled: "spec, cypress-lens",
+      cypressLensReporterOptions: {
+        titlePattern: "(?<=\\[).*(?=\\])",
+      },
+    }
 }
 ```
 
