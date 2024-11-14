@@ -40,7 +40,14 @@ export default function SnapshotItem({
       <div className={styles["information-container"]}>
         <div className={styles["image-name-text"]}>{snapshotName}</div>
         <div className={styles["image-percent-text"]}>
-          {variant === "fail" ? <Warning size={16} /> : <Check size={16} />}
+          {variant === "fail" ? (
+            <>
+              <Warning size={16} />
+              <span className={styles["failed-label"]}>FAILED</span>
+            </>
+          ) : (
+            <Check size={16} />
+          )}
           {snapshotPercent}
         </div>
       </div>
