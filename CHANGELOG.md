@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.15.0](https://github.com/dreamshotrocks/cypress-lens/compare/v1.14.1...v1.15.0) (2024-11-14)
+
+
+### Features
+
+* add failed label to failed snapshots - APPS-1604 ([c38c230](https://github.com/dreamshotrocks/cypress-lens/commit/c38c230930e60d6f3e0ec035cbfec5ea457c4dd6))
+
+
+### Bug Fixes
+
+* new image missing in pipeline - APPS-1465 ([b22907e](https://github.com/dreamshotrocks/cypress-lens/commit/b22907e363107ae4108cca28e6791257ac9d495a))
+
 ### [1.14.1](https://github.com/dreamshotrocks/cypress-lens/compare/v1.14.0...v1.14.1) (2024-11-12)
 
 
