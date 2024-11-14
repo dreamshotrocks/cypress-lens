@@ -17,11 +17,12 @@ const { getValueOrDefault } = require("./utils-browser");
 let CYPRESS_SCREENSHOT_DIR;
 
 function setupScreenshotPath(config) {
-  // use cypress default path as fallback
-  CYPRESS_SCREENSHOT_DIR = getValueOrDefault(
-    config?.screenshotsFolder,
-    "cypress/screenshots"
-  );
+  config.env.type === "actual"
+    ? (CYPRESS_SCREENSHOT_DIR = "cypress/snapshots/actual")
+    : (CYPRESS_SCREENSHOT_DIR = getValueOrDefault(
+        config?.screenshotsFolder,
+        "cypress/screenshots"
+      ));
 }
 
 /** Move the generated snapshot .png file to its new path.
