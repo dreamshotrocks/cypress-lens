@@ -8,8 +8,8 @@ interface SideBySideProps {
 export default function SideBySide({ snapshot }: SideBySideProps) {
   return (
     <div className={styles["container"]}>
-      <Baseline src={snapshot.images.base} />
-      <Baseline src={snapshot.images.new} />
+      <Baseline src={snapshot?.images.base} />
+      <Baseline src={snapshot?.images.new} />
     </div>
   );
 }

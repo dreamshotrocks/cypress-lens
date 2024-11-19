@@ -72,11 +72,22 @@ export default function Navigation({
         item.tests = filterTests(item.tests);
       });
 
-      const filtered = nextItems.filter((item: Item) => {
-        return item.tests.some((test: Test) => {
-          return test.failure;
-        });
+      const filtered = nextItems.map((item: any) => {
+        return {
+          ...item,
+          tests: item.tests.map((test: any) => {
+            return {
+              ...test,
+              snapshots: test.snapshots.filter(
+                (snapshot: any) =>
+                  snapshot.props.extraData &&
+                  Object.values(snapshot.props.extraData).length > 0
+              ),
+            };
+          }),
+        };
       });
+
       setFilteredItems(filtered);
     }
   };
@@ -112,67 +123,70 @@ export default function Navigation({
         </div>
       </div>
 
-      {filteredItems.map((item: Item) => {
-        return (
-          <Collapse
-            key={item.props.name}
-            title={item.props.name}
-            isOpen={openCollapse === item.props.name}
-            counts={getCollapseCounts(item.tests)}
-            onToggle={() => {
-              setOpenCollapse((prevOpen) =>
-                prevOpen === item.props.name ? null : item.props.name
-              );
-            }}
-          >
-            {item.tests.map((test: Test) => {
-              const testIndex = item.tests.indexOf(test);
-              const testsLength = item.tests.length;
+      {filteredItems.length > 0 &&
+        filteredItems.map((item: Item) => {
+          return (
+            <Collapse
+              key={item?.props?.name}
+              title={item?.props?.name}
+              isOpen={openCollapse === item?.props?.name}
+              counts={getCollapseCounts(item.tests)}
+              onToggle={() => {
+                setOpenCollapse((prevOpen) =>
+                  prevOpen === item?.props.name ? null : item.props.name
+                );
+              }}
+            >
+              {item.tests.map((test: Test) => {
+                const testIndex = item.tests.indexOf(test);
+                const testsLength = item.tests.length;
 
-              const isTestLast = testIndex === testsLength - 1;
+                const isTestLast = testIndex === testsLength - 1;
 
-              return (
-                <div
-                  className={styles["collapse-container"]}
-                  key={test.props.name}
-                >
-                  <div className={styles["collapse-name"]}>
-                    {test.props.name}
+                return (
+                  <div
+                    className={styles["collapse-container"]}
+                    key={test.props.name}
+                  >
+                    <div className={styles["collapse-name"]}>
+                      {test.props.name}
+                    </div>
+
+                    {test.snapshots.map((snapshot: Snapshot) => {
+                      return (
+                        <SnapshotItem
+                          key={snapshot.props.name}
+                          image={snapshot.images.base}
+                          snapshotName={snapshot.props.name}
+                          snapshotPercent={
+                            test.failure && snapshot.props.extraData.percentage
+                              ? `${Number(
+                                  snapshot.props.extraData.percentage
+                                ).toFixed(2)}%`
+                              : "PASS"
+                          }
+                          isActive={
+                            selectedImage?.snapshot?.props?.name ===
+                            snapshot?.props?.name
+                          }
+                          onClick={() =>
+                            imageClickHandler(snapshot, item, test)
+                          }
+                          variant={
+                            test.failure && snapshot.props.extraData.percentage
+                              ? "fail"
+                              : "pass"
+                          }
+                        />
+                      );
+                    })}
+                    {!isTestLast && <div className={styles["line-break"]} />}
                   </div>
-
-                  {test.snapshots.map((snapshot: Snapshot) => {
-                    return (
-                      <SnapshotItem
-                        key={snapshot.props.name}
-                        image={snapshot.images.base}
-                        snapshotName={snapshot.props.name}
-                        snapshotPercent={
-                          test.failure && snapshot.props.extraData.percentage
-                            ? `${Number(
-                                snapshot.props.extraData.percentage
-                              ).toFixed(2)}%`
-                            : "PASS"
-                        }
-                        isActive={
-                          selectedImage?.snapshot.props?.name ===
-                          snapshot.props?.name
-                        }
-                        onClick={() => imageClickHandler(snapshot, item, test)}
-                        variant={
-                          test.failure && snapshot.props.extraData.percentage
-                            ? "fail"
-                            : "pass"
-                        }
-                      />
-                    );
-                  })}
-                  {!isTestLast && <div className={styles["line-break"]} />}
-                </div>
-              );
-            })}
-          </Collapse>
-        );
-      })}
+                );
+              })}
+            </Collapse>
+          );
+        })}
     </div>
   );
 }

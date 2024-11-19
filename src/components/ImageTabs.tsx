@@ -70,13 +70,13 @@ export default function ImageTabs({ test, snapshot }: ImageTabsProps) {
           </div>
           <div className={styles["tabs"]}>
             {activeTab.tabText === "Baseline" && (
-              <Baseline src={snapshot.images.base} />
+              <Baseline src={snapshot?.images.base} />
             )}
             {activeTab.tabText === "Side By Side" && (
               <SideBySide snapshot={snapshot} />
             )}
             {activeTab.tabText === "Difference" && (
-              <Baseline src={snapshot.images.diff} />
+              <Baseline src={snapshot?.images.diff} />
             )}
             {activeTab.tabText === "Slider" && <Slider snapshot={snapshot} />}
             {activeTab.tabText === "Overlay" && <Overlay snapshot={snapshot} />}
