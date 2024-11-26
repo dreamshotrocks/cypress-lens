@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.15.1](https://github.com/dreamshotrocks/cypress-lens/compare/v1.15.0...v1.15.1) (2024-11-26)
+
+
+### Bug Fixes
+
+* failed filter - APPS-1619 ([65a6a2d](https://github.com/dreamshotrocks/cypress-lens/commit/65a6a2deaa4c01230e08848a4a6c040ec3e5e901))
+
 ## [1.15.0](https://github.com/dreamshotrocks/cypress-lens/compare/v1.14.1...v1.15.0) (2024-11-14)
 
 
