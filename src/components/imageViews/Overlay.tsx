@@ -24,12 +24,12 @@ export default function Overlay({ snapshot }: OverlayProps) {
       <div className={styles["image-container"]}>
         <div
           className={styles["image"]}
-          style={{ backgroundImage: `url("${snapshot.images.base}")` }}
+          style={{ backgroundImage: `url("${snapshot?.images.base}")` }}
         ></div>
         <div
           className={classNames(styles["image"], styles["new-image"])}
           style={{
-            backgroundImage: `url("${snapshot.images.new}")`,
+            backgroundImage: `url("${snapshot?.images.new}")`,
             opacity: `${transparent}`,
           }}
         ></div>
