@@ -92,6 +92,13 @@ export default function Navigation({
     }
   };
 
+  const isFailed = (resolutions: any) => {
+    return resolutions.some(
+      (resolution: { extraData: any }) =>
+        Object.keys(resolution.extraData).length > 0
+    );
+  };
+
   useEffect(() => {
     filter();
   }, [activeFilter]);
@@ -156,15 +163,8 @@ export default function Navigation({
                       return (
                         <SnapshotItem
                           key={snapshot.props.name}
-                          image={snapshot.images.base}
+                          image={snapshot.resolutions[0].images.base}
                           snapshotName={snapshot.props.name}
-                          snapshotPercent={
-                            test.failure && snapshot.props.extraData.percentage
-                              ? `${Number(
-                                  snapshot.props.extraData.percentage
-                                ).toFixed(2)}%`
-                              : "PASS"
-                          }
                           isActive={
                             selectedImage?.snapshot?.props?.name ===
                             snapshot?.props?.name
@@ -173,7 +173,7 @@ export default function Navigation({
                             imageClickHandler(snapshot, item, test)
                           }
                           variant={
-                            test.failure && snapshot.props.extraData.percentage
+                            test.failure && isFailed(snapshot.resolutions)
                               ? "fail"
                               : "pass"
                           }

@@ -6,7 +6,6 @@ interface SnapshotItemProps {
   image: string;
   isActive: boolean;
   snapshotName: string;
-  snapshotPercent: string;
   onClick: () => void;
   variant?: string;
 }
@@ -16,7 +15,6 @@ export default function SnapshotItem({
   image,
   isActive,
   snapshotName,
-  snapshotPercent,
   variant,
 }: SnapshotItemProps) {
   return (
@@ -46,9 +44,11 @@ export default function SnapshotItem({
               <span className={styles["failed-label"]}>FAILED</span>
             </>
           ) : (
-            <Check size={16} />
+            <>
+              <Check size={16} />
+              <span className={styles["pass-label"]}>PASS</span>
+            </>
           )}
-          {snapshotPercent}
         </div>
       </div>
     </div>
