@@ -41,6 +41,10 @@
         color: #ffffff;
         background-color: #3d79fa;
       }
+
+      &.failed {
+        color: #cb103c;
+      }
     }
   }
 }

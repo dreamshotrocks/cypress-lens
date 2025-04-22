@@ -81,6 +81,9 @@ export default function ImageTabs({ test, snapshot }: ImageTabsProps) {
                     key={index}
                     className={classNames({
                       [styles.tab]: true,
+                      [styles.failed]:
+                        test.failure &&
+                        Object.keys(resolution.extraData).length > 0,
                       [styles.active]:
                         activeResolution.size === resolution.size,
                     })}
@@ -96,14 +99,16 @@ export default function ImageTabs({ test, snapshot }: ImageTabsProps) {
                 <Baseline src={activeResolution.images.base} />
               )}
               {activeTab.tabText === "Side By Side" && (
-                <SideBySide snapshot={snapshot} />
+                <SideBySide snapshotResolution={activeResolution} />
               )}
               {activeTab.tabText === "Difference" && (
-                <Baseline src={snapshot?.resolutions[0].images.diff} />
+                <Baseline src={activeResolution.images.diff} />
               )}
-              {activeTab.tabText === "Slider" && <Slider snapshot={snapshot} />}
+              {activeTab.tabText === "Slider" && (
+                <Slider snapshotResolution={activeResolution} />
+              )}
               {activeTab.tabText === "Overlay" && (
-                <Overlay snapshot={snapshot} />
+                <Overlay snapshotResolution={activeResolution} />
               )}
             </div>
           </div>

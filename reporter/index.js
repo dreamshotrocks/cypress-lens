@@ -94,14 +94,20 @@ Reporter.prototype.getSnapshotsData = function (test) {
   }
 
   let snapshots = [];
+  let resolutions = [];
+  let rootFileName = "";
   const testPath =
     test.invocationDetails.fileUrl.split("p=")[1].replace(/\\/g, "/") +
     "/" +
     pathTitle;
   let basePath = path.resolve(`./cypress/snapshots/base/${testPath}`);
 
+  const files = fs.readdirSync(basePath);
+
   fs.existsSync(basePath) &&
-    fs.readdirSync(basePath).forEach((file) => {
+    files.forEach((file, index) => {
+      const currentFileName = file.replace(/-\d{3,4}-\d{3,4}\.png$/g, "");
+      const resolution = file.match(/\d{3,4}-\d{3,4}/)[0];
       fs.mkdirSync(
         path.resolve(`./cypress/report/snapshots/${testPath}/${file}`),
         {
@@ -156,17 +162,35 @@ Reporter.prototype.getSnapshotsData = function (test) {
         }
       }
 
-      snapshots.push({
-        props: {
-          name: file,
-          extraData,
-        },
+      if (currentFileName !== rootFileName && resolutions.length > 0) {
+        snapshots.push({
+          props: {
+            name: rootFileName,
+          },
+          resolutions,
+        });
+
+        resolutions = [];
+      }
+
+      rootFileName = currentFileName;
+
+      resolutions.push({
+        size: resolution,
         images: {
           base: `snapshots/${testPath}/${file}/base.png`,
           new: `snapshots/${testPath}/${file}/new.png`,
           diff: `snapshots/${testPath}/${file}/diff.png`,
         },
+        extraData,
       });
+
+      if (index === files.length - 1) {
+        snapshots.push({
+          props: { name: rootFileName },
+          resolutions,
+        });
+      }
     });
 
   return snapshots;

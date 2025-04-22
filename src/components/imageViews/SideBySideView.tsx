@@ -1,15 +1,15 @@
-import { Snapshot } from "../../types/ReporterTypes";
+import { Resolution } from "../../types/ReporterTypes";
 import styles from "./SideBySide.module.scss";
 import Baseline from "./Baseline";
 interface SideBySideProps {
-  snapshot: Snapshot;
+  snapshotResolution: Resolution;
 }
 
-export default function SideBySide({ snapshot }: SideBySideProps) {
+export default function SideBySide({ snapshotResolution }: SideBySideProps) {
   return (
     <div className={styles["container"]}>
-      <Baseline src={snapshot?.images.base} />
-      <Baseline src={snapshot?.images.new} />
+      <Baseline src={snapshotResolution?.images.base} />
+      <Baseline src={snapshotResolution?.images.new} />
     </div>
   );
 }
