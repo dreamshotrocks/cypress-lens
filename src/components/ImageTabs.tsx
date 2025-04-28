@@ -83,7 +83,7 @@ export default function ImageTabs({ test, snapshot }: ImageTabsProps) {
                       [styles.tab]: true,
                       [styles.failed]:
                         test.failure &&
-                        Object.keys(resolution.extraData).length > 0,
+                        Object.keys(resolution.extraData).length > 1,
                       [styles.active]:
                         activeResolution.size === resolution.size,
                     })}
@@ -108,7 +108,7 @@ export default function ImageTabs({ test, snapshot }: ImageTabsProps) {
                 <Slider snapshotResolution={activeResolution} />
               )}
               {activeTab.tabText === "Overlay" && (
-                <Overlay snapshotResolution={activeResolution} />
+                <Overlay snapshotResolution={activeResolution} /> 
               )}
             </div>
           </div>
@@ -116,7 +116,9 @@ export default function ImageTabs({ test, snapshot }: ImageTabsProps) {
           <Baseline src={activeResolution.images.base} />
         )}
         <div className={styles["badge-container"]}>
-          <div className={styles.text}>{snapshot?.props.name}</div>
+          <div className={styles.text}>
+            {snapshot?.props.name} - {activeResolution.extraData.date}
+          </div>
         </div>
       </>
     )

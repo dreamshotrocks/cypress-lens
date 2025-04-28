@@ -81,7 +81,7 @@ export default function Navigation({
               snapshots: test.snapshots.filter(
                 (snapshot: any) =>
                   snapshot.props.extraData &&
-                  Object.values(snapshot.props.extraData).length > 0
+                  Object.values(snapshot.props.extraData).length > 1
               ),
             };
           }),
@@ -95,7 +95,7 @@ export default function Navigation({
   const isFailed = (resolutions: any) => {
     return resolutions.some(
       (resolution: { extraData: any }) =>
-        Object.keys(resolution.extraData).length > 0
+        Object.keys(resolution.extraData).length > 1
     );
   };
 

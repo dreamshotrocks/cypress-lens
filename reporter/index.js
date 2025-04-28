@@ -108,6 +108,13 @@ Reporter.prototype.getSnapshotsData = function (test) {
     files.forEach((file, index) => {
       const currentFileName = file.replace(/-\d{3,4}-\d{3,4}\.png$/g, "");
       const resolution = file.match(/\d{3,4}-\d{3,4}/)[0];
+      const date = new Date();
+      const day = date.getDate();
+      const month = date.getMonth() + 1;
+      const year = date.getFullYear();
+      const hours = date.getHours();
+      const minutes = date.getMinutes();
+
       fs.mkdirSync(
         path.resolve(`./cypress/report/snapshots/${testPath}/${file}`),
         {
@@ -115,7 +122,9 @@ Reporter.prototype.getSnapshotsData = function (test) {
         }
       );
 
-      let extraData = {};
+      let extraData = {
+        date: `${day}/${month}/${year} ${hours}:${minutes}`,
+      };
 
       //base
       fs.copyFileSync(
@@ -144,7 +153,10 @@ Reporter.prototype.getSnapshotsData = function (test) {
             )}`
           );
 
-          extraData = JSON.parse(rawdata);
+          extraData = {
+            ...extraData,
+            ...JSON.parse(rawdata),
+          };
         } catch {}
 
         //new
