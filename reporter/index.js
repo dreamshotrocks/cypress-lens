@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const stripAnsi = require("strip-ansi");
 const sanitize = require("sanitize-filename");
-
+const sharp = require("sharp");
 var INVALID_CHARACTERS_REGEX =
   /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007f-\u0084\u0086-\u009f\uD800-\uDFFF\uFDD0-\uFDFF\uFFFF\uC008]/g; //eslint-disable-line no-control-regex
 
@@ -127,10 +127,14 @@ Reporter.prototype.getSnapshotsData = function (test) {
       };
 
       //base
-      fs.copyFileSync(
-        path.resolve(`./cypress/snapshots/base/${testPath}/${file}`),
-        path.resolve(`./cypress/report/snapshots/${testPath}/${file}/base.png`)
+      const baseSource = path.resolve(
+        `./cypress/snapshots/base/${testPath}/${file}`
       );
+      const baseDest = path.resolve(
+        `./cypress/report/snapshots/${testPath}/${file}/base.webp`
+      );
+      sharp(baseSource).webp().toFile(baseDest).catch(console.error);
+      fs.copyFileSync(baseSource, baseDest);
 
       if (
         fs.existsSync(
@@ -138,12 +142,14 @@ Reporter.prototype.getSnapshotsData = function (test) {
         )
       ) {
         //diff
-        fs.copyFileSync(
-          path.resolve(`./cypress/snapshots/diff/${testPath}/${file}`),
-          path.resolve(
-            `./cypress/report/snapshots/${testPath}/${file}/diff.png`
-          )
+        const diffSource = path.resolve(
+          `./cypress/snapshots/diff/${testPath}/${file}`
         );
+        const diffDest = path.resolve(
+          `./cypress/report/snapshots/${testPath}/${file}/diff.webp`
+        );
+        sharp(diffSource).webp().toFile(diffDest).catch(console.error);
+        fs.copyFileSync(diffSource, diffDest);
 
         try {
           const rawdata = fs.readFileSync(
@@ -165,12 +171,14 @@ Reporter.prototype.getSnapshotsData = function (test) {
             path.resolve(`./cypress/snapshots/actual/${testPath}/${file}`)
           )
         ) {
-          fs.copyFileSync(
-            path.resolve(`./cypress/snapshots/actual/${testPath}/${file}`),
-            path.resolve(
-              `./cypress/report/snapshots/${testPath}/${file}/new.png`
-            )
+          const newSource = path.resolve(
+            `./cypress/snapshots/actual/${testPath}/${file}`
           );
+          const newDest = path.resolve(
+            `./cypress/report/snapshots/${testPath}/${file}/new.webp`
+          );
+          sharp(newSource).webp().toFile(newDest).catch(console.error);
+          fs.copyFileSync(newSource, newDest);
         }
       }
 
@@ -190,9 +198,9 @@ Reporter.prototype.getSnapshotsData = function (test) {
       resolutions.push({
         size: resolution,
         images: {
-          base: `snapshots/${testPath}/${file}/base.png`,
-          new: `snapshots/${testPath}/${file}/new.png`,
-          diff: `snapshots/${testPath}/${file}/diff.png`,
+          base: `snapshots/${testPath}/${file}/base.webp`,
+          new: `snapshots/${testPath}/${file}/new.webp`,
+          diff: `snapshots/${testPath}/${file}/diff.webp`,
         },
         extraData,
       });

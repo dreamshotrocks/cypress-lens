@@ -11,12 +11,12 @@ var testData = [
               {
                 size: "1568-1024",
                 images: {
-                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-1-ui-autoplay-modal-none-resume-1568-1024.png/base.png",
-                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-1-ui-autoplay-modal-none-resume-1568-1024.png/new.png",
-                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-1-ui-autoplay-modal-none-resume-1568-1024.png/diff.png",
+                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-1-ui-autoplay-modal-none-resume-1568-1024.png/base.webp",
+                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-1-ui-autoplay-modal-none-resume-1568-1024.png/new.webp",
+                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-1-ui-autoplay-modal-none-resume-1568-1024.png/diff.webp",
                 },
                 extraData: {
-                  date: "25/4/2025 14:10",
+                  date: "29/4/2025 17:23",
                   mismatchedPixels: 1882,
                   percentage: 0.034236298326290104,
                 },
@@ -24,12 +24,12 @@ var testData = [
               {
                 size: "375-812",
                 images: {
-                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-1-ui-autoplay-modal-none-resume-375-812.png/base.png",
-                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-1-ui-autoplay-modal-none-resume-375-812.png/new.png",
-                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-1-ui-autoplay-modal-none-resume-375-812.png/diff.png",
+                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-1-ui-autoplay-modal-none-resume-375-812.png/base.webp",
+                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-1-ui-autoplay-modal-none-resume-375-812.png/new.webp",
+                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-1-ui-autoplay-modal-none-resume-375-812.png/diff.webp",
                 },
                 extraData: {
-                  date: "25/4/2025 14:10",
+                  date: "29/4/2025 17:23",
                   mismatchedPixels: 1927,
                   percentage: 0.07955128675866248,
                 },
@@ -37,12 +37,12 @@ var testData = [
               {
                 size: "768-900",
                 images: {
-                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-1-ui-autoplay-modal-none-resume-768-900.png/base.png",
-                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-1-ui-autoplay-modal-none-resume-768-900.png/new.png",
-                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-1-ui-autoplay-modal-none-resume-768-900.png/diff.png",
+                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-1-ui-autoplay-modal-none-resume-768-900.png/base.webp",
+                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-1-ui-autoplay-modal-none-resume-768-900.png/new.webp",
+                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-1-ui-autoplay-modal-none-resume-768-900.png/diff.webp",
                 },
                 extraData: {
-                  date: "25/4/2025 14:10",
+                  date: "29/4/2025 17:23",
                   mismatchedPixels: 1897,
                   percentage: 0.05238799781261749,
                 },
@@ -55,12 +55,12 @@ var testData = [
               {
                 size: "1568-1024",
                 images: {
-                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-1-ui-autoplay-modal-resume-1568-1024.png/base.png",
-                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-1-ui-autoplay-modal-resume-1568-1024.png/new.png",
-                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-1-ui-autoplay-modal-resume-1568-1024.png/diff.png",
+                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-1-ui-autoplay-modal-resume-1568-1024.png/base.webp",
+                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-1-ui-autoplay-modal-resume-1568-1024.png/new.webp",
+                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-1-ui-autoplay-modal-resume-1568-1024.png/diff.webp",
                 },
                 extraData: {
-                  date: "25/4/2025 14:10",
+                  date: "29/4/2025 17:23",
                   mismatchedPixels: 1882,
                   percentage: 0.034236298326290104,
                 },
@@ -68,12 +68,12 @@ var testData = [
               {
                 size: "375-812",
                 images: {
-                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-1-ui-autoplay-modal-resume-375-812.png/base.png",
-                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-1-ui-autoplay-modal-resume-375-812.png/new.png",
-                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-1-ui-autoplay-modal-resume-375-812.png/diff.png",
+                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-1-ui-autoplay-modal-resume-375-812.png/base.webp",
+                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-1-ui-autoplay-modal-resume-375-812.png/new.webp",
+                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-1-ui-autoplay-modal-resume-375-812.png/diff.webp",
                 },
                 extraData: {
-                  date: "25/4/2025 14:10",
+                  date: "29/4/2025 17:23",
                   mismatchedPixels: 1927,
                   percentage: 0.07955128675866248,
                 },
@@ -81,12 +81,12 @@ var testData = [
               {
                 size: "768-900",
                 images: {
-                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-1-ui-autoplay-modal-resume-768-900.png/base.png",
-                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-1-ui-autoplay-modal-resume-768-900.png/new.png",
-                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-1-ui-autoplay-modal-resume-768-900.png/diff.png",
+                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-1-ui-autoplay-modal-resume-768-900.png/base.webp",
+                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-1-ui-autoplay-modal-resume-768-900.png/new.webp",
+                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-1-ui-autoplay-modal-resume-768-900.png/diff.webp",
                 },
                 extraData: {
-                  date: "25/4/2025 14:10",
+                  date: "29/4/2025 17:23",
                   mismatchedPixels: 1897,
                   percentage: 0.05238799781261749,
                 },
@@ -99,12 +99,12 @@ var testData = [
               {
                 size: "1568-1024",
                 images: {
-                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-2-ui-help-modal-none-resume-1568-1024.png/base.png",
-                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-2-ui-help-modal-none-resume-1568-1024.png/new.png",
-                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-2-ui-help-modal-none-resume-1568-1024.png/diff.png",
+                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-2-ui-help-modal-none-resume-1568-1024.png/base.webp",
+                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-2-ui-help-modal-none-resume-1568-1024.png/new.webp",
+                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-2-ui-help-modal-none-resume-1568-1024.png/diff.webp",
                 },
                 extraData: {
-                  date: "25/4/2025 14:10",
+                  date: "29/4/2025 17:23",
                   mismatchedPixels: 1882,
                   percentage: 0.034236298326290104,
                 },
@@ -112,25 +112,21 @@ var testData = [
               {
                 size: "375-812",
                 images: {
-                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-2-ui-help-modal-none-resume-375-812.png/base.png",
-                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-2-ui-help-modal-none-resume-375-812.png/new.png",
-                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-2-ui-help-modal-none-resume-375-812.png/diff.png",
+                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-2-ui-help-modal-none-resume-375-812.png/base.webp",
+                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-2-ui-help-modal-none-resume-375-812.png/new.webp",
+                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-2-ui-help-modal-none-resume-375-812.png/diff.webp",
                 },
-                extraData: {
-                  date: "25/4/2025 14:10",
-                  mismatchedPixels: 78,
-                  percentage: 0.01600492535027828,
-                },
+                extraData: { date: "29/4/2025 17:23" },
               },
               {
                 size: "768-900",
                 images: {
-                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-2-ui-help-modal-none-resume-768-900.png/base.png",
-                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-2-ui-help-modal-none-resume-768-900.png/new.png",
-                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-2-ui-help-modal-none-resume-768-900.png/diff.png",
+                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-2-ui-help-modal-none-resume-768-900.png/base.webp",
+                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-2-ui-help-modal-none-resume-768-900.png/new.webp",
+                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-2-ui-help-modal-none-resume-768-900.png/diff.webp",
                 },
                 extraData: {
-                  date: "25/4/2025 14:10",
+                  date: "29/4/2025 17:23",
                   mismatchedPixels: 1897,
                   percentage: 0.05238799781261749,
                 },
@@ -143,12 +139,12 @@ var testData = [
               {
                 size: "1568-1024",
                 images: {
-                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-2-ui-help-modal-resume-1568-1024.png/base.png",
-                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-2-ui-help-modal-resume-1568-1024.png/new.png",
-                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-2-ui-help-modal-resume-1568-1024.png/diff.png",
+                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-2-ui-help-modal-resume-1568-1024.png/base.webp",
+                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-2-ui-help-modal-resume-1568-1024.png/new.webp",
+                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-2-ui-help-modal-resume-1568-1024.png/diff.webp",
                 },
                 extraData: {
-                  date: "25/4/2025 14:10",
+                  date: "29/4/2025 17:23",
                   mismatchedPixels: 1882,
                   percentage: 0.034236298326290104,
                 },
@@ -156,25 +152,21 @@ var testData = [
               {
                 size: "375-812",
                 images: {
-                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-2-ui-help-modal-resume-375-812.png/base.png",
-                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-2-ui-help-modal-resume-375-812.png/new.png",
-                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-2-ui-help-modal-resume-375-812.png/diff.png",
+                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-2-ui-help-modal-resume-375-812.png/base.webp",
+                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-2-ui-help-modal-resume-375-812.png/new.webp",
+                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-2-ui-help-modal-resume-375-812.png/diff.webp",
                 },
-                extraData: {
-                  date: "25/4/2025 14:10",
-                  mismatchedPixels: 78,
-                  percentage: 0.01600492535027828,
-                },
+                extraData: { date: "29/4/2025 17:23" },
               },
               {
                 size: "768-900",
                 images: {
-                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-2-ui-help-modal-resume-768-900.png/base.png",
-                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-2-ui-help-modal-resume-768-900.png/new.png",
-                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-2-ui-help-modal-resume-768-900.png/diff.png",
+                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-2-ui-help-modal-resume-768-900.png/base.webp",
+                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-2-ui-help-modal-resume-768-900.png/new.webp",
+                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-2-ui-help-modal-resume-768-900.png/diff.webp",
                 },
                 extraData: {
-                  date: "25/4/2025 14:10",
+                  date: "29/4/2025 17:23",
                   mismatchedPixels: 1897,
                   percentage: 0.05238799781261749,
                 },
@@ -187,12 +179,12 @@ var testData = [
               {
                 size: "1568-1024",
                 images: {
-                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-3-ui-settings-modal-none-resume-1568-1024.png/base.png",
-                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-3-ui-settings-modal-none-resume-1568-1024.png/new.png",
-                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-3-ui-settings-modal-none-resume-1568-1024.png/diff.png",
+                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-3-ui-settings-modal-none-resume-1568-1024.png/base.webp",
+                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-3-ui-settings-modal-none-resume-1568-1024.png/new.webp",
+                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-3-ui-settings-modal-none-resume-1568-1024.png/diff.webp",
                 },
                 extraData: {
-                  date: "25/4/2025 14:10",
+                  date: "29/4/2025 17:23",
                   mismatchedPixels: 1887,
                   percentage: 0.03428174677099926,
                 },
@@ -200,12 +192,12 @@ var testData = [
               {
                 size: "375-812",
                 images: {
-                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-3-ui-settings-modal-none-resume-375-812.png/base.png",
-                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-3-ui-settings-modal-none-resume-375-812.png/new.png",
-                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-3-ui-settings-modal-none-resume-375-812.png/diff.png",
+                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-3-ui-settings-modal-none-resume-375-812.png/base.webp",
+                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-3-ui-settings-modal-none-resume-375-812.png/new.webp",
+                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-3-ui-settings-modal-none-resume-375-812.png/diff.webp",
                 },
                 extraData: {
-                  date: "25/4/2025 14:10",
+                  date: "29/4/2025 17:23",
                   mismatchedPixels: 1932,
                   percentage: 0.0796544260302395,
                 },
@@ -213,12 +205,12 @@ var testData = [
               {
                 size: "768-900",
                 images: {
-                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-3-ui-settings-modal-none-resume-768-900.png/base.png",
-                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-3-ui-settings-modal-none-resume-768-900.png/new.png",
-                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-3-ui-settings-modal-none-resume-768-900.png/diff.png",
+                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-3-ui-settings-modal-none-resume-768-900.png/base.webp",
+                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-3-ui-settings-modal-none-resume-768-900.png/new.webp",
+                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-3-ui-settings-modal-none-resume-768-900.png/diff.webp",
                 },
                 extraData: {
-                  date: "25/4/2025 14:10",
+                  date: "29/4/2025 17:23",
                   mismatchedPixels: 1902,
                   percentage: 0.052456992966725714,
                 },
@@ -231,12 +223,12 @@ var testData = [
               {
                 size: "1568-1024",
                 images: {
-                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-3-ui-settings-modal-resume-1568-1024.png/base.png",
-                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-3-ui-settings-modal-resume-1568-1024.png/new.png",
-                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-3-ui-settings-modal-resume-1568-1024.png/diff.png",
+                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-3-ui-settings-modal-resume-1568-1024.png/base.webp",
+                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-3-ui-settings-modal-resume-1568-1024.png/new.webp",
+                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-3-ui-settings-modal-resume-1568-1024.png/diff.webp",
                 },
                 extraData: {
-                  date: "25/4/2025 14:10",
+                  date: "29/4/2025 17:23",
                   mismatchedPixels: 1887,
                   percentage: 0.03428174677099926,
                 },
@@ -244,12 +236,12 @@ var testData = [
               {
                 size: "375-812",
                 images: {
-                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-3-ui-settings-modal-resume-375-812.png/base.png",
-                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-3-ui-settings-modal-resume-375-812.png/new.png",
-                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-3-ui-settings-modal-resume-375-812.png/diff.png",
+                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-3-ui-settings-modal-resume-375-812.png/base.webp",
+                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-3-ui-settings-modal-resume-375-812.png/new.webp",
+                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-3-ui-settings-modal-resume-375-812.png/diff.webp",
                 },
                 extraData: {
-                  date: "25/4/2025 14:10",
+                  date: "29/4/2025 17:23",
                   mismatchedPixels: 1932,
                   percentage: 0.0796544260302395,
                 },
@@ -257,12 +249,12 @@ var testData = [
               {
                 size: "768-900",
                 images: {
-                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-3-ui-settings-modal-resume-768-900.png/base.png",
-                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-3-ui-settings-modal-resume-768-900.png/new.png",
-                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-3-ui-settings-modal-resume-768-900.png/diff.png",
+                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-3-ui-settings-modal-resume-768-900.png/base.webp",
+                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-3-ui-settings-modal-resume-768-900.png/new.webp",
+                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-3-ui-settings-modal-resume-768-900.png/diff.webp",
                 },
                 extraData: {
-                  date: "25/4/2025 14:10",
+                  date: "29/4/2025 17:23",
                   mismatchedPixels: 1902,
                   percentage: 0.052456992966725714,
                 },
@@ -275,12 +267,12 @@ var testData = [
               {
                 size: "1568-1024",
                 images: {
-                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-4-ui-history-modal-empty-none-resume-1568-1024.png/base.png",
-                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-4-ui-history-modal-empty-none-resume-1568-1024.png/new.png",
-                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-4-ui-history-modal-empty-none-resume-1568-1024.png/diff.png",
+                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-4-ui-history-modal-empty-none-resume-1568-1024.png/base.webp",
+                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-4-ui-history-modal-empty-none-resume-1568-1024.png/new.webp",
+                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-4-ui-history-modal-empty-none-resume-1568-1024.png/diff.webp",
                 },
                 extraData: {
-                  date: "25/4/2025 14:10",
+                  date: "29/4/2025 17:23",
                   mismatchedPixels: 1882,
                   percentage: 0.034236298326290104,
                 },
@@ -288,21 +280,21 @@ var testData = [
               {
                 size: "375-812",
                 images: {
-                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-4-ui-history-modal-empty-none-resume-375-812.png/base.png",
-                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-4-ui-history-modal-empty-none-resume-375-812.png/new.png",
-                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-4-ui-history-modal-empty-none-resume-375-812.png/diff.png",
+                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-4-ui-history-modal-empty-none-resume-375-812.png/base.webp",
+                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-4-ui-history-modal-empty-none-resume-375-812.png/new.webp",
+                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-4-ui-history-modal-empty-none-resume-375-812.png/diff.webp",
                 },
-                extraData: { date: "25/4/2025 14:10" },
+                extraData: { date: "29/4/2025 17:23" },
               },
               {
                 size: "768-900",
                 images: {
-                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-4-ui-history-modal-empty-none-resume-768-900.png/base.png",
-                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-4-ui-history-modal-empty-none-resume-768-900.png/new.png",
-                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-4-ui-history-modal-empty-none-resume-768-900.png/diff.png",
+                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-4-ui-history-modal-empty-none-resume-768-900.png/base.webp",
+                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-4-ui-history-modal-empty-none-resume-768-900.png/new.webp",
+                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-4-ui-history-modal-empty-none-resume-768-900.png/diff.webp",
                 },
                 extraData: {
-                  date: "25/4/2025 14:10",
+                  date: "29/4/2025 17:23",
                   mismatchedPixels: 1897,
                   percentage: 0.05238799781261749,
                 },
@@ -315,12 +307,12 @@ var testData = [
               {
                 size: "1568-1024",
                 images: {
-                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-4-ui-history-modal-empty-resume-1568-1024.png/base.png",
-                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-4-ui-history-modal-empty-resume-1568-1024.png/new.png",
-                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-4-ui-history-modal-empty-resume-1568-1024.png/diff.png",
+                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-4-ui-history-modal-empty-resume-1568-1024.png/base.webp",
+                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-4-ui-history-modal-empty-resume-1568-1024.png/new.webp",
+                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-4-ui-history-modal-empty-resume-1568-1024.png/diff.webp",
                 },
                 extraData: {
-                  date: "25/4/2025 14:10",
+                  date: "29/4/2025 17:23",
                   mismatchedPixels: 1882,
                   percentage: 0.034236298326290104,
                 },
@@ -328,21 +320,21 @@ var testData = [
               {
                 size: "375-812",
                 images: {
-                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-4-ui-history-modal-empty-resume-375-812.png/base.png",
-                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-4-ui-history-modal-empty-resume-375-812.png/new.png",
-                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-4-ui-history-modal-empty-resume-375-812.png/diff.png",
+                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-4-ui-history-modal-empty-resume-375-812.png/base.webp",
+                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-4-ui-history-modal-empty-resume-375-812.png/new.webp",
+                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-4-ui-history-modal-empty-resume-375-812.png/diff.webp",
                 },
-                extraData: { date: "25/4/2025 14:10" },
+                extraData: { date: "29/4/2025 17:23" },
               },
               {
                 size: "768-900",
                 images: {
-                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-4-ui-history-modal-empty-resume-768-900.png/base.png",
-                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-4-ui-history-modal-empty-resume-768-900.png/new.png",
-                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-4-ui-history-modal-empty-resume-768-900.png/diff.png",
+                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-4-ui-history-modal-empty-resume-768-900.png/base.webp",
+                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-4-ui-history-modal-empty-resume-768-900.png/new.webp",
+                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-4-ui-history-modal-empty-resume-768-900.png/diff.webp",
                 },
                 extraData: {
-                  date: "25/4/2025 14:10",
+                  date: "29/4/2025 17:23",
                   mismatchedPixels: 1897,
                   percentage: 0.05238799781261749,
                 },
@@ -355,12 +347,12 @@ var testData = [
               {
                 size: "1568-1024",
                 images: {
-                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-5-ui-stake-modal-none-resume-1568-1024.png/base.png",
-                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-5-ui-stake-modal-none-resume-1568-1024.png/new.png",
-                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-5-ui-stake-modal-none-resume-1568-1024.png/diff.png",
+                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-5-ui-stake-modal-none-resume-1568-1024.png/base.webp",
+                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-5-ui-stake-modal-none-resume-1568-1024.png/new.webp",
+                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-5-ui-stake-modal-none-resume-1568-1024.png/diff.webp",
                 },
                 extraData: {
-                  date: "25/4/2025 14:10",
+                  date: "29/4/2025 17:23",
                   mismatchedPixels: 1882,
                   percentage: 0.034236298326290104,
                 },
@@ -368,25 +360,25 @@ var testData = [
               {
                 size: "375-812",
                 images: {
-                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-5-ui-stake-modal-none-resume-375-812.png/base.png",
-                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-5-ui-stake-modal-none-resume-375-812.png/new.png",
-                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-5-ui-stake-modal-none-resume-375-812.png/diff.png",
+                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-5-ui-stake-modal-none-resume-375-812.png/base.webp",
+                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-5-ui-stake-modal-none-resume-375-812.png/new.webp",
+                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-5-ui-stake-modal-none-resume-375-812.png/diff.webp",
                 },
                 extraData: {
-                  date: "25/4/2025 14:10",
-                  mismatchedPixels: 229,
-                  percentage: 0.02742357644721041,
+                  date: "29/4/2025 17:23",
+                  mismatchedPixels: 232,
+                  percentage: 0.02760262237369417,
                 },
               },
               {
                 size: "768-900",
                 images: {
-                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-5-ui-stake-modal-none-resume-768-900.png/base.png",
-                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-5-ui-stake-modal-none-resume-768-900.png/new.png",
-                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-5-ui-stake-modal-none-resume-768-900.png/diff.png",
+                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-5-ui-stake-modal-none-resume-768-900.png/base.webp",
+                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-5-ui-stake-modal-none-resume-768-900.png/new.webp",
+                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-5-ui-stake-modal-none-resume-768-900.png/diff.webp",
                 },
                 extraData: {
-                  date: "25/4/2025 14:10",
+                  date: "29/4/2025 17:23",
                   mismatchedPixels: 1897,
                   percentage: 0.05238799781261749,
                 },
@@ -399,12 +391,12 @@ var testData = [
               {
                 size: "1568-1024",
                 images: {
-                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-5-ui-stake-modal-resume-1568-1024.png/base.png",
-                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-5-ui-stake-modal-resume-1568-1024.png/new.png",
-                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-5-ui-stake-modal-resume-1568-1024.png/diff.png",
+                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-5-ui-stake-modal-resume-1568-1024.png/base.webp",
+                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-5-ui-stake-modal-resume-1568-1024.png/new.webp",
+                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-5-ui-stake-modal-resume-1568-1024.png/diff.webp",
                 },
                 extraData: {
-                  date: "25/4/2025 14:10",
+                  date: "29/4/2025 17:23",
                   mismatchedPixels: 1882,
                   percentage: 0.034236298326290104,
                 },
@@ -412,21 +404,21 @@ var testData = [
               {
                 size: "375-812",
                 images: {
-                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-5-ui-stake-modal-resume-375-812.png/base.png",
-                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-5-ui-stake-modal-resume-375-812.png/new.png",
-                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-5-ui-stake-modal-resume-375-812.png/diff.png",
+                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-5-ui-stake-modal-resume-375-812.png/base.webp",
+                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-5-ui-stake-modal-resume-375-812.png/new.webp",
+                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-5-ui-stake-modal-resume-375-812.png/diff.webp",
                 },
-                extraData: { date: "25/4/2025 14:10" },
+                extraData: { date: "29/4/2025 17:23" },
               },
               {
                 size: "768-900",
                 images: {
-                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-5-ui-stake-modal-resume-768-900.png/base.png",
-                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-5-ui-stake-modal-resume-768-900.png/new.png",
-                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-5-ui-stake-modal-resume-768-900.png/diff.png",
+                  base: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-5-ui-stake-modal-resume-768-900.png/base.webp",
+                  new: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-5-ui-stake-modal-resume-768-900.png/new.webp",
+                  diff: "snapshots/cypress/integration/suites/visual/sanity.cy.ts/Scenario-1/octoplay-5-ui-stake-modal-resume-768-900.png/diff.webp",
                 },
                 extraData: {
-                  date: "25/4/2025 14:10",
+                  date: "29/4/2025 17:23",
                   mismatchedPixels: 1897,
                   percentage: 0.05238799781261749,
                 },
