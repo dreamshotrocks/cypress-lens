@@ -1,5 +1,5 @@
 export interface Resolution {
-  size: string;
+  size: string | null;
   images: {
     base: string;
     new: string;
@@ -41,7 +41,7 @@ export interface SelectedImage {
       name: string;
     };
     resolutions: {
-      size: string;
+      size: string | null;
       images: {
         base: string;
         new: string;

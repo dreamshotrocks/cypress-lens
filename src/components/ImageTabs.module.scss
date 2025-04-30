@@ -42,6 +42,22 @@
         background-color: #3d79fa;
       }
 
+      &.active-pass-tab {
+        background-color: #233d05;
+      }
+
+      &.pass-text {
+        color: #84e117;
+      }
+
+      &.failed-text {
+        color: #f31d4f;
+      }
+
+      &.active-failed-tab {
+        background-color: #3f0613;
+      }
+
       &.failed {
         color: #cb103c;
       }

@@ -96,6 +96,9 @@ Reporter.prototype.getSnapshotsData = function (test) {
   let snapshots = [];
   let resolutions = [];
   let rootFileName = "";
+  let resolution = null;
+  const regex = /-\d{3,4}-\d{3,4}\.png$/g;
+
   const testPath =
     test.invocationDetails.fileUrl.split("p=")[1].replace(/\\/g, "/") +
     "/" +
@@ -106,8 +109,11 @@ Reporter.prototype.getSnapshotsData = function (test) {
 
   fs.existsSync(basePath) &&
     files.forEach((file, index) => {
-      const currentFileName = file.replace(/-\d{3,4}-\d{3,4}\.png$/g, "");
-      const resolution = file.match(/\d{3,4}-\d{3,4}/)[0];
+      const currentFileName = file.replace(regex, "");
+      if (regex.test(file)) {
+        resolution = file.match(regex)[0];
+      }
+
       const date = new Date();
       const day = date.getDate();
       const month = date.getMonth() + 1;

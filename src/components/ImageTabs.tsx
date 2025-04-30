@@ -75,24 +75,35 @@ export default function ImageTabs({ test, snapshot }: ImageTabsProps) {
                   </div>
                 ))}
               </div>
-              <div className={styles["menu-container"]}>
-                {snapshot?.resolutions.map((resolution, index) => (
-                  <div
-                    key={index}
-                    className={classNames({
-                      [styles.tab]: true,
-                      [styles.failed]:
-                        test.failure &&
-                        Object.keys(resolution.extraData).length > 1,
-                      [styles.active]:
-                        activeResolution.size === resolution.size,
-                    })}
-                    onClick={() => setActiveResolution(resolution)}
-                  >
-                    {resolution.size}
-                  </div>
-                ))}
-              </div>
+              {activeResolution.size && (
+                <div className={styles["menu-container"]}>
+                  {snapshot?.resolutions.map((resolution, index) => (
+                    <div
+                      key={index}
+                      className={classNames({
+                        [styles.tab]: true,
+                        [styles["active-failed-tab"]]:
+                          activeResolution.size === resolution.size &&
+                          test.failure &&
+                          Object.keys(resolution.extraData).length > 1,
+                        [styles["failed-text"]]:
+                          test.failure &&
+                          Object.keys(resolution.extraData).length > 1,
+                        [styles["active-pass-tab"]]:
+                          activeResolution.size === resolution.size &&
+                          (!test.failure ||
+                            Object.keys(resolution.extraData).length <= 1),
+                        [styles["pass-text"]]:
+                          !test.failure ||
+                          Object.keys(resolution.extraData).length <= 1,
+                      })}
+                      onClick={() => setActiveResolution(resolution)}
+                    >
+                      {resolution.size}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
             <div className={styles["tabs"]}>
               {activeTab.tabText === "Baseline" && (
@@ -108,7 +119,7 @@ export default function ImageTabs({ test, snapshot }: ImageTabsProps) {
                 <Slider snapshotResolution={activeResolution} />
               )}
               {activeTab.tabText === "Overlay" && (
-                <Overlay snapshotResolution={activeResolution} /> 
+                <Overlay snapshotResolution={activeResolution} />
               )}
             </div>
           </div>
