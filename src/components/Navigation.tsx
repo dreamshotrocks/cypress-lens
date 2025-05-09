@@ -34,25 +34,33 @@ export default function Navigation({
     let countPass = 0;
     items.forEach((item: any) => {
       item.tests.forEach((test: any) => {
-        if (test.failure) {
-          countFailed++;
-        } else {
-          countPass++;
-        }
+        test.snapshots.forEach((snapshot: any) => {
+          snapshot.resolutions.forEach((resolution: any) => {
+            if (resolution.extraData.hasOwnProperty("mismatchedPixels")) {
+              countFailed++;
+            } else {
+              countPass++;
+            }
+          });
+        });
       });
     });
     return { failed: countFailed, passed: countPass };
   };
 
-  const getCollapseCounts = (items: any) => {
+  const getCollapseCounts = (tests: any) => {
     let countFailed = 0;
     let countPass = 0;
-    items.forEach((item: any) => {
-      if (item.failure) {
-        countFailed++;
-      } else {
-        countPass++;
-      }
+    tests.forEach((test: any) => {
+      test.snapshots.forEach((snapshot: any) => {
+        snapshot.resolutions.forEach((resolution: any) => {
+          if (resolution.extraData.hasOwnProperty("mismatchedPixels")) {
+            countFailed++;
+          } else {
+            countPass++;
+          }
+        });
+      });
     });
     return { failed: countFailed, passed: countPass };
   };
@@ -61,41 +69,65 @@ export default function Navigation({
     if (activeFilter === "all") {
       setFilteredItems(items);
     } else if (activeFilter === "failed") {
-      const nextItems = JSON.parse(JSON.stringify(items));
       const filterTests = (tests: Test[] = []) => {
         return tests.filter((test: Test) => {
           return test.failure;
         });
       };
 
-      nextItems.forEach((item: any = {}) => {
+      items.forEach((item: any = {}) => {
         item.tests = filterTests(item.tests);
       });
 
-      const filtered = nextItems.map((item: any) => {
+      const filtered = items.map((item: any) => {
         return {
           ...item,
           tests: item.tests.map((test: any) => {
             return {
               ...test,
-              snapshots: test.snapshots.filter(
-                (snapshot: any) =>
-                  snapshot.props.extraData &&
-                  Object.values(snapshot.props.extraData).length > 1
-              ),
+              snapshots: test.snapshots.map((snapshot: any) => {
+                return {
+                  ...snapshot,
+                  resolutions: snapshot.resolutions.filter(
+                    (resolution: any) => {
+                      return (
+                        resolution.extraData &&
+                        resolution.extraData.hasOwnProperty("mismatchedPixels")
+                      );
+                    }
+                  ),
+                };
+              }),
             };
           }),
         };
       });
+
+      if (
+        selectedImage &&
+        selectedImage.snapshot.resolutions.some((res) =>
+          res.extraData.hasOwnProperty("mismatchedPixels")
+        )
+      ) {
+        const fallbackItem = filtered[0];
+        if (fallbackItem) {
+          const fallbackTest = fallbackItem.tests[0];
+          const fallbackSnapshot = fallbackTest.snapshots[0];
+          onImageClick({
+            snapshot: fallbackSnapshot,
+            item: fallbackItem,
+            test: fallbackTest,
+          });
+        }
+      }
 
       setFilteredItems(filtered);
     }
   };
 
   const isFailed = (resolutions: any) => {
-    return resolutions.some(
-      (resolution: { extraData: any }) =>
-        Object.keys(resolution.extraData).length > 1
+    return resolutions.some((resolution: { extraData: any }) =>
+      resolution.extraData.hasOwnProperty("mismatchedPixels")
     );
   };
 
