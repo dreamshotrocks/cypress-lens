@@ -111,7 +111,7 @@ Reporter.prototype.getSnapshotsData = function (test) {
     files.forEach((file, index) => {
       const currentFileName = file.replace(regex, "");
       if (regex.test(file)) {
-        resolution = file.match(regex)[0];
+        resolution = file.match(/\d{3,4}-\d{3,4}/)[0];
       }
 
       const date = new Date();

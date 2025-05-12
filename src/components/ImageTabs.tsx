@@ -57,9 +57,9 @@ export default function ImageTabs({ test, snapshot }: ImageTabsProps) {
   return (
     activeResolution && (
       <>
-        {test.failure ? (
-          <div className={styles["tabs-container"]}>
-            <div className={styles["menu-wrapper"]}>
+        <div className={styles["tabs-container"]}>
+          <div className={styles["menu-wrapper"]}>
+            {test.failure && (
               <div className={styles["menu-container"]}>
                 {tabs.map((tab) => (
                   <div
@@ -75,57 +75,55 @@ export default function ImageTabs({ test, snapshot }: ImageTabsProps) {
                   </div>
                 ))}
               </div>
-              {activeResolution.size && (
-                <div className={styles["menu-container"]}>
-                  {snapshot?.resolutions.map((resolution, index) => (
-                    <div
-                      key={index}
-                      className={classNames({
-                        [styles.tab]: true,
-                        [styles["active-failed-tab"]]:
-                          activeResolution.size === resolution.size &&
-                          test.failure &&
-                          Object.keys(resolution.extraData).length > 1,
-                        [styles["failed-text"]]:
-                          test.failure &&
-                          Object.keys(resolution.extraData).length > 1,
-                        [styles["active-pass-tab"]]:
-                          activeResolution.size === resolution.size &&
-                          (!test.failure ||
-                            Object.keys(resolution.extraData).length <= 1),
-                        [styles["pass-text"]]:
-                          !test.failure ||
-                          Object.keys(resolution.extraData).length <= 1,
-                      })}
-                      onClick={() => setActiveResolution(resolution)}
-                    >
-                      {resolution.size}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-            <div className={styles["tabs"]}>
-              {activeTab.tabText === "Baseline" && (
-                <Baseline src={activeResolution.images.base} />
-              )}
-              {activeTab.tabText === "Side By Side" && (
-                <SideBySide snapshotResolution={activeResolution} />
-              )}
-              {activeTab.tabText === "Difference" && (
-                <Baseline src={activeResolution.images.diff} />
-              )}
-              {activeTab.tabText === "Slider" && (
-                <Slider snapshotResolution={activeResolution} />
-              )}
-              {activeTab.tabText === "Overlay" && (
-                <Overlay snapshotResolution={activeResolution} />
-              )}
-            </div>
+            )}
+            {activeResolution.size && (
+              <div className={styles["menu-container"]}>
+                {snapshot?.resolutions.map((resolution, index) => (
+                  <div
+                    key={index}
+                    className={classNames({
+                      [styles.tab]: true,
+                      [styles["active-failed-tab"]]:
+                        activeResolution.size === resolution.size &&
+                        test.failure &&
+                        Object.keys(resolution.extraData).length > 1,
+                      [styles["failed-text"]]:
+                        test.failure &&
+                        Object.keys(resolution.extraData).length > 1,
+                      [styles["active-pass-tab"]]:
+                        activeResolution.size === resolution.size &&
+                        (!test.failure ||
+                          Object.keys(resolution.extraData).length <= 1),
+                      [styles["pass-text"]]:
+                        !test.failure ||
+                        Object.keys(resolution.extraData).length <= 1,
+                    })}
+                    onClick={() => setActiveResolution(resolution)}
+                  >
+                    {resolution.size}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
-        ) : (
-          <Baseline src={activeResolution.images.base} />
-        )}
+          <div className={styles["tabs"]}>
+            {activeTab.tabText === "Baseline" && (
+              <Baseline src={activeResolution.images.base} />
+            )}
+            {activeTab.tabText === "Side By Side" && (
+              <SideBySide snapshotResolution={activeResolution} />
+            )}
+            {activeTab.tabText === "Difference" && (
+              <Baseline src={activeResolution.images.diff} />
+            )}
+            {activeTab.tabText === "Slider" && (
+              <Slider snapshotResolution={activeResolution} />
+            )}
+            {activeTab.tabText === "Overlay" && (
+              <Overlay snapshotResolution={activeResolution} />
+            )}
+          </div>
+        </div>
         <div className={styles["badge-container"]}>
           <div className={styles.text}>
             {snapshot?.props.name} - {activeResolution.extraData.date}
