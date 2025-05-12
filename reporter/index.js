@@ -97,6 +97,7 @@ Reporter.prototype.getSnapshotsData = function (test) {
   let resolutions = [];
   let rootFileName = "";
   let resolution = null;
+  let files = null;
   const regex = /-\d{3,4}-\d{3,4}\.png$/g;
 
   const testPath =
@@ -105,7 +106,9 @@ Reporter.prototype.getSnapshotsData = function (test) {
     pathTitle;
   let basePath = path.resolve(`./cypress/snapshots/base/${testPath}`);
 
-  const files = fs.readdirSync(basePath);
+  if (fs.existsSync(basePath)) {
+    files = fs.readdirSync(basePath);
+  }
 
   fs.existsSync(basePath) &&
     files.forEach((file, index) => {

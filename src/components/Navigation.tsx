@@ -85,19 +85,18 @@ export default function Navigation({
           tests: item.tests.map((test: any) => {
             return {
               ...test,
-              snapshots: test.snapshots.map((snapshot: any) => {
-                return {
-                  ...snapshot,
-                  resolutions: snapshot.resolutions.filter(
-                    (resolution: any) => {
-                      return (
-                        resolution.extraData &&
-                        resolution.extraData.hasOwnProperty("mismatchedPixels")
-                      );
-                    }
-                  ),
-                };
-              }),
+              snapshots: test.snapshots
+                .map((snapshot: any) => {
+                  const validResolutions = snapshot.resolutions.filter(
+                    (resolution: any) =>
+                      resolution.extraData &&
+                      resolution.extraData.hasOwnProperty("mismatchedPixels")
+                  );
+                  return validResolutions.length > 0
+                    ? { ...snapshot, resolutions: validResolutions }
+                    : null;
+                })
+                .filter((snapshot: any) => snapshot !== null),
             };
           }),
         };
