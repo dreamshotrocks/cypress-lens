@@ -1,13 +1,18 @@
-export interface Snapshot {
-  props: {
-    name: string;
-    extraData: any;
-  };
+export interface Resolution {
+  size: string | null;
   images: {
     base: string;
     new: string;
     diff: string;
   };
+  extraData: any;
+}
+
+export interface Snapshot {
+  props: {
+    name: string;
+  };
+  resolutions: Resolution[];
 }
 
 export interface Test {
@@ -34,13 +39,16 @@ export interface SelectedImage {
   snapshot: {
     props: {
       name: string;
+    };
+    resolutions: {
+      size: string | null;
+      images: {
+        base: string;
+        new: string;
+        diff: string;
+      };
       extraData: any;
-    };
-    images: {
-      base: string;
-      new: string;
-      diff: string;
-    };
+    }[];
   };
   item: {
     props: {

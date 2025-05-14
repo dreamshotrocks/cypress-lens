@@ -2,13 +2,13 @@ import styles from "./Overlay.module.scss";
 import classNames from "classnames";
 import { useState } from "react";
 import TransparencySlider from "../TransparencySlider";
-import { Snapshot } from "../../types/ReporterTypes";
+import { Resolution } from "../../types/ReporterTypes";
 
 interface OverlayProps {
-  snapshot: Snapshot;
+  snapshotResolution: Resolution;
 }
 
-export default function Overlay({ snapshot }: OverlayProps) {
+export default function Overlay({ snapshotResolution }: OverlayProps) {
   const [transparent, setTransparent] = useState(0.5);
 
   const handleAppSliderChange = (newValue: number) => {
@@ -24,12 +24,14 @@ export default function Overlay({ snapshot }: OverlayProps) {
       <div className={styles["image-container"]}>
         <div
           className={styles["image"]}
-          style={{ backgroundImage: `url("${snapshot?.images.base}")` }}
+          style={{
+            backgroundImage: `url("${snapshotResolution?.images.base}")`,
+          }}
         ></div>
         <div
           className={classNames(styles["image"], styles["new-image"])}
           style={{
-            backgroundImage: `url("${snapshot?.images.new}")`,
+            backgroundImage: `url("${snapshotResolution?.images.new}")`,
             opacity: `${transparent}`,
           }}
         ></div>
