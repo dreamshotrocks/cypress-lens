@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.16.0](https://github.com/dreamshotrocks/cypress-lens/compare/v1.15.1...v1.16.0) (2025-05-14)
+
+
+### Features
+
+* add local start setup ([b9adcec](https://github.com/dreamshotrocks/cypress-lens/commit/b9adcec655a9da894510dace4844328535088f3c))
+* add timestamp of the pictures - APPS-1632 ([20fd352](https://github.com/dreamshotrocks/cypress-lens/commit/20fd3528afa70385f2d664c995f6ea1a5df22f5e))
+* change the image format - APPS-1752 ([e4c8d8c](https://github.com/dreamshotrocks/cypress-lens/commit/e4c8d8c0d32ebedb32667a319ba45d65952152d6))
+* display resolution improvements ([3963a8b](https://github.com/dreamshotrocks/cypress-lens/commit/3963a8b1aafc7b417771b3525530747566ff2b41))
+* reconstruction of the object ([f69b294](https://github.com/dreamshotrocks/cypress-lens/commit/f69b29460662f9a6828516d2d59a843623424fb3))
+
+
+### Bug Fixes
+
+* comments ([55c2e60](https://github.com/dreamshotrocks/cypress-lens/commit/55c2e607a4ac40f60524bfb26e48872f5d10d5a9))
+* fix  the resolution tabs when all test pass ([a4a647c](https://github.com/dreamshotrocks/cypress-lens/commit/a4a647cd0f7a7f4d9eeb6b365927c60c5dc5cffb))
+* fix the bug with filter ([08f5933](https://github.com/dreamshotrocks/cypress-lens/commit/08f5933356dd9a3adac524598b3507d7cdd3c594))
+* fix the bug with filter - APPS-1937 ([dd2b0b0](https://github.com/dreamshotrocks/cypress-lens/commit/dd2b0b0cf274279e3b68c0072e9c3846ec5c674a))
+* fix the thumbnail - APPS-1913 ([47a14a9](https://github.com/dreamshotrocks/cypress-lens/commit/47a14a91b41ed8502bbd2662087ed78db33371d1))
+* remove package ([dcb7aec](https://github.com/dreamshotrocks/cypress-lens/commit/dcb7aecf6e65ab7a2ae0ffbe2befe05ca3101afa))
+
 ### [1.15.1](https://github.com/dreamshotrocks/cypress-lens/compare/v1.15.0...v1.15.1) (2024-11-26)
 
 
