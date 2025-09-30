@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.17.0](https://github.com/dreamshotrocks/cypress-lens/compare/v1.16.0...v1.17.0) (2025-09-30)
+
+
+### Features
+
+* added search bar functionality ([a64aae7](https://github.com/dreamshotrocks/cypress-lens/commit/a64aae77edb83eb4b2a6bdf449fdf979237c2598))
+
 ## [1.16.0](https://github.com/dreamshotrocks/cypress-lens/compare/v1.15.1...v1.16.0) (2025-05-14)
 
 
