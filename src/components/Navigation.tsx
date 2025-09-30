@@ -19,6 +19,7 @@ export default function Navigation({
 }: NavigationProps) {
   const [filteredItems, setFilteredItems] = useState<Item[]>(items);
   const [activeFilter, setActiveFilter] = useState<string>("all");
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const [openCollapse, setOpenCollapse] = useState<string | null>(
     items[0].props.name
   );
@@ -65,10 +66,56 @@ export default function Navigation({
     return { failed: countFailed, passed: countPass };
   };
 
+  const applySearchFilter = (itemsToFilter: Item[]): Item[] => {
+    if (!searchQuery.trim()) {
+      return itemsToFilter;
+    }
+
+    const query = searchQuery.toLowerCase().trim();
+
+    return itemsToFilter
+      .map((item) => {
+        // Check if item name matches
+        const itemMatches = item.props.name.toLowerCase().includes(query);
+
+        // Filter tests and snapshots
+        const filteredTests = item.tests
+          .map((test) => {
+            // Check if test name matches
+            const testMatches = test.props.name.toLowerCase().includes(query);
+
+            // Filter snapshots
+            const filteredSnapshots = test.snapshots.filter((snapshot) =>
+              snapshot.props.name.toLowerCase().includes(query)
+            );
+
+            // Include test if it matches or has matching snapshots
+            if (testMatches || filteredSnapshots.length > 0) {
+              return {
+                ...test,
+                snapshots: testMatches ? test.snapshots : filteredSnapshots,
+              };
+            }
+            return null;
+          })
+          .filter((test) => test !== null) as Test[];
+
+        // Include item if it matches or has matching tests
+        if (itemMatches || filteredTests.length > 0) {
+          return {
+            ...item,
+            tests: itemMatches ? item.tests : filteredTests,
+          };
+        }
+        return null;
+      })
+      .filter((item) => item !== null) as Item[];
+  };
+
   const filter = () => {
-    if (activeFilter === "all") {
-      setFilteredItems(items);
-    } else if (activeFilter === "failed") {
+    let baseItems = items;
+
+    if (activeFilter === "failed") {
       const filterTests = (tests: Test[] = []) => {
         return tests.filter((test: Test) => {
           return test.failure;
@@ -79,7 +126,7 @@ export default function Navigation({
         item.tests = filterTests(item.tests);
       });
 
-      const filtered = items.map((item: any) => {
+      baseItems = items.map((item: any) => {
         return {
           ...item,
           tests: item.tests.map((test: any) => {
@@ -108,7 +155,7 @@ export default function Navigation({
           res.extraData.hasOwnProperty("mismatchedPixels")
         )
       ) {
-        const fallbackItem = filtered[0];
+        const fallbackItem = baseItems[0];
         if (fallbackItem) {
           const fallbackTest = fallbackItem.tests[0];
           const fallbackSnapshot = fallbackTest.snapshots[0];
@@ -119,9 +166,11 @@ export default function Navigation({
           });
         }
       }
-
-      setFilteredItems(filtered);
     }
+
+    // Apply search filter to the base items
+    const finalFilteredItems = applySearchFilter(baseItems);
+    setFilteredItems(finalFilteredItems);
   };
 
   const isFailed = (resolutions: any) => {
@@ -132,7 +181,7 @@ export default function Navigation({
 
   useEffect(() => {
     filter();
-  }, [activeFilter]);
+  }, [activeFilter, searchQuery]);
 
   return (
     <div className={styles["drawer-container"]}>
@@ -158,6 +207,20 @@ export default function Navigation({
           >
             Failed: {getCounts(items).failed}
           </div>
+        </div>
+      </div>
+
+      {/* Search Bar */}
+      <div className={styles["search-container"]}>
+        <div className={styles["search-input-wrapper"]}>
+          <span className={styles["search-icon"]}>🔍</span>
+          <input
+            type="text"
+            placeholder="Search for snapshots..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className={styles["search-input"]}
+          />
         </div>
       </div>
 
