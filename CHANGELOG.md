@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.17.1](https://github.com/dreamshotrocks/cypress-lens/compare/v1.17.0...v1.17.1) (2025-10-14)
+
+
+### Bug Fixes
+
+* replaced search icon emoji with svg ([eabb429](https://github.com/dreamshotrocks/cypress-lens/commit/eabb429d2aaf7c6c0bf1fcc4e2320c6fc3d482b4))
+
 ## [1.17.0](https://github.com/dreamshotrocks/cypress-lens/compare/v1.16.0...v1.17.0) (2025-09-30)
 
 
