@@ -129,7 +129,7 @@ async function compareSnapshotsPlugin(args) {
       diff.data,
       diff.width,
       diff.height,
-      { threshold: 0.1 }
+      { threshold: 0.1, includeAA: false, alpha: 0.1 }
     );
     percentage = (mismatchedPixels / diff.width / diff.height) ** 0.5;
 
