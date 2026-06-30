@@ -17,7 +17,9 @@ const { getValueOrDefault } = require("./utils-browser");
 let CYPRESS_SCREENSHOT_DIR;
 
 function setupScreenshotPath(config) {
-  config.env.type === "actual"
+  const type = config?.expose?.type;
+
+  type === "actual"
     ? (CYPRESS_SCREENSHOT_DIR = "cypress/snapshots/actual")
     : (CYPRESS_SCREENSHOT_DIR = getValueOrDefault(
         config?.screenshotsFolder,

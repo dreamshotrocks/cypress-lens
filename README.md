@@ -162,11 +162,18 @@ it("Should display the home page according to baseline snapshot", () => {
 
 ```js
 {
-  env: {
+  expose: {
     failSilently: false;
   }
 }
 ```
+
+> **Note:** As of `cypress-lens` 2.0, configuration is read through Cypress'
+> `Cypress.expose()` API (introduced in Cypress 15.10.0) instead of the
+> deprecated `Cypress.env()`. Put cypress-lens settings such as `type`,
+> `SNAPSHOT_BASE_DIRECTORY`, `SNAPSHOT_DIFF_DIRECTORY`, `ALWAYS_GENERATE_DIFF`,
+> `ALLOW_VISUAL_REGRESSION_TO_FAIL` and `INTEGRATION_FOLDER` under the `expose`
+> config key (or pass them via the `--expose` CLI flag) rather than `env`.
 
 You can also pass default arguments to `compareSnapshotCommand()`:
 
@@ -183,11 +190,11 @@ These will be used by default when no parameters are passed to the compareSnapsh
 ### Take the base images:
 
 ```sh
-$ ./node_modules/.bin/cypress run --env type=base"
+$ ./node_modules/.bin/cypress run --expose type=base
 ```
 
 ### Find regressions:
 
 ```sh
-$ ./node_modules/.bin/cypress run --env type=actual
+$ ./node_modules/.bin/cypress run --expose type=actual
 ```
