@@ -1,5 +1,6 @@
 global.Cypress = {
   env: () => false,
+  expose: () => false,
   log: () => null,
   config: () => '/cypress/screenshots',
   Commands: {

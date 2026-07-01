@@ -19,6 +19,6 @@ else
 fi
 
 docker run -d --name cypress-test cypress-visual-regression sleep infinity
-docker exec cypress-test bash -c './node_modules/.bin/cypress run --env type=base'
-docker exec cypress-test bash -c './node_modules/.bin/cypress run --env type=actual'
+docker exec cypress-test bash -c './node_modules/.bin/cypress run --expose type=base'
+docker exec cypress-test bash -c './node_modules/.bin/cypress run --expose type=actual'
 docker rm -f cypress-test

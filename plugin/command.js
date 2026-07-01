@@ -19,7 +19,7 @@ function getErrorThreshold(defaultScreenshotOptions, params) {
 
 function getSpecRelativePath() {
   const integrationFolder = getValueOrDefault(
-    Cypress.env("INTEGRATION_FOLDER"),
+    Cypress.expose("INTEGRATION_FOLDER"),
     path.join("cypress", "e2e")
   );
   const testTitle = sanitize(Cypress.currentTest.title);
@@ -69,7 +69,7 @@ function updateScreenshot(name) {
     name,
     specDirectory: getSpecRelativePath(),
     screenshotsFolder: Cypress.config().screenshotsFolder,
-    snapshotBaseDirectory: Cypress.env("SNAPSHOT_BASE_DIRECTORY"),
+    snapshotBaseDirectory: Cypress.expose("SNAPSHOT_BASE_DIRECTORY"),
   });
 }
 
@@ -78,19 +78,21 @@ function compareScreenshots(name, errorThreshold) {
   const options = {
     fileName: name,
     specDirectory: getSpecRelativePath(),
-    baseDir: Cypress.env("SNAPSHOT_BASE_DIRECTORY"),
-    diffDir: Cypress.env("SNAPSHOT_DIFF_DIRECTORY"),
-    keepDiff: Cypress.env("ALWAYS_GENERATE_DIFF"),
-    allowVisualRegressionToFail: Cypress.env("ALLOW_VISUAL_REGRESSION_TO_FAIL"),
+    baseDir: Cypress.expose("SNAPSHOT_BASE_DIRECTORY"),
+    diffDir: Cypress.expose("SNAPSHOT_DIFF_DIRECTORY"),
+    keepDiff: Cypress.expose("ALWAYS_GENERATE_DIFF"),
+    allowVisualRegressionToFail: Cypress.expose(
+      "ALLOW_VISUAL_REGRESSION_TO_FAIL"
+    ),
     errorThreshold,
   };
 
   cy.task("compareSnapshotsPlugin", options).then((results) => {
     if (results.error) {
-      const collectVisualErros = Cypress.env().collectVisualErros;
+      const collectVisualErros = Cypress.expose("collectVisualErros");
 
       if (collectVisualErros) {
-        const visualErrors = Cypress.env().visualErrors || [];
+        const visualErrors = Cypress.expose("visualErrors") || [];
         if (visualErrors) {
           let errorMessage = {
             message: "Failed to parse json in cypress-lens",
@@ -116,7 +118,7 @@ function compareSnapshotCommand(defaultScreenshotOptions) {
     "compareSnapshot",
     { prevSubject: "optional" },
     (subject, name, params = {}) => {
-      const type = Cypress.env("type");
+      const type = Cypress.expose("type");
       const screenshotOptions =
         typeof params === "object"
           ? { ...defaultScreenshotOptions, ...params }

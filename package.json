@@ -15,8 +15,8 @@
   ],
   "main": "./reporter/index.js",
   "scripts": {
-    "test": "cypress run --env type=actual",
-    "base": "cypress run --env type=base",
+    "test": "cypress run --expose type=actual",
+    "base": "cypress run --expose type=base",
     "prepublish": "npm run build",
     "lint": "eslint plugin",
     "prebuild": "rimraf dist",
@@ -47,7 +47,7 @@
     "vite": "^5.3.1"
   },
   "peerDependencies": {
-    "cypress": ">=9.7.0"
+    "cypress": ">=15.10.0"
   },
   "files": [
     "dist/**/*",
