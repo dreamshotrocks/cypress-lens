@@ -15,6 +15,10 @@
   text-align: center;
   gap: 10px;
   max-width: 420px;
+  padding: 24px 28px;
+  border: 1px solid rgba(132, 225, 23, 0.22);
+  border-radius: 16px;
+  background: linear-gradient(180deg, #1a1a1a 0%, #141414 100%);
 }
 
 .icon {
@@ -48,17 +52,19 @@
   flex-direction: column;
   gap: 10px;
   padding: 10px;
-  border: 1px solid #212121;
+  border: 1px solid #262626;
   border-radius: 12px;
-  background: #121212;
+  background: linear-gradient(180deg, #1a1a1a 0%, #141414 100%);
   color: inherit;
   text-align: left;
   cursor: pointer;
-  transition: background-color 0.15s ease, border-color 0.15s ease;
+  transition: background-color 0.15s ease, border-color 0.15s ease,
+    transform 0.15s ease;
 
   &:hover {
-    background: #1a1a1a;
+    background: #1c1c1c;
     border-color: #3d79fa;
+    transform: translateY(-1px);
   }
 }
 

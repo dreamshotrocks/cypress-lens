@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Check } from "@phosphor-icons/react";
 import classNames from "classnames";
 import styles from "./App.module.scss";
+import EmptyFailedState from "./components/EmptyFailedState";
 import ImageTabs from "./components/ImageTabs";
 import Navigation from "./components/Navigation";
 import ReviewComplete from "./components/ReviewComplete";
@@ -36,6 +37,7 @@ function App() {
   const reportId = getReportIdFromLocation();
   const snapshotList = flattenSnapshots(filteredItems);
   const failedEntries = items ? getFailedResolutionEntries(items) : [];
+  const passedPreviews = items ? flattenSnapshots(items).slice(0, 8) : [];
   const currentIndex = findSnapshotIndex(snapshotList, selectedImage);
   const hasPrevious = currentIndex > 0;
   const hasNext =
@@ -83,6 +85,11 @@ function App() {
     window.scrollTo({ top: 0, behavior: "smooth" });
     document.body.scrollTop = 0;
     setSelectedImage(entry);
+  };
+
+  const selectPassedPreview = (entry: SelectedImage) => {
+    setActiveFilter("all");
+    selectSnapshot(entry);
   };
 
   const goToPrevious = () => {
@@ -243,7 +250,7 @@ function App() {
         />
       </div>
 
-      {selectedImage && (
+      {selectedImage ? (
         <div className={styles.container}>
           <div className={styles.detailTop}>
             <button
@@ -282,7 +289,16 @@ function App() {
             />
           </div>
         </div>
-      )}
+      ) : activeFilter === "failed" ? (
+        <div className={styles.container}>
+          <div className={styles.inner}>
+            <EmptyFailedState
+              previews={passedPreviews}
+              onSelect={selectPassedPreview}
+            />
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

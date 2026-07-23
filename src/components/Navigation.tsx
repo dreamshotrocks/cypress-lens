@@ -242,29 +242,8 @@ export default function Navigation({
         <div className={styles["empty-failed"]}>
           <div className={styles["empty-failed-title"]}>No failures</div>
           <div className={styles["empty-failed-subtitle"]}>
-            Showing passed snapshots
+            Passed snapshot previews are shown on the right
           </div>
-          {items.map((item) =>
-            item.tests.flatMap((test) =>
-              test.snapshots.slice(0, 3).map((snapshot) => (
-                <button
-                  key={`${item.props.name}-${snapshot.props.name}`}
-                  type="button"
-                  className={styles["empty-failed-item"]}
-                  onClick={() => {
-                    onActiveFilterChange("all");
-                    imageClickHandler(snapshot, item, test);
-                  }}
-                >
-                  <img
-                    src={snapshot.resolutions[0].images.base}
-                    alt={snapshot.props.name}
-                  />
-                  <span>{snapshot.props.name}</span>
-                </button>
-              ))
-            )
-          )}
         </div>
       )}
 
