@@ -11,7 +11,7 @@ import {
   flattenSnapshots,
   resolveSelectionInList,
 } from "./utils/flattenSnapshots";
-import { getReportCreatedAt } from "./utils/reportCreatedAt";
+import { getReportIdFromLocation } from "./utils/reportId";
 import {
   areAllFailedResolutionsReviewed,
   clearReviewedKeys,
@@ -32,7 +32,8 @@ function App() {
   const [showReviewComplete, setShowReviewComplete] = useState(false);
   const [reviewedKeys, setReviewedKeys] = useState<Set<string>>(new Set());
 
-  const reportId = items ? getReportCreatedAt(items) : null;
+  // e.g. 235346 from /reports/.../235346/visual-report/
+  const reportId = getReportIdFromLocation();
   const snapshotList = flattenSnapshots(filteredItems);
   const failedEntries = items ? getFailedResolutionEntries(items) : [];
   const currentIndex = findSnapshotIndex(snapshotList, selectedImage);
@@ -134,10 +135,13 @@ function App() {
   }, []);
 
   useEffect(() => {
+    setReviewedKeys(loadReviewedKeys(reportId));
+  }, [reportId]);
+
+  useEffect(() => {
     if (!items) {
       return;
     }
-    setReviewedKeys(loadReviewedKeys(getReportCreatedAt(items)));
 
     const first = flattenSnapshots(items)[0];
     if (first) {
