@@ -3,30 +3,94 @@
   height: 100vh;
   border: none;
   display: flex;
+  background: #0d0d0d;
+  overflow: hidden;
+}
 
-  .navigation {
-    width: 100%;
-    max-width: 300px;
-    height: 100%;
-    background-color: rgb(18, 18, 18);
-    overflow-y: auto;
-    overflow-x: hidden;
+.navigation {
+  width: 100%;
+  max-width: 300px;
+  height: 100%;
+  background-color: rgb(18, 18, 18);
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex-shrink: 0;
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: auto;
+  min-width: 0;
+}
+
+.detailTop {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 50px 0;
+}
+
+.shortcutHint {
+  margin-left: 2px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: #2a2a2a;
+  color: #9aa0a6;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.reviewedButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 16px;
+  border: 1px solid #3d79fa;
+  border-radius: 40px;
+  background: transparent;
+  color: #3d79fa;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(61, 121, 250, 0.12);
   }
 
-  .container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    overflow: auto;
+  &.reviewedActive {
+    border-color: #84e117;
+    background: rgba(132, 225, 23, 0.12);
+    color: #84e117;
+  }
 
-    .inner {
-      padding: 50px;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
+  .shortcutHint {
+    background: rgba(255, 255, 255, 0.12);
+    color: inherit;
+  }
+}
+
+.inner {
+  padding: 24px 50px 50px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+@media (max-width: 720px) {
+  .detailTop {
+    padding: 16px 16px 0;
+  }
+
+  .inner {
+    padding: 20px 16px 40px;
   }
 }

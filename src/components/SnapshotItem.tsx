@@ -1,6 +1,6 @@
 import styles from "./SnapshotItem.module.scss";
 import classNames from "classnames";
-import { Warning, Check } from "@phosphor-icons/react";
+import { Warning, Check, CheckCircle } from "@phosphor-icons/react";
 
 interface SnapshotItemProps {
   image: string;
@@ -8,6 +8,8 @@ interface SnapshotItemProps {
   snapshotName: string;
   onClick: () => void;
   variant?: string;
+  reviewed?: boolean;
+  resolutions?: Array<{ size: string | null; reviewed: boolean }>;
 }
 
 export default function SnapshotItem({
@@ -16,41 +18,72 @@ export default function SnapshotItem({
   isActive,
   snapshotName,
   variant,
+  reviewed = false,
+  resolutions = [],
 }: SnapshotItemProps) {
+  const statusLabel = reviewed
+    ? "REVIEWED"
+    : variant === "fail"
+      ? "FAILED"
+      : "PASS";
+
   return (
-    <div
-      className={classNames({
-        [styles["container"]]: true,
-        [styles["active"]]: isActive && variant != "fail",
-        [styles["active-fail"]]: isActive && variant === "fail",
-        [styles["fail"]]: variant === "fail",
+    <button
+      type="button"
+      className={classNames(styles.card, {
+        [styles.active]: isActive && !reviewed && variant !== "fail",
+        [styles.activeFail]: isActive && !reviewed && variant === "fail",
+        [styles.activeReviewed]: isActive && reviewed,
+        [styles.fail]: !reviewed && variant === "fail",
+        [styles.reviewed]: reviewed,
       })}
       onClick={onClick}
     >
-      <div
-        className={classNames({
-          [styles["image-container"]]: true,
-          [styles["active"]]: isActive,
-        })}
-      >
-        <img className={styles["image"]} src={image} alt="base" />
+      <div className={styles.thumbnail}>
+        <img src={image} alt="" />
       </div>
-      <div className={styles["information-container"]}>
-        <div className={styles["image-name-text"]}>{snapshotName}</div>
-        <div className={styles["image-percent-text"]}>
-          {variant === "fail" ? (
-            <>
-              <Warning size={16} />
-              <span className={styles["failed-label"]}>FAILED</span>
-            </>
-          ) : (
-            <>
-              <Check size={16} />
-              <span className={styles["pass-label"]}>PASS</span>
-            </>
+
+      <div className={styles.content}>
+        <div className={styles.name} title={snapshotName}>
+          {snapshotName}
+        </div>
+
+        <div className={styles.meta}>
+          <span
+            className={classNames(styles.status, {
+              [styles.statusFail]: !reviewed && variant === "fail",
+              [styles.statusPass]: !reviewed && variant !== "fail",
+              [styles.statusReviewed]: reviewed,
+            })}
+          >
+            {reviewed ? (
+              <CheckCircle size={12} weight="fill" />
+            ) : variant === "fail" ? (
+              <Warning size={12} />
+            ) : (
+              <Check size={12} />
+            )}
+            {statusLabel}
+          </span>
+
+          {resolutions.some((resolution) => resolution.size) && (
+            <div className={styles.resolutions}>
+              {resolutions
+                .filter((resolution) => resolution.size)
+                .map((resolution) => (
+                  <span
+                    key={resolution.size}
+                    className={classNames(styles.resolutionChip, {
+                      [styles.resolutionReviewed]: resolution.reviewed,
+                    })}
+                  >
+                    {resolution.size}
+                  </span>
+                ))}
+            </div>
           )}
         </div>
       </div>
-    </div>
+    </button>
   );
 }

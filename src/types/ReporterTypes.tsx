@@ -58,4 +58,5 @@ export interface SelectedImage {
     tests: Test[];
   };
   test: Test;
+  resolution: Resolution;
 }

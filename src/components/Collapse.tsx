@@ -29,7 +29,10 @@ export default function Collapse({
     >
       <div className={styles["header-container"]} onClick={onToggle}>
         <div className={styles.header}>
-          {title}
+          <div className={styles["title-row"]}>
+            <span className={styles.title}>{title}</span>
+            <span className={styles["spec-tag"]}>spec</span>
+          </div>
           {isOpen && <CaretDown size="16" />}
           {!isOpen && <CaretLeft size="16" />}
         </div>

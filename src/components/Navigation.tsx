@@ -1,69 +1,66 @@
 import { useEffect, useState } from "react";
+import { Checks, MagnifyingGlass, Trash, X } from "@phosphor-icons/react";
+import classNames from "classnames";
 import styles from "./Navigation.module.scss";
-import { Dispatch, SetStateAction } from "react";
 import Collapse from "./Collapse";
 import SnapshotItem from "./SnapshotItem";
 import { Item, SelectedImage, Snapshot, Test } from "../types/ReporterTypes";
-import classNames from "classnames";
+import {
+  isFailedResolution,
+  isFailedSnapshot,
+} from "../utils/failure";
+import { getReportCreatedAt } from "../utils/reportCreatedAt";
+import {
+  areAllResolutionsReviewed,
+  isResolutionReviewed,
+  isSnapshotReviewed,
+} from "../utils/reviewedSnapshots";
 
 interface NavigationProps {
   items: Item[];
   selectedImage: SelectedImage | null;
-  onImageClick: Dispatch<SetStateAction<SelectedImage | null>>;
+  reviewedKeys: Set<string>;
+  activeFilter: string;
+  onActiveFilterChange: (filter: string) => void;
+  onImageClick: (entry: SelectedImage) => void;
+  onFilteredItemsChange: (items: Item[]) => void;
+  onMarkAllReviewed: () => void;
+  onClearReviewData: () => void;
 }
 
 export default function Navigation({
   items,
   selectedImage,
+  reviewedKeys,
+  activeFilter,
+  onActiveFilterChange,
   onImageClick,
+  onFilteredItemsChange,
+  onMarkAllReviewed,
+  onClearReviewData,
 }: NavigationProps) {
   const [filteredItems, setFilteredItems] = useState<Item[]>(items);
-  const [activeFilter, setActiveFilter] = useState<string>("all");
-  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState("");
   const [openCollapse, setOpenCollapse] = useState<string | null>(
-    items[0].props.name
+    items[0]?.props.name ?? null
   );
 
+  const createdAt = getReportCreatedAt(items);
+  const hasReviewedData = reviewedKeys.size > 0;
+  const allReviewed = areAllResolutionsReviewed(items, reviewedKeys);
+  const counts = getCounts(items);
+
   const imageClickHandler = (snapshot: Snapshot, item: Item, test: Test) => {
-    console.log(window.scrollTo({ top: 0, behavior: "smooth" }));
+    window.scrollTo({ top: 0, behavior: "smooth" });
     document.body.scrollTop = 0;
-    onImageClick({ snapshot, item, test });
-  };
-
-  const getCounts = (items: any) => {
-    let countFailed = 0;
-    let countPass = 0;
-    items.forEach((item: any) => {
-      item.tests.forEach((test: any) => {
-        test.snapshots.forEach((snapshot: any) => {
-          snapshot.resolutions.forEach((resolution: any) => {
-            if (resolution.extraData.hasOwnProperty("mismatchedPixels")) {
-              countFailed++;
-            } else {
-              countPass++;
-            }
-          });
-        });
-      });
+    const resolution =
+      snapshot.resolutions.find(isFailedResolution) || snapshot.resolutions[0];
+    onImageClick({
+      snapshot,
+      item,
+      test,
+      resolution,
     });
-    return { failed: countFailed, passed: countPass };
-  };
-
-  const getCollapseCounts = (tests: any) => {
-    let countFailed = 0;
-    let countPass = 0;
-    tests.forEach((test: any) => {
-      test.snapshots.forEach((snapshot: any) => {
-        snapshot.resolutions.forEach((resolution: any) => {
-          if (resolution.extraData.hasOwnProperty("mismatchedPixels")) {
-            countFailed++;
-          } else {
-            countPass++;
-          }
-        });
-      });
-    });
-    return { failed: countFailed, passed: countPass };
   };
 
   const applySearchFilter = (itemsToFilter: Item[]): Item[] => {
@@ -75,21 +72,15 @@ export default function Navigation({
 
     return itemsToFilter
       .map((item) => {
-        // Check if item name matches
         const itemMatches = item.props.name.toLowerCase().includes(query);
 
-        // Filter tests and snapshots
         const filteredTests = item.tests
           .map((test) => {
-            // Check if test name matches
             const testMatches = test.props.name.toLowerCase().includes(query);
-
-            // Filter snapshots
             const filteredSnapshots = test.snapshots.filter((snapshot) =>
               snapshot.props.name.toLowerCase().includes(query)
             );
 
-            // Include test if it matches or has matching snapshots
             if (testMatches || filteredSnapshots.length > 0) {
               return {
                 ...test,
@@ -98,9 +89,8 @@ export default function Navigation({
             }
             return null;
           })
-          .filter((test) => test !== null) as Test[];
+          .filter((test): test is Test => test !== null);
 
-        // Include item if it matches or has matching tests
         if (itemMatches || filteredTests.length > 0) {
           return {
             ...item,
@@ -109,195 +99,282 @@ export default function Navigation({
         }
         return null;
       })
-      .filter((item) => item !== null) as Item[];
+      .filter((item): item is Item => item !== null);
   };
 
   const filter = () => {
     let baseItems = items;
 
     if (activeFilter === "failed") {
-      const filterTests = (tests: Test[] = []) => {
-        return tests.filter((test: Test) => {
-          return test.failure;
-        });
-      };
-
-      items.forEach((item: any = {}) => {
-        item.tests = filterTests(item.tests);
-      });
-
-      baseItems = items.map((item: any) => {
-        return {
-          ...item,
-          tests: item.tests.map((test: any) => {
-            return {
+      baseItems = items
+        .map((item) => {
+          const failedTests = item.tests
+            .map((test) => ({
               ...test,
               snapshots: test.snapshots
-                .map((snapshot: any) => {
+                .map((snapshot) => {
                   const validResolutions = snapshot.resolutions.filter(
-                    (resolution: any) =>
-                      resolution.extraData &&
-                      resolution.extraData.hasOwnProperty("mismatchedPixels")
+                    isFailedResolution
                   );
                   return validResolutions.length > 0
                     ? { ...snapshot, resolutions: validResolutions }
                     : null;
                 })
-                .filter((snapshot: any) => snapshot !== null),
-            };
-          }),
-        };
-      });
+                .filter((snapshot): snapshot is Snapshot => snapshot !== null),
+            }))
+            .filter((test) => test.snapshots.length > 0);
 
-      if (
-        selectedImage &&
-        selectedImage.snapshot.resolutions.some((res) =>
-          res.extraData.hasOwnProperty("mismatchedPixels")
-        )
-      ) {
-        const fallbackItem = baseItems[0];
-        if (fallbackItem) {
-          const fallbackTest = fallbackItem.tests[0];
-          const fallbackSnapshot = fallbackTest.snapshots[0];
-          onImageClick({
-            snapshot: fallbackSnapshot,
-            item: fallbackItem,
-            test: fallbackTest,
-          });
-        }
-      }
+          return {
+            ...item,
+            tests: failedTests,
+          };
+        })
+        .filter((item) => item.tests.length > 0);
     }
 
-    // Apply search filter to the base items
     const finalFilteredItems = applySearchFilter(baseItems);
     setFilteredItems(finalFilteredItems);
-  };
-
-  const isFailed = (resolutions: any) => {
-    return resolutions.some((resolution: { extraData: any }) =>
-      resolution.extraData.hasOwnProperty("mismatchedPixels")
-    );
+    onFilteredItemsChange(finalFilteredItems);
   };
 
   useEffect(() => {
     filter();
-  }, [activeFilter, searchQuery]);
+  }, [activeFilter, searchQuery, items]);
+
+  useEffect(() => {
+    if (selectedImage?.item?.props?.name) {
+      setOpenCollapse(selectedImage.item.props.name);
+    }
+  }, [selectedImage]);
 
   return (
     <div className={styles["drawer-container"]}>
+      {createdAt && (
+        <div className={styles.createdAt}>
+          <span className={styles.createdAtLabel}>Report created</span>
+          <span className={styles.createdAtValue}>{createdAt}</span>
+        </div>
+      )}
+
       <div className={styles["tabs-container"]}>
         <div className={styles["menu-container"]}>
           <div
-            key={1}
             className={classNames({
               [styles.tab]: true,
               [styles.active]: activeFilter === "all",
             })}
-            onClick={() => setActiveFilter("all")}
+            onClick={() => onActiveFilterChange("all")}
           >
             All
           </div>
           <div
-            key={2}
             className={classNames({
               [styles.tab]: true,
               [styles.active]: activeFilter === "failed",
             })}
-            onClick={() => setActiveFilter("failed")}
+            onClick={() => onActiveFilterChange("failed")}
           >
-            Failed: {getCounts(items).failed}
+            Failed: {counts.failed}
           </div>
         </div>
       </div>
 
-      {/* Search Bar */}
-      <div className={styles["search-container"]}>
-        <div className={styles["search-input-wrapper"]}>
-          <span className={styles["search-icon"]}>
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path
-                d="M7 12C9.76142 12 12 9.76142 12 7C12 4.23858 9.76142 2 7 2C4.23858 2 2 4.23858 2 7C2 9.76142 4.23858 12 7 12Z"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M10.5 10.5L14 14"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </span>
+      <div className={styles.tools}>
+        <div className={styles.searchField}>
+          <MagnifyingGlass
+            size={15}
+            weight="bold"
+            className={styles.searchIcon}
+          />
           <input
             type="text"
-            placeholder="Search for snapshots..."
+            placeholder="Search snapshots..."
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className={styles["search-input"]}
+            onChange={(event) => setSearchQuery(event.target.value)}
+            className={styles.searchInput}
           />
+          {searchQuery && (
+            <button
+              type="button"
+              className={styles.searchClear}
+              onClick={() => setSearchQuery("")}
+              aria-label="Clear search"
+              title="Clear search"
+            >
+              <X size={12} weight="bold" />
+            </button>
+          )}
+        </div>
+
+        <div className={styles.reviewActions}>
+          <button
+            type="button"
+            className={styles.markAllReviewedButton}
+            onClick={onMarkAllReviewed}
+            disabled={allReviewed || counts.all === 0}
+            title={
+              allReviewed
+                ? "All resolutions are already reviewed"
+                : "Mark every resolution in this report as reviewed"
+            }
+          >
+            <Checks size={15} weight="bold" />
+            <span>Mark all</span>
+          </button>
+          <button
+            type="button"
+            className={styles.clearReviewButton}
+            onClick={onClearReviewData}
+            disabled={!hasReviewedData}
+            title={
+              hasReviewedData
+                ? "Clear review progress for this report"
+                : "No review data saved for this report"
+            }
+          >
+            <Trash size={15} weight="bold" />
+            <span>Clear</span>
+          </button>
         </div>
       </div>
 
+      {activeFilter === "failed" && filteredItems.length === 0 && (
+        <div className={styles["empty-failed"]}>
+          <div className={styles["empty-failed-title"]}>No failures</div>
+          <div className={styles["empty-failed-subtitle"]}>
+            Showing passed snapshots
+          </div>
+          {items.map((item) =>
+            item.tests.flatMap((test) =>
+              test.snapshots.slice(0, 3).map((snapshot) => (
+                <button
+                  key={`${item.props.name}-${snapshot.props.name}`}
+                  type="button"
+                  className={styles["empty-failed-item"]}
+                  onClick={() => {
+                    onActiveFilterChange("all");
+                    imageClickHandler(snapshot, item, test);
+                  }}
+                >
+                  <img
+                    src={snapshot.resolutions[0].images.base}
+                    alt={snapshot.props.name}
+                  />
+                  <span>{snapshot.props.name}</span>
+                </button>
+              ))
+            )
+          )}
+        </div>
+      )}
+
       {filteredItems.length > 0 &&
-        filteredItems.map((item: Item) => {
-          return (
-            <Collapse
-              key={item?.props?.name}
-              title={item?.props?.name}
-              isOpen={openCollapse === item?.props?.name}
-              counts={getCollapseCounts(item.tests)}
-              onToggle={() => {
-                setOpenCollapse((prevOpen) =>
-                  prevOpen === item?.props.name ? null : item.props.name
-                );
-              }}
-            >
-              {item.tests.map((test: Test) => {
-                const testIndex = item.tests.indexOf(test);
-                const testsLength = item.tests.length;
+        filteredItems.map((item) => (
+          <Collapse
+            key={item.props.name}
+            title={item.props.name}
+            isOpen={openCollapse === item.props.name}
+            counts={getCollapseCounts(item.tests)}
+            onToggle={() => {
+              setOpenCollapse((prevOpen) =>
+                prevOpen === item.props.name ? null : item.props.name
+              );
+            }}
+          >
+            {item.tests.map((test, testIndex) => {
+              const isTestLast = testIndex === item.tests.length - 1;
 
-                const isTestLast = testIndex === testsLength - 1;
+              return (
+                <div
+                  className={styles["collapse-container"]}
+                  key={test.props.name}
+                >
+                  {test.snapshots.map((snapshot) => {
+                    const failed = isFailedSnapshot(snapshot.resolutions);
+                    const reviewed = isSnapshotReviewed(
+                      {
+                        item,
+                        test,
+                        snapshot,
+                        resolution: snapshot.resolutions[0],
+                      },
+                      reviewedKeys
+                    );
 
-                return (
-                  <div
-                    className={styles["collapse-container"]}
-                    key={test.props.name}
-                  >
-                    <div className={styles["collapse-name"]}>
-                      {test.props.name}
-                    </div>
-
-                    {test.snapshots.map((snapshot: Snapshot) => {
-                      return (
-                        <SnapshotItem
-                          key={snapshot.props.name}
-                          image={snapshot.resolutions[0].images.base}
-                          snapshotName={snapshot.props.name}
-                          isActive={
-                            selectedImage?.snapshot?.props?.name ===
-                            snapshot?.props?.name
-                          }
-                          onClick={() =>
-                            imageClickHandler(snapshot, item, test)
-                          }
-                          variant={
-                            test.failure && isFailed(snapshot.resolutions)
-                              ? "fail"
-                              : "pass"
-                          }
-                        />
-                      );
-                    })}
-                    {!isTestLast && <div className={styles["line-break"]} />}
-                  </div>
-                );
-              })}
-            </Collapse>
-          );
-        })}
+                    return (
+                      <SnapshotItem
+                        key={snapshot.props.name}
+                        image={snapshot.resolutions[0].images.base}
+                        snapshotName={snapshot.props.name}
+                        isActive={
+                          selectedImage?.snapshot?.props?.name ===
+                            snapshot.props.name &&
+                          selectedImage?.item?.props?.name === item.props.name
+                        }
+                        onClick={() => imageClickHandler(snapshot, item, test)}
+                        variant={failed ? "fail" : "pass"}
+                        reviewed={reviewed}
+                        resolutions={snapshot.resolutions.map((resolution) => ({
+                          size: resolution.size,
+                          reviewed: isResolutionReviewed(
+                            {
+                              item,
+                              test,
+                              snapshot,
+                              resolution,
+                            },
+                            reviewedKeys
+                          ),
+                        }))}
+                      />
+                    );
+                  })}
+                  {!isTestLast && <div className={styles["line-break"]} />}
+                </div>
+              );
+            })}
+          </Collapse>
+        ))}
     </div>
   );
+}
+
+function getCounts(sourceItems: Item[]) {
+  let failed = 0;
+  let passed = 0;
+
+  sourceItems.forEach((item) => {
+    item.tests.forEach((test) => {
+      test.snapshots.forEach((snapshot) => {
+        snapshot.resolutions.forEach((resolution) => {
+          if (isFailedResolution(resolution)) {
+            failed += 1;
+          } else {
+            passed += 1;
+          }
+        });
+      });
+    });
+  });
+
+  return { failed, passed, all: failed + passed };
+}
+
+function getCollapseCounts(tests: Test[]) {
+  let failed = 0;
+  let passed = 0;
+
+  tests.forEach((test) => {
+    test.snapshots.forEach((snapshot) => {
+      snapshot.resolutions.forEach((resolution) => {
+        if (isFailedResolution(resolution)) {
+          failed += 1;
+        } else {
+          passed += 1;
+        }
+      });
+    });
+  });
+
+  return { failed, passed };
 }

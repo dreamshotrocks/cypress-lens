@@ -13,6 +13,15 @@ function removeInvalidCharacters(input) {
   return input.replace(INVALID_CHARACTERS_REGEX, "");
 }
 
+function formatReportDate(date = new Date()) {
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+  const hours = date.getHours();
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  return `${day}/${month}/${year} ${hours}:${minutes}`;
+}
+
 function readWriteSync(text) {
   let data = `
   <!DOCTYPE html>
@@ -30,7 +39,7 @@ function readWriteSync(text) {
   fs.writeFileSync(path.resolve("./cypress/report/index.html"), data, "utf-8");
   fs.writeFileSync(
     path.resolve("./cypress/report/data.js"),
-    `var testData = ${text}`,
+    `var reportCreatedAt = ${JSON.stringify(formatReportDate())};\nvar testData = ${text}`,
     "utf-8"
   );
 }

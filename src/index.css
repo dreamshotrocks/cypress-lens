@@ -4,8 +4,12 @@ html,
 body {
   width: 100%;
   height: 100%;
+  margin: 0;
   background-color: #1c1c1c;
-  overflow: auto;
+  overflow: hidden;
+  font-family: "Inter";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 
   ::-webkit-scrollbar-button:start:decrement {
     display: block;
@@ -29,13 +33,6 @@ body {
 
 #root {
   height: 100%;
-}
-
-body {
-  margin: 0;
-  font-family: "Inter";
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
 }
 
