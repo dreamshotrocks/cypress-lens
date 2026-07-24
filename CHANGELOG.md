@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.18.0](https://github.com/dreamshotrocks/cypress-lens/compare/v1.17.3...v1.18.0) (2026-07-24)
+
+
+### Features
+
+* add configuration and styling updates for improved UI ([e1dc03c](https://github.com/dreamshotrocks/cypress-lens/commit/e1dc03cf4b3673761a4dc91c1cebae050a582b45))
+* enhance EmptyFailedState and App component functionality ([c54d03a](https://github.com/dreamshotrocks/cypress-lens/commit/c54d03a6588f5c0f9b65a236d987b0fe61e693ec))
+* enhance reporting and navigation features ([5c076d7](https://github.com/dreamshotrocks/cypress-lens/commit/5c076d7aa7361580caf4a067776cc65aeb6f5fa0))
+
 ### [1.17.3](https://github.com/dreamshotrocks/cypress-lens/compare/v1.17.2...v1.17.3) (2026-07-01)
 
 ### [1.17.2](https://github.com/dreamshotrocks/cypress-lens/compare/v1.17.1...v1.17.2) (2026-05-18)
