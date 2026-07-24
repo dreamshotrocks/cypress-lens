@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   ArrowLeft,
+  BarChart3,
   CheckCheck,
   ExternalLink,
   Search,
@@ -8,6 +9,7 @@ import {
   X,
 } from "lucide-react";
 import Collapse from "./Collapse";
+import ReportMetricsModal from "./ReportMetricsModal";
 import SnapshotItem from "./SnapshotItem";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,13 +18,20 @@ import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Item, SelectedImage, Snapshot, Test } from "@/types/ReporterTypes";
 import { isFailedResolution, isFailedSnapshot } from "@/utils/failure";
+import {
+  MISMATCH_SEVERITY_BUCKETS,
+  MismatchSeverityId,
+  resolutionMatchesSeverity,
+} from "@/utils/mismatchSeverity";
 import { getReportCreatedAt } from "@/utils/reportCreatedAt";
+import { computeReportMetrics } from "@/utils/reportMetrics";
 import {
   areAllFailedResolutionsReviewed,
   getFailedResolutionEntries,
   isResolutionReviewed,
   isSnapshotReviewed,
 } from "@/utils/reviewedSnapshots";
+import { cn } from "@/lib/utils";
 
 const ALL_REPORTS_URL = "https://portal.octoplay.com/automation";
 
@@ -54,6 +63,10 @@ export default function Navigation({
   const [openCollapse, setOpenCollapse] = useState<string | null>(
     items[0]?.props.name ?? null
   );
+  const [metricsOpen, setMetricsOpen] = useState(false);
+  const [severityFilters, setSeverityFilters] = useState<
+    Set<MismatchSeverityId>
+  >(() => new Set());
 
   const createdAt = getReportCreatedAt(items);
   const hasReviewedData = reviewedKeys.size > 0;
@@ -63,12 +76,40 @@ export default function Navigation({
     reviewedKeys
   );
   const counts = getCounts(items);
+  const severityCounts = useMemo(() => {
+    const metrics = computeReportMetrics(items, reviewedKeys);
+    return Object.fromEntries(
+      MISMATCH_SEVERITY_BUCKETS.map((bucket, index) => [
+        bucket.id,
+        metrics.mismatchBuckets[index]?.count ?? 0,
+      ])
+    ) as Record<MismatchSeverityId, number>;
+  }, [items, reviewedKeys]);
+  const hasSeverityFilter = severityFilters.size > 0;
+
+  const toggleSeverityFilter = (id: MismatchSeverityId) => {
+    setSeverityFilters((current) => {
+      const next = new Set(current);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+  };
 
   const imageClickHandler = (snapshot: Snapshot, item: Item, test: Test) => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     document.body.scrollTop = 0;
     const resolution =
-      snapshot.resolutions.find(isFailedResolution) || snapshot.resolutions[0];
+      snapshot.resolutions.find(
+        (itemResolution) =>
+          isFailedResolution(itemResolution) &&
+          resolutionMatchesSeverity(itemResolution, severityFilters)
+      ) ||
+      snapshot.resolutions.find(isFailedResolution) ||
+      snapshot.resolutions[0];
     onImageClick({
       snapshot,
       item,
@@ -119,7 +160,7 @@ export default function Navigation({
   const filter = () => {
     let baseItems = items;
 
-    if (activeFilter === "failed") {
+    if (activeFilter === "failed" || hasSeverityFilter) {
       baseItems = items
         .map((item) => {
           const failedTests = item.tests
@@ -128,7 +169,15 @@ export default function Navigation({
               snapshots: test.snapshots
                 .map((snapshot) => {
                   const validResolutions = snapshot.resolutions.filter(
-                    isFailedResolution
+                    (resolution) => {
+                      if (!isFailedResolution(resolution)) {
+                        return false;
+                      }
+                      return resolutionMatchesSeverity(
+                        resolution,
+                        severityFilters
+                      );
+                    }
                   );
                   return validResolutions.length > 0
                     ? { ...snapshot, resolutions: validResolutions }
@@ -153,7 +202,7 @@ export default function Navigation({
 
   useEffect(() => {
     filter();
-  }, [activeFilter, searchQuery, items]);
+  }, [activeFilter, searchQuery, items, severityFilters]);
 
   useEffect(() => {
     if (selectedImage?.item?.props?.name) {
@@ -175,24 +224,37 @@ export default function Navigation({
           ) : (
             <div />
           )}
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            asChild
-            className="shrink-0 text-xs"
-          >
-            <a
-              href={ALL_REPORTS_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Open all automation reports"
+          <div className="flex shrink-0 flex-col gap-1.5">
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              asChild
+              className="text-xs"
             >
-              <ArrowLeft className="size-3.5" />
-              All reports
-              <ExternalLink className="size-3 opacity-70" />
-            </a>
-          </Button>
+              <a
+                href={ALL_REPORTS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Open all automation reports"
+              >
+                <ArrowLeft className="size-3.5" />
+                All reports
+                <ExternalLink className="size-3 opacity-70" />
+              </a>
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => setMetricsOpen(true)}
+              title="Open report metrics"
+              className="text-xs"
+            >
+              <BarChart3 className="size-3.5" />
+              Metrics
+            </Button>
+          </div>
         </div>
 
         <Tabs
@@ -205,6 +267,58 @@ export default function Navigation({
             <TabsTrigger value="failed">Failed: {counts.failed}</TabsTrigger>
           </TabsList>
         </Tabs>
+
+        <div className="space-y-2 rounded-xl border border-border bg-background/50 p-3">
+          <div className="flex items-center justify-between gap-2 px-0.5">
+            <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+              Mismatch severity
+            </div>
+            {hasSeverityFilter && (
+              <button
+                type="button"
+                onClick={() => setSeverityFilters(new Set())}
+                className="text-[10px] font-medium text-primary hover:underline"
+              >
+                Clear
+              </button>
+            )}
+          </div>
+          <div className="grid grid-cols-2 gap-1.5">
+            {MISMATCH_SEVERITY_BUCKETS.map((bucket) => {
+              const selected = severityFilters.has(bucket.id);
+              const count = severityCounts[bucket.id] ?? 0;
+
+              return (
+                <Button
+                  key={bucket.id}
+                  type="button"
+                  size="sm"
+                  variant={selected ? "default" : "outline"}
+                  disabled={count === 0 && !selected}
+                  onClick={() => toggleSeverityFilter(bucket.id)}
+                  title={`Filter failed resolutions with ${bucket.label}`}
+                  className={cn(
+                    "h-8 justify-between px-2 text-[11px]",
+                    selected && "border-primary"
+                  )}
+                >
+                  <span>{bucket.shortLabel}</span>
+                  <span
+                    className={cn(
+                      "tabular-nums",
+                      selected ? "text-primary-foreground/80" : "text-muted-foreground"
+                    )}
+                  >
+                    {count}
+                  </span>
+                </Button>
+              );
+            })}
+          </div>
+          <p className="px-0.5 text-[10px] leading-relaxed text-muted-foreground">
+            Filter by mismatched pixel amount.
+          </p>
+        </div>
 
         <div className="space-y-2.5 rounded-xl border border-border bg-background/50 p-3">
           <div className="relative">
@@ -272,13 +386,25 @@ export default function Navigation({
 
       <Separator className="shrink-0" />
 
+      <ReportMetricsModal
+        open={metricsOpen}
+        items={items}
+        reviewedKeys={reviewedKeys}
+        onClose={() => setMetricsOpen(false)}
+      />
+
       <ScrollArea className="min-h-0 flex-1 overflow-hidden">
         <div className="py-2">
-          {activeFilter === "failed" && filteredItems.length === 0 && (
+          {(activeFilter === "failed" || hasSeverityFilter) &&
+            filteredItems.length === 0 && (
             <div className="space-y-1 px-4 py-3">
-              <div className="text-sm font-semibold">No failures</div>
+              <div className="text-sm font-semibold">
+                {hasSeverityFilter ? "No matches" : "No failures"}
+              </div>
               <div className="text-xs text-muted-foreground">
-                Passed snapshot previews are shown on the right
+                {hasSeverityFilter
+                  ? "No failed resolutions in the selected severity ranges"
+                  : "Passed snapshot previews are shown on the right"}
               </div>
             </div>
           )}

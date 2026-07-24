@@ -13,6 +13,7 @@ import Baseline from "./imageViews/Baseline";
 import SideBySide from "./imageViews/SideBySideView";
 import Slider from "./imageViews/Slider";
 import Overlay from "./imageViews/Overlay";
+import ZoomableViewport from "./ZoomableViewport";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -205,23 +206,35 @@ export default function ImageTabs({
           )}
         </div>
 
-        <div className="w-full">
-          {activeView === "Baseline" && (
-            <Baseline src={activeResolution.images.base} />
-          )}
-          {activeView === "Side By Side" && (
-            <SideBySide snapshotResolution={activeResolution} />
-          )}
-          {activeView === "Difference" && (
-            <Baseline src={activeResolution.images.diff} />
-          )}
-          {activeView === "Slider" && (
-            <Slider snapshotResolution={activeResolution} />
-          )}
-          {activeView === "Overlay" && (
-            <Overlay snapshotResolution={activeResolution} />
-          )}
-        </div>
+        {activeView === "Overlay" ? (
+          <Overlay
+            snapshotResolution={activeResolution}
+            bordered={false}
+          />
+        ) : activeView === "Side By Side" ? (
+          <SideBySide snapshotResolution={activeResolution} />
+        ) : (
+          <ZoomableViewport
+            resetKey={[
+              snapshot.props.name,
+              activeResolution.size ?? "default",
+              activeView,
+            ].join("::")}
+          >
+            {activeView === "Baseline" && (
+              <Baseline src={activeResolution.images.base} bordered={false} />
+            )}
+            {activeView === "Difference" && (
+              <Baseline src={activeResolution.images.diff} bordered={false} />
+            )}
+            {activeView === "Slider" && (
+              <Slider
+                snapshotResolution={activeResolution}
+                bordered={false}
+              />
+            )}
+          </ZoomableViewport>
+        )}
       </div>
 
       {showNavigation && (
@@ -231,14 +244,14 @@ export default function ImageTabs({
             variant="outline"
             onClick={onPrevious}
             disabled={!hasPrevious}
-            title="Previous snapshot (←)"
+            title="Previous snapshot"
             aria-label="Previous snapshot"
             className="min-w-[132px]"
           >
             <ArrowLeft className="size-4" />
             Previous
             <Badge variant="muted" className="font-mono text-[10px]">
-              ←
+              <ArrowLeft className="size-3" aria-hidden="true" />
             </Badge>
           </Button>
 
@@ -259,14 +272,14 @@ export default function ImageTabs({
             variant="outline"
             onClick={onNext}
             disabled={!hasNext}
-            title="Next snapshot (→)"
+            title="Next snapshot"
             aria-label="Next snapshot"
             className="min-w-[132px]"
           >
             Next
             <ArrowRight className="size-4" />
             <Badge variant="muted" className="font-mono text-[10px]">
-              →
+              <ArrowRight className="size-3" aria-hidden="true" />
             </Badge>
           </Button>
         </div>

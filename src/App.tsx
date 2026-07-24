@@ -211,11 +211,8 @@ function App() {
   useEffect(() => {
     setSelectedImage((current) => {
       if (snapshotList.length === 0) {
-        if (activeFilter === "failed") {
-          syncSnapshotQueryParam(null);
-          return null;
-        }
-        return current;
+        syncSnapshotQueryParam(null);
+        return null;
       }
       const next = resolveSelectionInList(snapshotList, current);
       syncSnapshotQueryParam(next);
