@@ -1,31 +1,31 @@
+import { useEffect, useState } from "react";
 import {
   ArrowLeft,
   ArrowRight,
-  ArrowsInLineVertical,
   Check,
-  ExcludeSquare,
-  Image,
-  SelectionInverse,
-  SquareHalf,
-} from "@phosphor-icons/react";
-import styles from "./ImageTabs.module.scss";
-import { useState } from "react";
+  Columns2,
+  Diff,
+  Image as ImageIcon,
+  Layers,
+  SlidersHorizontal,
+} from "lucide-react";
 import Baseline from "./imageViews/Baseline";
 import SideBySide from "./imageViews/SideBySideView";
 import Slider from "./imageViews/Slider";
 import Overlay from "./imageViews/Overlay";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import {
   Resolution,
   SelectedImage,
   Snapshot,
   Test,
-} from "../types/ReporterTypes";
-import classNames from "classnames";
-import {
-  isFailedResolution,
-  isFailedSnapshot,
-} from "../utils/failure";
-import { isResolutionReviewed } from "../utils/reviewedSnapshots";
+} from "@/types/ReporterTypes";
+import { isFailedResolution, isFailedSnapshot } from "@/utils/failure";
+import { isResolutionReviewed } from "@/utils/reviewedSnapshots";
+import { cn } from "@/lib/utils";
 
 interface ImageTabsProps {
   test: Test;
@@ -44,40 +44,14 @@ interface ImageTabsProps {
 }
 
 const VIEW_TABS = [
-  {
-    tabIcon: Image,
-    tabText: "Baseline",
-    shortText: "Baseline",
-    id: "tab1",
-  },
-  {
-    tabIcon: SquareHalf,
-    tabText: "Side By Side",
-    shortText: "Side by side",
-    id: "tab2",
-  },
-  {
-    tabIcon: ExcludeSquare,
-    tabText: "Difference",
-    shortText: "Diff",
-    id: "tab3",
-  },
-  {
-    tabIcon: ArrowsInLineVertical,
-    tabText: "Slider",
-    shortText: "Slider",
-    id: "tab4",
-  },
-  {
-    tabIcon: SelectionInverse,
-    tabText: "Overlay",
-    shortText: "Overlay",
-    id: "tab5",
-  },
+  { id: "tab1", tabText: "Baseline", shortText: "Baseline", Icon: ImageIcon },
+  { id: "tab2", tabText: "Side By Side", shortText: "Side by side", Icon: Columns2 },
+  { id: "tab3", tabText: "Difference", shortText: "Diff", Icon: Diff },
+  { id: "tab4", tabText: "Slider", shortText: "Slider", Icon: SlidersHorizontal },
+  { id: "tab5", tabText: "Overlay", shortText: "Overlay", Icon: Layers },
 ] as const;
 
 export default function ImageTabs({
-  test,
   snapshot,
   activeResolution,
   reviewedKeys,
@@ -97,43 +71,87 @@ export default function ImageTabs({
     VIEW_TABS.find((tab) => tab.id === activeTabId) ?? VIEW_TABS[0];
   const activeView = snapshotHasFailure ? activeTab.tabText : "Baseline";
 
+  useEffect(() => {
+    if (!snapshotHasFailure) {
+      return;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "v" && event.key !== "V") {
+        return;
+      }
+
+      const target = event.target as HTMLElement | null;
+      if (
+        target &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.isContentEditable)
+      ) {
+        return;
+      }
+
+      if (event.metaKey || event.ctrlKey || event.altKey) {
+        return;
+      }
+
+      event.preventDefault();
+      setActiveTabId((currentId) => {
+        const index = VIEW_TABS.findIndex((tab) => tab.id === currentId);
+        const nextIndex = index < 0 ? 0 : (index + 1) % VIEW_TABS.length;
+        return VIEW_TABS[nextIndex].id;
+      });
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [snapshotHasFailure]);
+
   return (
     <>
-      <div className={styles["tabs-container"]}>
-        <div className={styles.toolbar}>
+      <div className="flex w-full flex-col items-center gap-5">
+        <div className="flex w-full flex-wrap items-end justify-center gap-4">
           {snapshotHasFailure && (
-            <div className={styles.toolbarGroup}>
-              <span className={styles.groupLabel}>View</span>
-              <div className={styles.viewTabs} role="tablist">
-                {VIEW_TABS.map((tab) => {
-                  const Icon = tab.tabIcon;
-                  const isActive = activeTabId === tab.id;
-
-                  return (
-                    <button
-                      key={tab.id}
-                      type="button"
-                      role="tab"
-                      aria-selected={isActive}
-                      className={classNames(styles.viewTab, {
-                        [styles.viewTabActive]: isActive,
-                      })}
-                      onClick={() => setActiveTabId(tab.id)}
-                      title={tab.tabText}
-                    >
-                      <Icon size={15} weight={isActive ? "fill" : "regular"} />
-                      <span>{tab.shortText}</span>
-                    </button>
-                  );
-                })}
-              </div>
+            <div className="flex min-w-0 flex-col gap-2">
+              <span className="flex items-center gap-1.5 px-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                View
+                <Badge variant="muted" className="font-mono text-[10px] normal-case tracking-normal">
+                  V
+                </Badge>
+              </span>
+              <ToggleGroup
+                type="single"
+                value={activeTabId}
+                onValueChange={(value) => {
+                  if (value) setActiveTabId(value);
+                }}
+                variant="outline"
+                size="sm"
+                className="flex flex-wrap justify-start rounded-xl border border-border bg-card p-1"
+              >
+                {VIEW_TABS.map((tab) => (
+                  <ToggleGroupItem
+                    key={tab.id}
+                    value={tab.id}
+                    title={tab.tabText}
+                    className={cn(
+                      "gap-1.5 px-3 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
+                    )}
+                  >
+                    <tab.Icon className="size-3.5" />
+                    <span className="hidden sm:inline">{tab.shortText}</span>
+                  </ToggleGroupItem>
+                ))}
+              </ToggleGroup>
             </div>
           )}
 
           {activeResolution.size && (
-            <div className={styles.toolbarGroup}>
-              <span className={styles.groupLabel}>Resolution</span>
-              <div className={styles.resolutionTabs}>
+            <div className="flex min-w-0 flex-col gap-2">
+              <span className="px-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                Resolution
+              </span>
+              <div className="flex flex-wrap gap-1.5 rounded-xl border border-border bg-card p-1.5">
                 {snapshot?.resolutions.map((resolution, index) => {
                   const resolutionFailed = isFailedResolution(resolution);
                   const resolutionReviewed =
@@ -146,15 +164,11 @@ export default function ImageTabs({
                   const isActive = activeResolution.size === resolution.size;
 
                   return (
-                    <button
+                    <Button
                       key={index}
                       type="button"
-                      className={classNames(styles.resolutionTab, {
-                        [styles.resolutionActive]: isActive,
-                        [styles.resolutionFailed]: resolutionFailed,
-                        [styles.resolutionPassed]: !resolutionFailed,
-                        [styles.resolutionReviewed]: resolutionReviewed,
-                      })}
+                      size="sm"
+                      variant={isActive ? "default" : "ghost"}
                       onClick={() => onResolutionChange(resolution)}
                       title={
                         resolutionReviewed
@@ -163,12 +177,27 @@ export default function ImageTabs({
                             ? `${resolution.size} · failed`
                             : `${resolution.size} · passed`
                       }
+                      className={cn(
+                        "h-8 gap-1 font-mono text-xs",
+                        !isActive &&
+                          resolutionFailed &&
+                          !resolutionReviewed &&
+                          "text-destructive hover:text-destructive",
+                        !isActive &&
+                          (!resolutionFailed || resolutionReviewed) &&
+                          "text-success hover:text-success",
+                        isActive &&
+                          resolutionFailed &&
+                          !resolutionReviewed &&
+                          "bg-destructive/80 hover:bg-destructive",
+                        isActive &&
+                          (!resolutionFailed || resolutionReviewed) &&
+                          "bg-success text-success-foreground hover:bg-success/90"
+                      )}
                     >
-                      {resolutionReviewed ? (
-                        <Check size={12} weight="bold" />
-                      ) : null}
-                      <span>{resolution.size}</span>
-                    </button>
+                      {resolutionReviewed && <Check className="size-3" />}
+                      {resolution.size}
+                    </Button>
                   );
                 })}
               </div>
@@ -176,7 +205,7 @@ export default function ImageTabs({
           )}
         </div>
 
-        <div className={styles["tabs"]}>
+        <div className="w-full">
           {activeView === "Baseline" && (
             <Baseline src={activeResolution.images.base} />
           )}
@@ -194,45 +223,52 @@ export default function ImageTabs({
           )}
         </div>
       </div>
+
       {showNavigation && (
-        <div className={styles["navigation-controls"]}>
-          <button
+        <div className="mt-5 flex flex-wrap items-center justify-center gap-4">
+          <Button
             type="button"
-            className={styles["nav-button"]}
+            variant="outline"
             onClick={onPrevious}
             disabled={!hasPrevious}
-            aria-label="Previous snapshot"
             title="Previous snapshot (←)"
+            aria-label="Previous snapshot"
+            className="min-w-[132px]"
           >
-            <ArrowLeft size={16} weight="bold" />
+            <ArrowLeft className="size-4" />
             Previous
-            <span className={styles["shortcut-hint"]}>←</span>
-          </button>
+            <Badge variant="muted" className="font-mono text-[10px]">
+              ←
+            </Badge>
+          </Button>
 
-          <div className={styles["badge-container"]}>
-            <div className={styles.text}>
+          <Card className="min-w-[240px] px-5 py-3 text-center shadow-none">
+            <div className="px-1 text-xs leading-relaxed text-foreground/80">
               {snapshot?.props.name} - {activeResolution.extraData.date}
             </div>
             {totalCount > 0 && currentIndex >= 0 && (
-              <div className={styles.counter}>
+              <div className="mt-1.5 text-[11px] text-muted-foreground">
                 {currentIndex + 1} / {totalCount}
                 {activeResolution.size ? ` · ${activeResolution.size}` : ""}
               </div>
             )}
-          </div>
+          </Card>
 
-          <button
+          <Button
             type="button"
-            className={styles["nav-button"]}
+            variant="outline"
             onClick={onNext}
             disabled={!hasNext}
-            aria-label="Next snapshot"
             title="Next snapshot (→)"
+            aria-label="Next snapshot"
+            className="min-w-[132px]"
           >
             Next
-            <ArrowRight size={16} weight="bold" />
-            <span className={styles["shortcut-hint"]}>→</span>
-          </button>
+            <ArrowRight className="size-4" />
+            <Badge variant="muted" className="font-mono text-[10px]">
+              →
+            </Badge>
+          </Button>
         </div>
       )}
     </>

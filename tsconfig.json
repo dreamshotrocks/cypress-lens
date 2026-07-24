@@ -15,7 +15,11 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "types": ["vite/client"]
+    "types": ["vite/client", "node"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
-  "include": ["src", "plugin/command.d.ts", "plugin/command.d.ts"]
+  "include": ["src", "plugin/command.d.ts", "vite.config.mts"]
 }

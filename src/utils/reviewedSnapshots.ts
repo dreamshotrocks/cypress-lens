@@ -54,6 +54,12 @@ export function markResolutionReviewed(
   reviewed: boolean
 ): Set<string> {
   const keys = loadReviewedKeys(reportId);
+
+  // Only failed resolutions can be reviewed
+  if (!isFailedResolution(entry.resolution)) {
+    return keys;
+  }
+
   const key = getResolutionReviewKey(entry);
 
   if (reviewed) {
@@ -66,29 +72,18 @@ export function markResolutionReviewed(
   return keys;
 }
 
+/** Marks every failed resolution as reviewed. */
 export function markAllResolutionsReviewed(
   reportId: string | null,
   items: Item[]
 ): Set<string> {
   const keys = new Set(
-    flattenSnapshots(items).map((entry) => getResolutionReviewKey(entry))
+    getFailedResolutionEntries(items).map((entry) =>
+      getResolutionReviewKey(entry)
+    )
   );
   saveReviewedKeys(reportId, keys);
   return keys;
-}
-
-export function areAllResolutionsReviewed(
-  items: Item[],
-  reviewedKeys: Set<string>
-): boolean {
-  const entries = flattenSnapshots(items);
-  if (entries.length === 0) {
-    return false;
-  }
-
-  return entries.every((entry) =>
-    reviewedKeys.has(getResolutionReviewKey(entry))
-  );
 }
 
 export function getFailedResolutionEntries(items: Item[]): SelectedImage[] {
@@ -115,20 +110,29 @@ export function isResolutionReviewed(
   entry: SelectedImage,
   reviewedKeys: Set<string>
 ): boolean {
+  if (!isFailedResolution(entry.resolution)) {
+    return false;
+  }
+
   return reviewedKeys.has(getResolutionReviewKey(entry));
 }
 
-/** Snapshot is reviewed only when every resolution has been reviewed. */
+/**
+ * Snapshot is reviewed only when every failed resolution has been reviewed.
+ * Passed-only snapshots are never "reviewed".
+ */
 export function isSnapshotReviewed(
   entry: SelectedImage,
   reviewedKeys: Set<string>
 ): boolean {
-  const resolutions = entry.snapshot.resolutions;
-  if (resolutions.length === 0) {
+  const failedResolutions = entry.snapshot.resolutions.filter(
+    isFailedResolution
+  );
+  if (failedResolutions.length === 0) {
     return false;
   }
 
-  return resolutions.every((resolution) =>
+  return failedResolutions.every((resolution) =>
     reviewedKeys.has(
       getResolutionReviewKey({
         ...entry,

@@ -1,20 +1,30 @@
 import { useEffect, useState } from "react";
-import { Checks, MagnifyingGlass, Trash, X } from "@phosphor-icons/react";
-import classNames from "classnames";
-import styles from "./Navigation.module.scss";
+import {
+  ArrowLeft,
+  CheckCheck,
+  ExternalLink,
+  Search,
+  Trash2,
+  X,
+} from "lucide-react";
 import Collapse from "./Collapse";
 import SnapshotItem from "./SnapshotItem";
-import { Item, SelectedImage, Snapshot, Test } from "../types/ReporterTypes";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Item, SelectedImage, Snapshot, Test } from "@/types/ReporterTypes";
+import { isFailedResolution, isFailedSnapshot } from "@/utils/failure";
+import { getReportCreatedAt } from "@/utils/reportCreatedAt";
 import {
-  isFailedResolution,
-  isFailedSnapshot,
-} from "../utils/failure";
-import { getReportCreatedAt } from "../utils/reportCreatedAt";
-import {
-  areAllResolutionsReviewed,
+  areAllFailedResolutionsReviewed,
+  getFailedResolutionEntries,
   isResolutionReviewed,
   isSnapshotReviewed,
-} from "../utils/reviewedSnapshots";
+} from "@/utils/reviewedSnapshots";
+
+const ALL_REPORTS_URL = "https://portal.octoplay.com/automation";
 
 interface NavigationProps {
   items: Item[];
@@ -47,7 +57,11 @@ export default function Navigation({
 
   const createdAt = getReportCreatedAt(items);
   const hasReviewedData = reviewedKeys.size > 0;
-  const allReviewed = areAllResolutionsReviewed(items, reviewedKeys);
+  const failedCount = getFailedResolutionEntries(items).length;
+  const allFailedReviewed = areAllFailedResolutionsReviewed(
+    items,
+    reviewedKeys
+  );
   const counts = getCounts(items);
 
   const imageClickHandler = (snapshot: Snapshot, item: Item, test: Test) => {
@@ -148,172 +162,197 @@ export default function Navigation({
   }, [selectedImage]);
 
   return (
-    <div className={styles["drawer-container"]}>
-      {createdAt && (
-        <div className={styles.createdAt}>
-          <span className={styles.createdAtLabel}>Report created</span>
-          <span className={styles.createdAtValue}>{createdAt}</span>
-        </div>
-      )}
-
-      <div className={styles["tabs-container"]}>
-        <div className={styles["menu-container"]}>
-          <div
-            className={classNames({
-              [styles.tab]: true,
-              [styles.active]: activeFilter === "all",
-            })}
-            onClick={() => onActiveFilterChange("all")}
-          >
-            All
-          </div>
-          <div
-            className={classNames({
-              [styles.tab]: true,
-              [styles.active]: activeFilter === "failed",
-            })}
-            onClick={() => onActiveFilterChange("failed")}
-          >
-            Failed: {counts.failed}
-          </div>
-        </div>
-      </div>
-
-      <div className={styles.tools}>
-        <div className={styles.searchField}>
-          <MagnifyingGlass
-            size={15}
-            weight="bold"
-            className={styles.searchIcon}
-          />
-          <input
-            type="text"
-            placeholder="Search snapshots..."
-            value={searchQuery}
-            onChange={(event) => setSearchQuery(event.target.value)}
-            className={styles.searchInput}
-          />
-          {searchQuery && (
-            <button
-              type="button"
-              className={styles.searchClear}
-              onClick={() => setSearchQuery("")}
-              aria-label="Clear search"
-              title="Clear search"
-            >
-              <X size={12} weight="bold" />
-            </button>
+    <div className="flex h-full min-h-0 flex-col">
+      <div className="shrink-0 space-y-3.5 p-3.5 pb-3">
+        <div className="flex items-start justify-between gap-2 px-0.5">
+          {createdAt ? (
+            <div className="min-w-0 space-y-1">
+              <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                Report created
+              </div>
+              <div className="text-xs text-foreground/80">{createdAt}</div>
+            </div>
+          ) : (
+            <div />
           )}
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            asChild
+            className="shrink-0 text-xs"
+          >
+            <a
+              href={ALL_REPORTS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Open all automation reports"
+            >
+              <ArrowLeft className="size-3.5" />
+              All reports
+              <ExternalLink className="size-3 opacity-70" />
+            </a>
+          </Button>
         </div>
 
-        <div className={styles.reviewActions}>
-          <button
-            type="button"
-            className={styles.markAllReviewedButton}
-            onClick={onMarkAllReviewed}
-            disabled={allReviewed || counts.all === 0}
-            title={
-              allReviewed
-                ? "All resolutions are already reviewed"
-                : "Mark every resolution in this report as reviewed"
-            }
-          >
-            <Checks size={15} weight="bold" />
-            <span>Mark all</span>
-          </button>
-          <button
-            type="button"
-            className={styles.clearReviewButton}
-            onClick={onClearReviewData}
-            disabled={!hasReviewedData}
-            title={
-              hasReviewedData
-                ? "Clear review progress for this report"
-                : "No review data saved for this report"
-            }
-          >
-            <Trash size={15} weight="bold" />
-            <span>Clear</span>
-          </button>
+        <Tabs
+          value={activeFilter}
+          onValueChange={onActiveFilterChange}
+          className="w-full"
+        >
+          <TabsList className="grid h-10 w-full grid-cols-2">
+            <TabsTrigger value="all">All</TabsTrigger>
+            <TabsTrigger value="failed">Failed: {counts.failed}</TabsTrigger>
+          </TabsList>
+        </Tabs>
+
+        <div className="space-y-2.5 rounded-xl border border-border bg-background/50 p-3">
+          <div className="relative">
+            <Search className="pointer-events-none absolute left-2.5 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              type="text"
+              placeholder="Search snapshots..."
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
+              className="h-9 bg-background pl-8 pr-8 text-xs"
+            />
+            {searchQuery && (
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                className="absolute right-1 top-1/2 size-7 -translate-y-1/2"
+                onClick={() => setSearchQuery("")}
+                aria-label="Clear search"
+                title="Clear search"
+              >
+                <X className="size-3.5" />
+              </Button>
+            )}
+          </div>
+
+          <div className="grid grid-cols-2 gap-2">
+            <Button
+              type="button"
+              variant="success"
+              size="sm"
+              onClick={onMarkAllReviewed}
+              disabled={failedCount === 0 || allFailedReviewed}
+              title={
+                failedCount === 0
+                  ? "No failed resolutions to review"
+                  : allFailedReviewed
+                    ? "All failed resolutions are already reviewed"
+                    : "Mark every failed resolution as reviewed"
+              }
+              className="text-xs"
+            >
+              <CheckCheck className="size-3.5" />
+              Mark all
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={onClearReviewData}
+              disabled={!hasReviewedData}
+              title={
+                hasReviewedData
+                  ? "Clear review progress for this report"
+                  : "No review data saved for this report"
+              }
+              className="text-xs hover:border-destructive/50 hover:bg-destructive/10 hover:text-destructive"
+            >
+              <Trash2 className="size-3.5" />
+              Clear
+            </Button>
+          </div>
         </div>
       </div>
 
-      {activeFilter === "failed" && filteredItems.length === 0 && (
-        <div className={styles["empty-failed"]}>
-          <div className={styles["empty-failed-title"]}>No failures</div>
-          <div className={styles["empty-failed-subtitle"]}>
-            Passed snapshot previews are shown on the right
-          </div>
+      <Separator className="shrink-0" />
+
+      <ScrollArea className="min-h-0 flex-1 overflow-hidden">
+        <div className="py-2">
+          {activeFilter === "failed" && filteredItems.length === 0 && (
+            <div className="space-y-1 px-4 py-3">
+              <div className="text-sm font-semibold">No failures</div>
+              <div className="text-xs text-muted-foreground">
+                Passed snapshot previews are shown on the right
+              </div>
+            </div>
+          )}
+
+          {filteredItems.map((item) => (
+            <Collapse
+              key={item.props.name}
+              title={item.props.name}
+              isOpen={openCollapse === item.props.name}
+              counts={getCollapseCounts(item.tests)}
+              onToggle={() => {
+                setOpenCollapse((prevOpen) =>
+                  prevOpen === item.props.name ? null : item.props.name
+                );
+              }}
+            >
+              {item.tests.map((test, testIndex) => {
+                const isTestLast = testIndex === item.tests.length - 1;
+
+                return (
+                  <div key={test.props.name} className="pb-1">
+                    {test.snapshots.map((snapshot) => {
+                      const failed = isFailedSnapshot(snapshot.resolutions);
+                      const reviewed = isSnapshotReviewed(
+                        {
+                          item,
+                          test,
+                          snapshot,
+                          resolution: snapshot.resolutions[0],
+                        },
+                        reviewedKeys
+                      );
+
+                      return (
+                        <SnapshotItem
+                          key={snapshot.props.name}
+                          image={snapshot.resolutions[0].images.base}
+                          snapshotName={snapshot.props.name}
+                          isActive={
+                            selectedImage?.snapshot?.props?.name ===
+                              snapshot.props.name &&
+                            selectedImage?.item?.props?.name === item.props.name
+                          }
+                          onClick={() =>
+                            imageClickHandler(snapshot, item, test)
+                          }
+                          variant={failed ? "fail" : "pass"}
+                          reviewed={reviewed}
+                          resolutions={snapshot.resolutions.map(
+                            (resolution) => ({
+                              size: resolution.size,
+                              failed: isFailedResolution(resolution),
+                              reviewed: isResolutionReviewed(
+                                {
+                                  item,
+                                  test,
+                                  snapshot,
+                                  resolution,
+                                },
+                                reviewedKeys
+                              ),
+                            })
+                          )}
+                        />
+                      );
+                    })}
+                    {!isTestLast && <Separator className="mx-3 my-3 w-auto" />}
+                  </div>
+                );
+              })}
+            </Collapse>
+          ))}
         </div>
-      )}
-
-      {filteredItems.length > 0 &&
-        filteredItems.map((item) => (
-          <Collapse
-            key={item.props.name}
-            title={item.props.name}
-            isOpen={openCollapse === item.props.name}
-            counts={getCollapseCounts(item.tests)}
-            onToggle={() => {
-              setOpenCollapse((prevOpen) =>
-                prevOpen === item.props.name ? null : item.props.name
-              );
-            }}
-          >
-            {item.tests.map((test, testIndex) => {
-              const isTestLast = testIndex === item.tests.length - 1;
-
-              return (
-                <div
-                  className={styles["collapse-container"]}
-                  key={test.props.name}
-                >
-                  {test.snapshots.map((snapshot) => {
-                    const failed = isFailedSnapshot(snapshot.resolutions);
-                    const reviewed = isSnapshotReviewed(
-                      {
-                        item,
-                        test,
-                        snapshot,
-                        resolution: snapshot.resolutions[0],
-                      },
-                      reviewedKeys
-                    );
-
-                    return (
-                      <SnapshotItem
-                        key={snapshot.props.name}
-                        image={snapshot.resolutions[0].images.base}
-                        snapshotName={snapshot.props.name}
-                        isActive={
-                          selectedImage?.snapshot?.props?.name ===
-                            snapshot.props.name &&
-                          selectedImage?.item?.props?.name === item.props.name
-                        }
-                        onClick={() => imageClickHandler(snapshot, item, test)}
-                        variant={failed ? "fail" : "pass"}
-                        reviewed={reviewed}
-                        resolutions={snapshot.resolutions.map((resolution) => ({
-                          size: resolution.size,
-                          reviewed: isResolutionReviewed(
-                            {
-                              item,
-                              test,
-                              snapshot,
-                              resolution,
-                            },
-                            reviewedKeys
-                          ),
-                        }))}
-                      />
-                    );
-                  })}
-                  {!isTestLast && <div className={styles["line-break"]} />}
-                </div>
-              );
-            })}
-          </Collapse>
-        ))}
+      </ScrollArea>
     </div>
   );
 }

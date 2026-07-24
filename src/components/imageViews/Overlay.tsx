@@ -1,8 +1,6 @@
-import styles from "./Overlay.module.scss";
-import classNames from "classnames";
 import { useState } from "react";
 import TransparencySlider from "../TransparencySlider";
-import { Resolution } from "../../types/ReporterTypes";
+import { Resolution } from "@/types/ReporterTypes";
 
 interface OverlayProps {
   snapshotResolution: Resolution;
@@ -11,30 +9,31 @@ interface OverlayProps {
 export default function Overlay({ snapshotResolution }: OverlayProps) {
   const [transparent, setTransparent] = useState(0.5);
 
-  const handleAppSliderChange = (newValue: number) => {
-    setTransparent(newValue);
-  };
-
   return (
-    <div className={styles["container"]}>
+    <div className="flex w-full flex-col items-center gap-3">
       <TransparencySlider
         value={transparent}
-        onChange={handleAppSliderChange}
+        onChange={setTransparent}
       />
-      <div className={styles["image-container"]}>
+      <div className="relative w-full overflow-hidden rounded-xl border border-border bg-card p-2">
         <div
-          className={styles["image"]}
-          style={{
-            backgroundImage: `url("${snapshotResolution?.images.base}")`,
-          }}
-        ></div>
-        <div
-          className={classNames(styles["image"], styles["new-image"])}
-          style={{
-            backgroundImage: `url("${snapshotResolution?.images.new}")`,
-            opacity: `${transparent}`,
-          }}
-        ></div>
+          className="relative mx-auto"
+          style={{ height: "min(70vh, 720px)" }}
+        >
+          <div
+            className="absolute inset-0 bg-contain bg-center bg-no-repeat"
+            style={{
+              backgroundImage: `url("${snapshotResolution?.images.base}")`,
+            }}
+          />
+          <div
+            className="absolute inset-0 bg-contain bg-center bg-no-repeat"
+            style={{
+              backgroundImage: `url("${snapshotResolution?.images.new}")`,
+              opacity: transparent,
+            }}
+          />
+        </div>
       </div>
     </div>
   );

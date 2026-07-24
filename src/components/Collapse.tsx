@@ -1,8 +1,7 @@
 import { ReactNode } from "react";
-import styles from "./Collapse.module.scss";
-import { CaretDown, CaretLeft } from "@phosphor-icons/react";
-import { AnimatePresence, motion } from "framer-motion";
-import classNames from "classnames";
+import { ChevronDown, ChevronRight } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 interface CollapseProps {
   title: string;
@@ -20,46 +19,42 @@ export default function Collapse({
   onToggle,
 }: CollapseProps) {
   return (
-    <div
-      className={classNames({
-        [styles["vertical-collapse"]]: true,
-        [styles.failed]: counts && counts.failed > 0,
-      })}
-      style={{ marginBottom: !isOpen ? 0 : "20px" }}
-    >
-      <div className={styles["header-container"]} onClick={onToggle}>
-        <div className={styles.header}>
-          <div className={styles["title-row"]}>
-            <span className={styles.title}>{title}</span>
-            <span className={styles["spec-tag"]}>spec</span>
-          </div>
-          {isOpen && <CaretDown size="16" />}
-          {!isOpen && <CaretLeft size="16" />}
-        </div>
-        {counts && (
-          <span className={styles["counts"]}>
-            {counts.failed > 0 ? (
-              <span className={styles["failed"]}>Failed: {counts.failed}</span>
-            ) : null}
-          </span>
+    <div className="mb-2">
+      <button
+        type="button"
+        onClick={onToggle}
+        className={cn(
+          "flex w-full items-center justify-between gap-3 px-3 py-3 text-left transition-colors hover:bg-accent/50",
+          counts && counts.failed > 0 && "text-foreground"
         )}
-      </div>
-      {isOpen && (
-        <AnimatePresence>
-          <motion.div
-            initial={{ y: "50%" }}
-            animate={{ y: "0%" }}
-            transition={{
-              type: "spring",
-              stiffness: 656,
-              damping: 54,
-              mass: 1.6,
-            }}
+        aria-expanded={isOpen}
+      >
+        <div className="flex min-w-0 items-center gap-2.5">
+          {isOpen ? (
+            <ChevronDown className="size-4 shrink-0 text-muted-foreground" />
+          ) : (
+            <ChevronRight className="size-4 shrink-0 text-muted-foreground" />
+          )}
+          <span className="truncate text-sm font-medium leading-none">
+            {title}
+          </span>
+          <Badge
+            variant="outline"
+            className="h-5 shrink-0 px-1.5 text-[10px] uppercase tracking-wide"
           >
-            {children}
-          </motion.div>
-        </AnimatePresence>
-      )}
+            spec
+          </Badge>
+        </div>
+        {counts && counts.failed > 0 ? (
+          <Badge
+            variant="destructive"
+            className="h-5 shrink-0 px-2 text-[10px]"
+          >
+            Failed: {counts.failed}
+          </Badge>
+        ) : null}
+      </button>
+      {isOpen && <div className="pb-3 pt-1">{children}</div>}
     </div>
   );
 }

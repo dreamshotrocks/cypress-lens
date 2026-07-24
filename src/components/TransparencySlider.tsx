@@ -1,5 +1,4 @@
-import { CSSProperties, ChangeEvent } from "react";
-import styles from "./TransparencySlider.module.scss";
+import { ChangeEvent, CSSProperties } from "react";
 
 interface TransparencySliderProps {
   style?: CSSProperties;
@@ -13,12 +12,15 @@ export default function TransparencySlider({
   style,
 }: TransparencySliderProps) {
   const handleSliderChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const newValue = Number(event.target.value);
-    onChange(newValue);
+    onChange(Number(event.target.value));
   };
 
   return (
-    <div className={styles["transparency-slider-container"]} style={style}>
+    <div
+      className="flex w-full max-w-md items-center gap-3 rounded-xl border border-border bg-card px-4 py-2"
+      style={style}
+    >
+      <span className="text-xs text-muted-foreground">Opacity</span>
       <input
         type="range"
         min={0}
@@ -26,8 +28,11 @@ export default function TransparencySlider({
         step={0.1}
         value={value}
         onChange={handleSliderChange}
-        className={styles["transparency-slider-input"]}
+        className="h-1.5 w-full cursor-pointer accent-primary"
       />
+      <span className="w-8 text-right font-mono text-xs text-muted-foreground">
+        {value.toFixed(1)}
+      </span>
     </div>
   );
 }
