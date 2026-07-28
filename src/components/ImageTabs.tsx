@@ -5,6 +5,7 @@ import {
   Check,
   Columns2,
   Diff,
+  ExternalLink,
   Image as ImageIcon,
   Layers,
   SlidersHorizontal,
@@ -71,6 +72,24 @@ export default function ImageTabs({
   const activeTab =
     VIEW_TABS.find((tab) => tab.id === activeTabId) ?? VIEW_TABS[0];
   const activeView = snapshotHasFailure ? activeTab.tabText : "Baseline";
+
+  const activeImageSrc =
+    activeView === "Difference"
+      ? activeResolution.images.diff
+      : activeView === "Side By Side" ||
+          activeView === "Slider" ||
+          activeView === "Overlay"
+        ? activeResolution.images.new
+        : activeResolution.images.base;
+
+  const openImageInNewTab = () => {
+    if (!activeImageSrc) {
+      return;
+    }
+
+    const url = new URL(activeImageSrc, window.location.href).href;
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
 
   useEffect(() => {
     if (!snapshotHasFailure) {
@@ -204,6 +223,25 @@ export default function ImageTabs({
               </div>
             </div>
           )}
+
+          <div className="flex min-w-0 flex-col gap-2">
+            <span className="px-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+              Image
+            </span>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={openImageInNewTab}
+              disabled={!activeImageSrc}
+              title={`Open ${activeView.toLowerCase()} image in a new tab`}
+              aria-label={`Open ${activeView.toLowerCase()} image in a new tab`}
+              className="h-8 gap-1.5 rounded-xl"
+            >
+              <ExternalLink className="size-3.5" />
+              Open in new tab
+            </Button>
+          </div>
         </div>
 
         {activeView === "Overlay" ? (

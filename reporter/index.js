@@ -27,6 +27,7 @@ function readWriteSync(text) {
   <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8" />
     <link href="./static/css/main.css" rel="stylesheet" />
     <script src="./data.js"></script>
   </head>   
