@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.19.0](https://github.com/dreamshotrocks/cypress-lens/compare/v1.18.1...v1.19.0) (2026-07-28)
+
+
+### Features
+
+* enhance ImageTabs with new functionality for opening images in a new tab ([eec31fe](https://github.com/dreamshotrocks/cypress-lens/commit/eec31fe2f6e4d25e9a699f1fa5266ee513dd80cb))
+
 ## [1.18.0](https://github.com/dreamshotrocks/cypress-lens/compare/v1.17.3...v1.18.0) (2026-07-24)
 
 
