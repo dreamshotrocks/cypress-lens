@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.20.0](https://github.com/dreamshotrocks/cypress-lens/compare/v1.19.0...v1.20.0) (2026-07-28)
+
+
+### Features
+
+* add labeled snapshots to SideBySideView for improved clarity ([3517728](https://github.com/dreamshotrocks/cypress-lens/commit/351772823343851384102bee333717a05964dacd))
+
 ## [1.19.0](https://github.com/dreamshotrocks/cypress-lens/compare/v1.18.1...v1.19.0) (2026-07-28)
 
 
