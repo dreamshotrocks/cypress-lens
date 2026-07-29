@@ -6,7 +6,6 @@ import ImageTabs from "./components/ImageTabs";
 import Navigation from "./components/Navigation";
 import ReviewComplete from "./components/ReviewComplete";
 import { Button } from "./components/ui/button";
-import { Badge } from "./components/ui/badge";
 import { TooltipProvider } from "./components/ui/tooltip";
 import { Item, SelectedImage } from "./types/ReporterTypes";
 import {
@@ -65,7 +64,6 @@ function App() {
   const reportId = getReportIdFromLocation();
   const snapshotList = flattenSnapshots(filteredItems);
   const failedEntries = items ? getFailedResolutionEntries(items) : [];
-  const passedPreviews = items ? flattenSnapshots(items).slice(0, 8) : [];
   const currentIndex = findSnapshotIndex(snapshotList, selectedImage);
   const hasPrevious = currentIndex > 0;
   const hasNext =
@@ -118,11 +116,6 @@ function App() {
     document.body.scrollTop = 0;
     setSelectedImage(entry);
     syncSnapshotQueryParam(entry);
-  };
-
-  const selectPassedPreview = (entry: SelectedImage) => {
-    setActiveFilter("all");
-    selectSnapshot(entry);
   };
 
   const shareSnapshot = async () => {
@@ -313,25 +306,6 @@ function App() {
     return null;
   }
 
-  const navToggleButton = (
-    <Button
-      type="button"
-      variant="outline"
-      onClick={() => setNavHidden((hidden) => !hidden)}
-      title={navHidden ? "Show navigation (B)" : "Hide navigation (B)"}
-    >
-      {navHidden ? (
-        <PanelLeftOpen className="size-4" />
-      ) : (
-        <PanelLeftClose className="size-4" />
-      )}
-      {navHidden ? "Show nav" : "Hide nav"}
-      <Badge variant="muted" className="ml-0.5 font-mono text-[10px]">
-        B
-      </Badge>
-    </Button>
-  );
-
   return (
     <TooltipProvider delayDuration={200}>
       {showReviewComplete ? (
@@ -342,30 +316,53 @@ function App() {
           />
         </div>
       ) : (
-        <div className="flex h-screen w-full overflow-hidden bg-background">
-          <aside
-            className={cn(
-              "flex h-full w-full max-w-[320px] shrink-0 flex-col overflow-hidden border-r border-border bg-card",
-              navHidden && "hidden"
-            )}
-          >
-            <Navigation
-              items={items}
-              selectedImage={selectedImage}
-              reviewedKeys={reviewedKeys}
-              activeFilter={activeFilter}
-              onActiveFilterChange={setActiveFilter}
-              onImageClick={selectSnapshot}
-              onFilteredItemsChange={setFilteredItems}
-              onMarkAllReviewed={markAllReviewed}
-              onClearReviewData={clearReportReviewData}
-            />
-          </aside>
+        <div className="flex h-screen w-full bg-background">
+          {!navHidden ? (
+            <div className="relative h-full w-full max-w-[320px] shrink-0 overflow-visible">
+              <aside className="flex h-full w-full flex-col overflow-hidden border-r border-border bg-card">
+                <Navigation
+                  items={items}
+                  selectedImage={selectedImage}
+                  reviewedKeys={reviewedKeys}
+                  activeFilter={activeFilter}
+                  onActiveFilterChange={setActiveFilter}
+                  onImageClick={selectSnapshot}
+                  onFilteredItemsChange={setFilteredItems}
+                  onMarkAllReviewed={markAllReviewed}
+                  onClearReviewData={clearReportReviewData}
+                />
+              </aside>
+              <Button
+                type="button"
+                variant="outline"
+                size="icon-sm"
+                onClick={() => setNavHidden(true)}
+                title="Hide navigation (B)"
+                aria-label="Hide navigation"
+                className="absolute top-3.5 right-0 z-20 translate-x-1/2 border-border bg-secondary shadow-md hover:bg-secondary/90 dark:bg-secondary dark:hover:bg-secondary/90"
+              >
+                <PanelLeftClose className="size-3.5" />
+              </Button>
+            </div>
+          ) : (
+            <div className="relative h-full w-0 shrink-0">
+              <Button
+                type="button"
+                variant="outline"
+                size="icon-sm"
+                onClick={() => setNavHidden(false)}
+                title="Show navigation (B)"
+                aria-label="Show navigation"
+                className="absolute top-3.5 left-0 z-20 translate-x-1/2 border-border bg-secondary shadow-md hover:bg-secondary/90 dark:bg-secondary dark:hover:bg-secondary/90"
+              >
+                <PanelLeftOpen className="size-3.5" />
+              </Button>
+            </div>
+          )}
 
           {selectedImage ? (
             <main className="flex h-screen min-w-0 flex-1 flex-col overflow-auto">
               <div className="flex items-center justify-end gap-2 px-6 pt-5 md:px-10">
-                {navToggleButton}
                 <Button
                   type="button"
                   variant="outline"
@@ -389,12 +386,6 @@ function App() {
                   >
                     <Check className="size-4" />
                     {selectedReviewed ? "Reviewed" : "Mark reviewed"}
-                    <Badge
-                      variant="muted"
-                      className="ml-0.5 font-mono text-[10px]"
-                    >
-                      Space
-                    </Badge>
                   </Button>
                 )}
               </div>
@@ -422,14 +413,8 @@ function App() {
             </main>
           ) : activeFilter === "failed" ? (
             <main className="flex h-screen min-w-0 flex-1 flex-col overflow-auto">
-              <div className="flex items-center justify-end px-6 pt-5 md:px-10">
-                {navToggleButton}
-              </div>
               <div className="flex w-full flex-1 flex-col items-center justify-center px-4 py-6 md:px-12">
-                <EmptyFailedState
-                  previews={passedPreviews}
-                  onSelect={selectPassedPreview}
-                />
+                <EmptyFailedState />
               </div>
             </main>
           ) : null}

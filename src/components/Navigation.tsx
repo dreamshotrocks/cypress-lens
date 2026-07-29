@@ -1,9 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import {
-  ArrowLeft,
   BarChart3,
   CheckCheck,
-  ExternalLink,
   Search,
   Trash2,
   X,
@@ -213,7 +211,7 @@ export default function Navigation({
   return (
     <div className="flex h-full min-h-0 flex-col">
       <div className="shrink-0 space-y-3.5 p-3.5 pb-3">
-        <div className="flex items-start justify-between gap-2 px-0.5">
+        <div className="space-y-2 px-0.5">
           {createdAt ? (
             <div className="min-w-0 space-y-1">
               <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
@@ -221,16 +219,14 @@ export default function Navigation({
               </div>
               <div className="text-xs text-foreground/80">{createdAt}</div>
             </div>
-          ) : (
-            <div />
-          )}
-          <div className="flex shrink-0 flex-col gap-1.5">
+          ) : null}
+          <div className="flex gap-1.5">
             <Button
               type="button"
               variant="outline"
               size="sm"
               asChild
-              className="text-xs"
+              className="flex-1 text-xs"
             >
               <a
                 href={ALL_REPORTS_URL}
@@ -238,9 +234,7 @@ export default function Navigation({
                 rel="noopener noreferrer"
                 title="Open all automation reports"
               >
-                <ArrowLeft className="size-3.5" />
                 All reports
-                <ExternalLink className="size-3 opacity-70" />
               </a>
             </Button>
             <Button
@@ -249,7 +243,7 @@ export default function Navigation({
               size="sm"
               onClick={() => setMetricsOpen(true)}
               title="Open report metrics"
-              className="text-xs"
+              className="flex-1 text-xs"
             >
               <BarChart3 className="size-3.5" />
               Metrics
