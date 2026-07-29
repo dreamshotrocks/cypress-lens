@@ -43,6 +43,7 @@ interface ImageTabsProps {
   onPrevious: () => void;
   onNext: () => void;
   showNavigation?: boolean;
+  keyboardEnabled?: boolean;
 }
 
 const VIEW_TABS = [
@@ -66,6 +67,7 @@ export default function ImageTabs({
   onPrevious,
   onNext,
   showNavigation = true,
+  keyboardEnabled = true,
 }: ImageTabsProps) {
   const snapshotHasFailure = isFailedSnapshot(snapshot.resolutions);
   const [activeTabId, setActiveTabId] = useState<string>(VIEW_TABS[0].id);
@@ -92,7 +94,7 @@ export default function ImageTabs({
   };
 
   useEffect(() => {
-    if (!snapshotHasFailure) {
+    if (!snapshotHasFailure || !keyboardEnabled) {
       return;
     }
 
@@ -125,7 +127,7 @@ export default function ImageTabs({
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [snapshotHasFailure]);
+  }, [snapshotHasFailure, keyboardEnabled]);
 
   return (
     <>

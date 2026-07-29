@@ -1,6 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Check, Link2, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import EmptyFailedState from "./components/EmptyFailedState";
+import HotkeysTutorial from "./components/HotkeysTutorial";
 import ImageTabs from "./components/ImageTabs";
 import Navigation from "./components/Navigation";
 import ReviewComplete from "./components/ReviewComplete";
@@ -14,6 +15,10 @@ import {
   resolveSelectionInList,
 } from "./utils/flattenSnapshots";
 import { isFailedResolution } from "./utils/failure";
+import {
+  hasSeenHotkeysTutorial,
+  markHotkeysTutorialSeen,
+} from "./utils/hotkeysTutorial";
 import { getReportIdFromLocation } from "./utils/reportId";
 import {
   areAllFailedResolutionsReviewed,
@@ -40,12 +45,22 @@ function App() {
     null
   );
   const [showReviewComplete, setShowReviewComplete] = useState(false);
+  const [showHotkeysTutorial, setShowHotkeysTutorial] = useState(
+    () => !hasSeenHotkeysTutorial()
+  );
   const [reviewedKeys, setReviewedKeys] = useState<Set<string>>(new Set());
   const [navHidden, setNavHidden] = useState(false);
   const [shareCopied, setShareCopied] = useState(false);
   const shareCopiedTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
     null
   );
+
+  const dismissHotkeysTutorial = useCallback((dontShowAgain: boolean) => {
+    if (dontShowAgain) {
+      markHotkeysTutorialSeen();
+    }
+    setShowHotkeysTutorial(false);
+  }, []);
 
   const reportId = getReportIdFromLocation();
   const snapshotList = flattenSnapshots(filteredItems);
@@ -230,6 +245,10 @@ function App() {
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
+      if (showHotkeysTutorial) {
+        return;
+      }
+
       if (showReviewComplete) {
         if (event.key === "Escape") {
           event.preventDefault();
@@ -288,23 +307,10 @@ function App() {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [showReviewComplete]);
+  }, [showHotkeysTutorial, showReviewComplete]);
 
   if (!items) {
     return null;
-  }
-
-  if (showReviewComplete) {
-    return (
-      <TooltipProvider delayDuration={200}>
-        <div className="flex h-screen w-full overflow-hidden bg-background">
-          <ReviewComplete
-            failedEntries={failedEntries}
-            onBackToGallery={() => setShowReviewComplete(false)}
-          />
-        </div>
-      </TooltipProvider>
-    );
   }
 
   const navToggleButton = (
@@ -328,94 +334,112 @@ function App() {
 
   return (
     <TooltipProvider delayDuration={200}>
-      <div className="flex h-screen w-full overflow-hidden bg-background">
-        <aside
-          className={cn(
-            "flex h-full w-full max-w-[320px] shrink-0 flex-col overflow-hidden border-r border-border bg-card",
-            navHidden && "hidden"
-          )}
-        >
-          <Navigation
-            items={items}
-            selectedImage={selectedImage}
-            reviewedKeys={reviewedKeys}
-            activeFilter={activeFilter}
-            onActiveFilterChange={setActiveFilter}
-            onImageClick={selectSnapshot}
-            onFilteredItemsChange={setFilteredItems}
-            onMarkAllReviewed={markAllReviewed}
-            onClearReviewData={clearReportReviewData}
+      {showReviewComplete ? (
+        <div className="flex h-screen w-full overflow-hidden bg-background">
+          <ReviewComplete
+            failedEntries={failedEntries}
+            onBackToGallery={() => setShowReviewComplete(false)}
           />
-        </aside>
+        </div>
+      ) : (
+        <div className="flex h-screen w-full overflow-hidden bg-background">
+          <aside
+            className={cn(
+              "flex h-full w-full max-w-[320px] shrink-0 flex-col overflow-hidden border-r border-border bg-card",
+              navHidden && "hidden"
+            )}
+          >
+            <Navigation
+              items={items}
+              selectedImage={selectedImage}
+              reviewedKeys={reviewedKeys}
+              activeFilter={activeFilter}
+              onActiveFilterChange={setActiveFilter}
+              onImageClick={selectSnapshot}
+              onFilteredItemsChange={setFilteredItems}
+              onMarkAllReviewed={markAllReviewed}
+              onClearReviewData={clearReportReviewData}
+            />
+          </aside>
 
-        {selectedImage ? (
-          <main className="flex h-screen min-w-0 flex-1 flex-col overflow-auto">
-            <div className="flex items-center justify-end gap-2 px-6 pt-5 md:px-10">
-              {navToggleButton}
-              <Button
-                type="button"
-                variant="outline"
-                onClick={shareSnapshot}
-                title="Copy link to this snapshot"
-              >
-                <Link2 className="size-4" />
-                {shareCopied ? "Copied" : "Share Snapshot"}
-              </Button>
-              {selectedCanBeReviewed && (
+          {selectedImage ? (
+            <main className="flex h-screen min-w-0 flex-1 flex-col overflow-auto">
+              <div className="flex items-center justify-end gap-2 px-6 pt-5 md:px-10">
+                {navToggleButton}
                 <Button
                   type="button"
-                  variant={selectedReviewed ? "success" : "outline"}
-                  onClick={() => toggleReviewed(selectedImage)}
-                  title={
-                    selectedReviewed
-                      ? `Unmark ${selectedImage.resolution.size ?? "resolution"} reviewed (Space)`
-                      : `Mark ${selectedImage.resolution.size ?? "resolution"} reviewed (Space)`
-                  }
-                  className={cn(selectedReviewed && "border-success/50")}
+                  variant="outline"
+                  onClick={shareSnapshot}
+                  title="Copy link to this snapshot"
                 >
-                  <Check className="size-4" />
-                  {selectedReviewed ? "Reviewed" : "Mark reviewed"}
-                  <Badge variant="muted" className="ml-0.5 font-mono text-[10px]">
-                    Space
-                  </Badge>
+                  <Link2 className="size-4" />
+                  {shareCopied ? "Copied" : "Share Snapshot"}
                 </Button>
-              )}
-            </div>
-            <div className="flex w-full flex-1 flex-col items-center justify-center px-6 py-6 md:px-10 md:pb-10">
-              <ImageTabs
-                test={selectedImage.test}
-                snapshot={selectedImage.snapshot}
-                activeResolution={selectedImage.resolution}
-                reviewedKeys={reviewedKeys}
-                selectedEntry={selectedImage}
-                onResolutionChange={(resolution) => {
-                  const next = { ...selectedImage, resolution };
-                  setSelectedImage(next);
-                  syncSnapshotQueryParam(next);
-                }}
-                currentIndex={currentIndex}
-                totalCount={snapshotList.length}
-                hasPrevious={hasPrevious}
-                hasNext={hasNext}
-                onPrevious={goToPrevious}
-                onNext={goToNext}
-              />
-            </div>
-          </main>
-        ) : activeFilter === "failed" ? (
-          <main className="flex h-screen min-w-0 flex-1 flex-col overflow-auto">
-            <div className="flex items-center justify-end px-6 pt-5 md:px-10">
-              {navToggleButton}
-            </div>
-            <div className="flex w-full flex-1 flex-col items-center justify-center px-4 py-6 md:px-12">
-              <EmptyFailedState
-                previews={passedPreviews}
-                onSelect={selectPassedPreview}
-              />
-            </div>
-          </main>
-        ) : null}
-      </div>
+                {selectedCanBeReviewed && (
+                  <Button
+                    type="button"
+                    variant={selectedReviewed ? "success" : "outline"}
+                    onClick={() => toggleReviewed(selectedImage)}
+                    title={
+                      selectedReviewed
+                        ? `Unmark ${selectedImage.resolution.size ?? "resolution"} reviewed (Space)`
+                        : `Mark ${selectedImage.resolution.size ?? "resolution"} reviewed (Space)`
+                    }
+                    className={cn(selectedReviewed && "border-success/50")}
+                  >
+                    <Check className="size-4" />
+                    {selectedReviewed ? "Reviewed" : "Mark reviewed"}
+                    <Badge
+                      variant="muted"
+                      className="ml-0.5 font-mono text-[10px]"
+                    >
+                      Space
+                    </Badge>
+                  </Button>
+                )}
+              </div>
+              <div className="flex w-full flex-1 flex-col items-center justify-center px-6 py-6 md:px-10 md:pb-10">
+                <ImageTabs
+                  test={selectedImage.test}
+                  snapshot={selectedImage.snapshot}
+                  activeResolution={selectedImage.resolution}
+                  reviewedKeys={reviewedKeys}
+                  selectedEntry={selectedImage}
+                  onResolutionChange={(resolution) => {
+                    const next = { ...selectedImage, resolution };
+                    setSelectedImage(next);
+                    syncSnapshotQueryParam(next);
+                  }}
+                  currentIndex={currentIndex}
+                  totalCount={snapshotList.length}
+                  hasPrevious={hasPrevious}
+                  hasNext={hasNext}
+                  onPrevious={goToPrevious}
+                  onNext={goToNext}
+                  keyboardEnabled={!showHotkeysTutorial}
+                />
+              </div>
+            </main>
+          ) : activeFilter === "failed" ? (
+            <main className="flex h-screen min-w-0 flex-1 flex-col overflow-auto">
+              <div className="flex items-center justify-end px-6 pt-5 md:px-10">
+                {navToggleButton}
+              </div>
+              <div className="flex w-full flex-1 flex-col items-center justify-center px-4 py-6 md:px-12">
+                <EmptyFailedState
+                  previews={passedPreviews}
+                  onSelect={selectPassedPreview}
+                />
+              </div>
+            </main>
+          ) : null}
+        </div>
+      )}
+
+      <HotkeysTutorial
+        open={showHotkeysTutorial}
+        onClose={dismissHotkeysTutorial}
+      />
     </TooltipProvider>
   );
 }
