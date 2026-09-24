@@ -58,6 +58,7 @@ const VIEW_TABS = [
 ] as const;
 
 export default function ImageTabs({
+  test,
   snapshot,
   activeResolution,
   reviewedKeys,
@@ -120,6 +121,9 @@ export default function ImageTabs({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [snapshotHasFailure, keyboardEnabled]);
 
+  const tlibId = snapshot.props.name?.trim() ?? "";
+  const tlibTitle = test.props.name?.trim() ?? "";
+
   const toolbar = (
     <div className="flex w-full flex-wrap items-start justify-center gap-4">
       {snapshotHasFailure && (
@@ -153,7 +157,21 @@ export default function ImageTabs({
       )}
 
       {activeResolution.size && (
-        <div className="flex min-w-0 flex-col gap-2">
+        <div className="flex min-w-0 max-w-3xl flex-col items-center gap-2">
+          {(tlibId || tlibTitle) && (
+            <div className="flex flex-col items-center gap-1 px-1 text-center">
+              {tlibId ? (
+                <span className="font-mono text-xs font-semibold tracking-wide text-foreground">
+                  {tlibId}
+                </span>
+              ) : null}
+              {tlibTitle && tlibTitle !== tlibId ? (
+                <p className="text-sm leading-snug text-foreground">
+                  {tlibTitle}
+                </p>
+              ) : null}
+            </div>
+          )}
           <span className={TOOLBAR_LABEL_CLASS}>Resolution</span>
           <div className={cn(TOOLBAR_CONTROL_CLASS, "flex-wrap gap-1")}>
             {snapshot?.resolutions.map((resolution, index) => {
